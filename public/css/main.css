@@ -19,9 +19,9 @@
 
 /* Colors */
 :root {
-  --color-default: #fafafa;
+  --color-default: #000000;
   --color-primary: #27a776;
-  --color-secondary: #161718;
+  --color-secondary: #000000;
 }
 
 /* Smooth scroll behavior */
@@ -35,7 +35,7 @@
 body {
   font-family: var(--font-default);
   color: var(--color-default);
-  background-color: #000;
+  background-color: #F5EDE6;
 }
 
 a {
@@ -91,7 +91,7 @@ h6 {
   font-size: 36px;
   font-weight: 700;
   font-family: var(--font-secondary);
-  color: #fff;
+  color: #000000;
 }
 
 /*--------------------------------------------------------------
@@ -106,7 +106,7 @@ h6 {
 .page-header h2 {
   font-size: 56px;
   font-weight: 500;
-  color: #fff;
+  color: #000000;
   font-family: var(--font-secondary);
 }
 
@@ -117,7 +117,7 @@ h6 {
 }
 
 .page-header p {
-  color: rgba(255, 255, 255, 0.8);
+  color: #000;
 }
 
 .page-header .cta-btn {
@@ -130,7 +130,7 @@ h6 {
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: 0.3s;
-  color: #fff;
+  color: #000000;
   background: var(--color-primary);
 }
 
@@ -157,13 +157,13 @@ h6 {
 
 .scroll-top i {
   font-size: 24px;
-  color: #fff;
+  color: #000000;
   line-height: 0;
 }
 
 .scroll-top:hover {
   background: rgba(39, 167, 118, 0.8);
-  color: #fff;
+  color: #000000;
 }
 
 .scroll-top.active {
@@ -213,7 +213,7 @@ h6 {
 #preloader .line:before {
   content: "";
   position: absolute;
-  background-color: #fff;
+  background-color: #000000;
   left: 0;
   top: 50%;
   width: 1px;
@@ -286,7 +286,7 @@ h6 {
   transition: all 0.5s;
   z-index: 997;
   padding: 30px 0;
-  background-color: #000;
+  background-color: #6b7075;
 }
 
 .header .logo {
@@ -302,7 +302,7 @@ h6 {
   font-size: 32px;
   margin: 0;
   font-weight: 400;
-  color: #fff;
+  color: #000000;
   font-family: var(--font-secondary);
 }
 
@@ -327,7 +327,7 @@ h6 {
 }
 
 .header .header-social-links a {
-  color: rgba(255, 255, 255, 0.5);
+  color: #000000;
   padding-left: 15px;
   display: inline-block;
   line-height: 0px;
@@ -336,7 +336,7 @@ h6 {
 }
 
 .header .header-social-links a:hover {
-  color: #fff;
+  color: #000000;
 }
 
 @media (max-width: 575px) {
@@ -364,7 +364,7 @@ h6 {
   .navbar li {
     position: relative;
   }
-
+/*header*/
   .navbar a,
   .navbar a:focus {
     display: flex;
@@ -376,7 +376,7 @@ h6 {
     letter-spacing: 1px;
     font-size: 13px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.5);
+    color: #000000;
     white-space: nowrap;
     transition: 0.3s;
   }
@@ -392,7 +392,7 @@ h6 {
   .navbar .active,
   .navbar .active:focus,
   .navbar li:hover>a {
-    color: #fff;
+    color: #000000;
   }
 
   .navbar .dropdown ul {
@@ -428,7 +428,7 @@ h6 {
   .navbar .dropdown ul a:hover,
   .navbar .dropdown ul .active:hover,
   .navbar .dropdown ul li:hover>a {
-    color: #fff;
+    color: #000000;
   }
 
   .navbar .dropdown:hover>ul {
@@ -522,7 +522,7 @@ h6 {
   .navbar .active,
   .navbar .active:focus,
   .navbar li:hover>a {
-    color: #fff;
+    color: #000000;
   }
 
   .navbar .dropdown ul,
@@ -541,7 +541,7 @@ h6 {
   }
 
   .mobile-nav-show {
-    color: #fff;
+    color: #000000;
     font-size: 28px;
     cursor: pointer;
     line-height: 0;
@@ -551,7 +551,7 @@ h6 {
   }
 
   .mobile-nav-hide {
-    color: #fff;
+    color: #000000;
     font-size: 32px;
     cursor: pointer;
     line-height: 0;
@@ -649,12 +649,12 @@ h6 {
   font-size: 18px;
   font-weight: bold;
   margin: 10px 0 5px 0;
-  color: #fff;
+  color: #000000;
 }
 
 .testimonials .testimonial-item h4 {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
+  color: #000000;
   margin: 0;
 }
 
@@ -733,7 +733,7 @@ h6 {
 .gallery .gallery-links .preview-link,
 .gallery .gallery-links .details-link {
   font-size: 20px;
-  color: rgba(255, 255, 255, 0.5);
+  color: #000000;
   transition: 0.3s;
   line-height: 1.2;
   margin: 30px 8px 0 8px;
@@ -741,7 +741,7 @@ h6 {
 
 .gallery .gallery-links .preview-link:hover,
 .gallery .gallery-links .details-link:hover {
-  color: #fff;
+  color: #000000;
 }
 
 .gallery .gallery-links .details-link {
@@ -864,7 +864,7 @@ h6 {
 .gallery-single .portfolio-info .btn-visit {
   padding: 8px 40px;
   background: var(--color-primary);
-  color: #fff;
+  color: #000000;
   border-radius: 50px;
   transition: 0.3s;
 }
@@ -877,7 +877,7 @@ h6 {
   font-size: 26px;
   font-weight: 700;
   margin-bottom: 20px;
-  color: #fff;
+  color: #000000;
   font-family: var(--font-secondary);
 }
 
@@ -964,7 +964,7 @@ h6 {
 
 .services .service-item i {
   background: var(--color-primary);
-  color: #fff;
+  color: #000000;
   font-size: 24px;
   transition: 0.3s;
   display: flex;
@@ -983,7 +983,7 @@ h6 {
 }
 
 .services .service-item h4 a {
-  color: #fff;
+  color: #000000;
 }
 
 .services .service-item p {
@@ -1003,11 +1003,11 @@ h6 {
 
 .services .service-item:hover h4 a,
 .services .service-item:hover p {
-  color: #fff;
+  color: #000000;
 }
 
 .services .service-item:hover i {
-  background: #fff;
+  background: #000000;
   color: var(--color-primary);
 }
 
@@ -1071,12 +1071,12 @@ h6 {
   padding: 0;
   margin-bottom: 0;
   font-size: 14px;
-  color: #fff;
+  color: #000000;
 }
 
 .contact .info-item:hover i {
   background: var(--color-primary);
-  color: #fff;
+  color: #000000;
 }
 
 .contact .php-email-form {
@@ -1089,7 +1089,7 @@ h6 {
 
 .contact .php-email-form .error-message {
   display: none;
-  color: #fff;
+  color: #000000;
   background: #df1529;
   text-align: left;
   padding: 15px;
@@ -1102,7 +1102,7 @@ h6 {
 
 .contact .php-email-form .sent-message {
   display: none;
-  color: #fff;
+  color: #000000;
   background: var(--color-primary);
   text-align: center;
   padding: 15px;
@@ -1136,7 +1136,7 @@ h6 {
   font-size: 14px;
   background-color: var(--color-secondary);
   border: 1px solid #2e3133;
-  color: #fff;
+  color: #000000;
 }
 
 .contact .php-email-form input {
@@ -1151,7 +1151,7 @@ h6 {
   background: var(--color-primary);
   border: 0;
   padding: 10px 35px;
-  color: #fff;
+  color: #000000;
   transition: 0.4s;
   border-radius: 4px;
 }
@@ -1186,7 +1186,7 @@ h6 {
   margin: 0 0 10px 0;
   font-size: 38px;
   font-weight: 700;
-  color: #fff;
+  color: #000000;
   font-family: var(--font-secondary);
 }
 
@@ -1224,7 +1224,7 @@ h6 {
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: 0.3s;
-  color: #fff;
+  color: #000000;
   background: var(--color-primary);
 }
 
@@ -1250,14 +1250,14 @@ h6 {
 
 .footer .copyright {
   text-align: center;
-  color: rgba(255, 255, 255, 0.8);
+  color: #000;
 }
 
 .footer .credits {
   padding-top: 6px;
   text-align: center;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.8);
+  color: #000;
 }
 
 .footer .credits a {
