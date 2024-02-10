@@ -280,13 +280,13 @@ h6 {
 }
 
 /*--------------------------------------------------------------
-# Header
+# Header 
 --------------------------------------------------------------*/
 .header {
   transition: all 0.5s;
   z-index: 997;
   padding: 30px 0;
-  background-color: #6b7075;
+  background-color: #FEFCF3;
 }
 
 .header .logo {
@@ -364,7 +364,7 @@ h6 {
   .navbar li {
     position: relative;
   }
-/*header*/
+/*header en pose*/
   .navbar a,
   .navbar a:focus {
     display: flex;
@@ -392,7 +392,7 @@ h6 {
   .navbar .active,
   .navbar .active:focus,
   .navbar li:hover>a {
-    color: #000000;
+    color: #F9A936;
   }
 
   .navbar .dropdown ul {
