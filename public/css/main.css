@@ -213,7 +213,7 @@ h6 {
 #preloader .line:before {
   content: "";
   position: absolute;
-  background-color: #000000;
+  background-color: #F5EDE6;
   left: 0;
   top: 50%;
   width: 1px;
