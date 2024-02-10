@@ -176,18 +176,25 @@ h6 {
 # Preloader
 --------------------------------------------------------------*/
 #preloader {
-  display: flex;
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 99999;
+   position: fixed;
+   display: flex;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #FEFCF3; /* Fond du preloader */
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 99999;
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center;
 }
 
 #preloader:before,
 #preloader:after {
   content: "";
-  background-color: var(--color-secondary);
+  background-color: #000;
   position: absolute;
   inset: 0;
   width: 50%;
@@ -285,7 +292,7 @@ h6 {
 .header {
   transition: all 0.5s;
   z-index: 997;
-  padding: 30px 0;
+  padding: 20px 0;
   background-color: #FEFCF3;
 }
 
@@ -294,7 +301,7 @@ h6 {
 }
 
 .header .logo img {
-  max-height: 40px;
+  max-height: 50px;
   margin-right: 8px;
 }
 
@@ -1245,7 +1252,11 @@ h6 {
   margin-top: 30px;
   padding: 30px 0;
   font-size: 14px;
+  background-color: #FEFCF3;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
+  bottom: 0;
+  position: fixed; 
+  width: 100%; /* Pleine largeur */
 }
 
 .footer .copyright {

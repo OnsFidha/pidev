@@ -1,77 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="description">
+        <meta content="" name="keywords">
 
-    {% block title %}
-        Artistool
-    {% endblock %}
-
-    {% block css %}
-        <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-        <link href="{{asset('bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
-        <link href="{{asset('swiper/swiper-bundle.min.css')}}" rel="stylesheet">
-        <link href="{{asset('glightbox/css/glightbox.min.css')}}" rel="stylesheet">
-        <link href="{{asset('aos/aos.css')}}" rel="stylesheet">
-        <link href="{{asset('css/main.css')}}" rel="stylesheet">
-    {% endblock %} 
-
-</head>
-
-<body>
-    <header id="header" class="header d-flex align-items-center fixed-top">
-
-        <div class="container-fluid d-flex align-items-center justify-content-between">
-
-        <a href="index.html" class="logo d-flex align-items-center  me-auto me-lg-0">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <img src={{asset('img/logo.png')}} alt="" width="100" height="300"> 
-
-        </a>
-
-        <nav id="navbar" class="navbar">
-            <ul>
-            <li><a href="index.html" class="active">Accueil</a></li>
-            <li><a href="about.html">Magasin</a></li>
-            <li><a href="#"> Evènement</a></li>
-            <li><a href="services.html">Poste</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-
-        <div class="header-social-links">
-           
-            <a href="#"  class="">se connecter</a>
-            <a href="#"   class="">s'inscrire</a>
+        {% block css %}
+            <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+            <link href="{{asset('bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+            <link href="{{asset('swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+            <link href="{{asset('glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+            <link href="{{asset('aos/aos.css')}}" rel="stylesheet">
+            <link href="{{asset('css/main.css')}}" rel="stylesheet">
+        {% endblock %}
+    
+        
+    </head>
+ 
+    <body>
+        <div id="preloader">
+            <img src={{asset('img/logo.png')}}  width="250" height="200"> 
         </div>
-        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
-        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+        {% block header %}
+            <header  id="header" class="header d-flex align-items-center fixed-top">
+                <div class="container-fluid d-flex align-items-center justify-content-between">
+                    <a href="index.html" class="logo d-flex align-items-center  me-auto me-lg-0">
+                        <img src={{asset('img/logo.png')}} alt="" width="100" height="300"> 
 
-        </div>
-    </header>
-<br><br><br><br>
-    <footer id="footer" class="footer">
-        <div class="container">
-        <div class="copyright">
-            &copy; Copyright <strong><span>PhotoFolio</span></strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
-        </div>
-    </footer>
+                    </a>
+                    <nav id="navbar" class="navbar">
+                        <ul>
+                        <li><a href="index.html" class="active">Accueil</a></li>
+                        <li><a href="about.html">Magasin</a></li>
+                        <li><a href="#"> Evènement</a></li>
+                        <li><a href="services.html">Poste</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                    <div class="header-social-links">
+                        <a href="#"  class="">se connecter</a>
+                        <a href="#"   class="">s'inscrire</a>
+                    </div>
+                </div>
+            </header>
+        {% endblock %}
+        <div class="container" style="margin-top: 120px;">
+            {% block body %}
 
-    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+            {% endblock %}
+        </div>
+        {% block footer %}
+            <footer id="footer" class="footer">
+                <div class="container">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>PhotoFolio</span></strong>. All Rights Reserved
+                </div>
+                <div class="credits">
+                    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                </div>
+                </div>
+            </footer>
+        {% endblock %}
+       
+        <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+        
+    </body>
 
-  <div id="preloader">
-    <div style="text-align:center;">
-        <img src={{asset('img/logo.png')}} alt="" width="70" height="100"> 
-    </div>
-  </div>
+       
+
+
+
 	{% block js %}
         <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{asset('swiper/swiper-bundle.min.js')}}"></script>
@@ -80,6 +80,4 @@
         <script src="{{asset('php-email-form/validate.js')}}"></script>
         <script src="{{asset('js/main.js')}}"></script>
     {% endblock %}
-</body>
-
 </html>
