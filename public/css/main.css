@@ -208,7 +208,7 @@ h6 {
   right: 0;
 }
 
-#preloader .line {
+#preloader .img {
   position: relative;
   overflow: hidden;
   margin: auto;
@@ -217,7 +217,7 @@ h6 {
   transition: all 0.8s ease 0s;
 }
 
-#preloader .line:before {
+#preloader .img:before {
   content: "";
   position: absolute;
   background-color: #F5EDE6;

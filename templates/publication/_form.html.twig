@@ -1,0 +1,25 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<div style="margin: 0 auto; width: fit-content;">
+<table >
+    <tr>
+        <td>{{ form_label(form.type) }}</td>
+        <td>{{ form_widget(form.type, {'attr': {'class': 'form-select'}}) }}</td>
+    </tr>
+    <tr>
+        <td>{{ form_label(form.lieu) }}</td>
+        <td>{{ form_widget(form.lieu, {'attr': {'class': 'form-control'}}) }}</td>
+    </tr>
+    <tr>
+        <td>{{ form_label(form.text) }}</td>
+        <td>{{ form_widget(form.text, {'attr': {'class': 'form-control', 'rows': 4}}) }}</td>
+    </tr>
+    <tr>
+        <td>{{ form_label(form.photo) }}</td>
+        <td>{{ form_widget(form.photo, {'attr': {'class': 'form-control'}}) }}</td>
+    </tr>
+   
+</table>
+
+<button type="submit" class="btn btn-primary">Enregistrer</button>
+</div>
+{{ form_end(form) }}
