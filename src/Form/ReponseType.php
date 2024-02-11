@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Reponse;
+use App\Entity\Reclamation;
+use App\Form\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,6 +17,12 @@ class ReponseType extends AbstractType
             ->add('reponse')
             ->add('date_reponse')
             ->add('relation')
+//             ->add('relation', EntityType::class, [
+//                   'class' => 'App\Entity\Reclamation', 
+//                   'choice_label' => 'id', 
+//                   'placeholder' => 'Select an id', 
+// 
+//             ])
         ;
     }
 

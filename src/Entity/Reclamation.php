@@ -78,4 +78,9 @@ class Reclamation
 
         return $this;
     }
+
+    public function __toString(): string
+{
+    return $this->getId() !== null ? (string) $this->getId() : '';
+}
 }
