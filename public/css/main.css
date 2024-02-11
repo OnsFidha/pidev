@@ -176,18 +176,25 @@ h6 {
 # Preloader
 --------------------------------------------------------------*/
 #preloader {
-  display: flex;
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 99999;
+   position: fixed;
+   display: flex;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #FEFCF3; /* Fond du preloader */
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 99999;
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center;
 }
 
 #preloader:before,
 #preloader:after {
   content: "";
-  background-color: var(--color-secondary);
+  background-color: #000;
   position: absolute;
   inset: 0;
   width: 50%;
@@ -213,7 +220,7 @@ h6 {
 #preloader .line:before {
   content: "";
   position: absolute;
-  background-color: #000000;
+  background-color: #F5EDE6;
   left: 0;
   top: 50%;
   width: 1px;
@@ -280,13 +287,13 @@ h6 {
 }
 
 /*--------------------------------------------------------------
-# Header
+# Header 
 --------------------------------------------------------------*/
 .header {
   transition: all 0.5s;
   z-index: 997;
-  padding: 30px 0;
-  background-color: #6b7075;
+  padding: 20px 0;
+  background-color: #FEFCF3;
 }
 
 .header .logo {
@@ -294,7 +301,7 @@ h6 {
 }
 
 .header .logo img {
-  max-height: 40px;
+  max-height: 50px;
   margin-right: 8px;
 }
 
@@ -364,7 +371,7 @@ h6 {
   .navbar li {
     position: relative;
   }
-/*header*/
+/*header en pose*/
   .navbar a,
   .navbar a:focus {
     display: flex;
@@ -392,7 +399,7 @@ h6 {
   .navbar .active,
   .navbar .active:focus,
   .navbar li:hover>a {
-    color: #000000;
+    color: #F9A936;
   }
 
   .navbar .dropdown ul {
@@ -1245,7 +1252,11 @@ h6 {
   margin-top: 30px;
   padding: 30px 0;
   font-size: 14px;
+  background-color: #FEFCF3;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
+  bottom: 0;
+  position: fixed; 
+  width: 100%; /* Pleine largeur */
 }
 
 .footer .copyright {
