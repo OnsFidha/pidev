@@ -17,23 +17,20 @@ class Produit
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column]
-    private ?int $prix = null;
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 3, nullable: true)]
+    private ?string $prix = null;
 
     #[ORM\Column]
     private ?int $quantite = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produits')]
-    private ?Categorie $id_categorie = null;
+    #[ORM\ManyToOne(inversedBy: 'produit')]
+    private ?Categorie $categorie = null;
 
     public function getId(): ?int
     {
@@ -52,12 +49,12 @@ class Produit
         return $this;
     }
 
-    public function getPrix(): ?int
+    public function getPrix(): ?string
     {
         return $this->prix;
     }
 
-    public function setPrix(int $prix): static
+    public function setPrix(?string $prix): static
     {
         $this->prix = $prix;
 
@@ -81,21 +78,9 @@ class Produit
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): static
-    {
-        $this->date = $date;
 
         return $this;
     }
@@ -112,14 +97,14 @@ class Produit
         return $this;
     }
 
-    public function getIdCategorie(): ?Categorie
+    public function getCategorie(): ?Categorie
     {
-        return $this->id_categorie;
+        return $this->categorie;
     }
 
-    public function setIdCategorie(?Categorie $id_categorie): static
+    public function setCategorie(?Categorie $categorie): static
     {
-        $this->id_categorie = $id_categorie;
+        $this->categorie = $categorie;
 
         return $this;
     }

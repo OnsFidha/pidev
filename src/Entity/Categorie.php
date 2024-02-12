@@ -18,15 +18,15 @@ class Categorie
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: 'id_categorie')]
-    private Collection $produits;
+    #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: 'categorie')]
+    private Collection $produit;
 
     public function __construct()
     {
-        $this->produits = new ArrayCollection();
+        $this->produit = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,7 +51,7 @@ class Categorie
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
@@ -61,16 +61,16 @@ class Categorie
     /**
      * @return Collection<int, Produit>
      */
-    public function getProduits(): Collection
+    public function getProduit(): Collection
     {
-        return $this->produits;
+        return $this->produit;
     }
 
     public function addProduit(Produit $produit): static
     {
-        if (!$this->produits->contains($produit)) {
-            $this->produits->add($produit);
-            $produit->setIdCategorie($this);
+        if (!$this->produit->contains($produit)) {
+            $this->produit->add($produit);
+            $produit->setCategorie($this);
         }
 
         return $this;
@@ -78,10 +78,10 @@ class Categorie
 
     public function removeProduit(Produit $produit): static
     {
-        if ($this->produits->removeElement($produit)) {
+        if ($this->produit->removeElement($produit)) {
             // set the owning side to null (unless already changed)
-            if ($produit->getIdCategorie() === $this) {
-                $produit->setIdCategorie(null);
+            if ($produit->getCategorie() === $this) {
+                $produit->setCategorie(null);
             }
         }
 
