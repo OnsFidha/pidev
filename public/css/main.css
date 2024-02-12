@@ -20,7 +20,7 @@
 /* Colors */
 :root {
   --color-default: #000000;
-  --color-primary: #27a776;
+  --color-primary: #F26A77;
   --color-secondary: #000000;
 }
 
@@ -44,7 +44,7 @@ a {
 }
 
 a:hover {
-  color: #32cf93;
+  color: #F9A936;
   text-decoration: none;
 }
 
@@ -72,7 +72,7 @@ h6 {
   margin: 0 0 5px 0;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: #000;
   font-family: var(--font-primary);
 }
 
@@ -81,7 +81,7 @@ h6 {
   width: 120px;
   height: 1px;
   display: inline-block;
-  background: #5bd9a9;
+  background: #91DAF0;
   margin: 4px 10px;
 }
 
@@ -135,7 +135,7 @@ h6 {
 }
 
 .page-header .cta-btn:hover {
-  background: #2cbc85;
+  background: #F9A936;
 }
 
 /*--------------------------------------------------------------
@@ -143,16 +143,18 @@ h6 {
 --------------------------------------------------------------*/
 .scroll-top {
   position: fixed;
-  visibility: hidden;
-  opacity: 0;
-  right: 15px;
-  bottom: -15px;
+  bottom: 40px; /* Ajustement pour positionner le bouton */
+  right: 40px; /* Ajustement pour positionner le bouton */
   z-index: 99999;
   background: var(--color-primary);
   width: 44px;
   height: 44px;
   border-radius: 50px;
+  text-align: center; /* Pour centrer l'icône */
+  line-height: 44px; /* Pour centrer l'icône */
   transition: all 0.4s;
+  visibility: hidden; /* Masquer initialement le bouton */
+  opacity: 0;
 }
 
 .scroll-top i {
@@ -877,7 +879,7 @@ h6 {
 }
 
 .gallery-single .portfolio-info .btn-visit:hover {
-  background: #2cbc85;
+  background: #F9A936;
 }
 
 .gallery-single .portfolio-description h2 {
@@ -1236,7 +1238,7 @@ h6 {
 }
 
 .hero .btn-get-started:hover {
-  background: #2cbc85;
+  background: #F9A936;
 }
 
 @media (max-width: 768px) {
@@ -1249,7 +1251,7 @@ h6 {
 # Footer
 --------------------------------------------------------------*/
 .footer {
-  margin-top: 30px;
+  margin-top: 60px;
   padding: 30px 0;
   font-size: 14px;
   background-color: #FEFCF3;

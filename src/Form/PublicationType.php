@@ -7,6 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+
+
 
 class PublicationType extends AbstractType
 {
@@ -15,19 +19,24 @@ class PublicationType extends AbstractType
         $builder
         ->add('type', ChoiceType::class, [
             'choices' => [
+                'choisir '=>null,
                 'offre' => 'offre',
                 'ordinaire' => 'ordinaire',
             ],
             'required' => true, 
         ])
-            ->add('text', null, [
+            ->add('text', TextareaType::class, [
                 'required' => true,
-
+                'label' => 'Description', 
+                'attr' => ['class' => 'form-control', 'rows' => 4], 
             ])
-            ->add('lieu', null, [
+            ->add('lieu', CountryType::class, [
+                'label' => 'Pays', 
                 'required' => true, 
             ])
             ->add('photo');
+            
+            
     }
     
 

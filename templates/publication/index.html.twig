@@ -1,47 +1,76 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Publication index{% endblock %}
+{% block title %}Publication {% endblock %}
+
+
 
 {% block body %}
-    <h1>Publication index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Type</th>
-                <th>Text</th>
-                <th>Lieu</th>
-                <th>Date_creation</th>
-                <th>Date_modification</th>
-                <th>Avis</th>
-                <th>Photo</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for publication in publications %}
-            <tr>
-                <td>{{ publication.id }}</td>
-                <td>{{ publication.type }}</td>
-                <td>{{ publication.text }}</td>
-                <td>{{ publication.lieu }}</td>
-                <td>{{ publication.dateCreation ? publication.dateCreation|date('Y-m-d') : '' }}</td>
-                <td>{{ publication.dateModification ? publication.dateModification|date('Y-m-d') : '' }}</td>
-                <td>{{ publication.avis }}</td>
-                <td>{{ publication.photo }}</td>
-                <td>
-                    <a href="{{ path('app_publication_show', {'id': publication.id}) }}">show</a>
-                    <a href="{{ path('app_publication_edit', {'id': publication.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <h1>liste des publications</h1>
+    <a href="{{ path('app_publication_new') }}">
+        <i class="bi bi-plus-circle" style="font-size: 30px;"></i> Ajouter une nouvelle publication
+    </a>
+    {# float: right;#}
+    <section id="gallery" class="gallery">
+        <div class="container-fluid">
+            <div class="row gy-4 justify-content-center">
+                {% for publication in publications %}
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <a  style='color:white 'href="{{ path('app_publication_show', {'id': publication.id}) }}" >
+                        <div class="gallery-item h-100"> 
+                        <img src="{{ publication.photo }}" class="img-fluid" alt="Paysage">
+                            <div class="gallery-links d-flex align-items-center justify-content-center" >
+                                <div > Publié le {{publication.getDateCreation|date('d F Y') }} par xxxxx</div>
+                            </div>
+                        </div>
+                    </a>
+                    {% for star in range(1,publication.avis) %}
+                        <i style=" color: #ffc107; margin: 0 1px;" class="bi bi-star-fill"></i>
+                    
+                    {% endfor %}
 
-    <a href="{{ path('app_publication_new') }}">Create new</a>
+
+               </div>
+                {% else %}
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">Pas de publications</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    
+    {#
+        <div class="row">
+            {% for publication in publications %}
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-head">
+                        <h5 class="card-title"> Publication {{ publication.type }}</h5>
+                    </div>
+                    <img src="{{ publication.photo }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">{{ publication.text }}</p>
+                        <p class="card-text"><small class="text-muted">{{ publication.dateCreation ? publication.dateCreation|date('Y-m-d') : '' }}</small></p>
+                        <a href="{{ path('app_publication_show', {'id': publication.id}) }}" class="btn btn-primary">Show</a>
+                        <a href="{{ path('app_publication_edit', {'id': publication.id}) }}" class="btn btn-secondary">Edit</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">Pas de publications</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    #}
+   
 {% endblock %}

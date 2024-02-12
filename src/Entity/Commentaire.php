@@ -24,11 +24,12 @@ class Commentaire
     #[ORM\JoinColumn(nullable: false)]
     private ?Publication $id_publication = null;
 
+    
     public function getId(): ?int
     {
         return $this->id;
     }
-
+  
     public function getText(): ?string
     {
         return $this->text;
