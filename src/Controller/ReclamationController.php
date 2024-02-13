@@ -22,6 +22,17 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+    /////
+    #[Route('/back', name: 'app_reclamation_index2', methods: ['GET'])]
+    public function index2(ReclamationRepository $reclamationRepository): Response
+    {
+        return $this->render('reclamation/indexBack.html.twig', [
+            'reclamations' => $reclamationRepository->findAll(),
+        ]);
+    }
+
+    /////
+
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
