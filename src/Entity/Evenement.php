@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
@@ -17,6 +18,7 @@ class Evenement
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Entrez le nom")]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -26,12 +28,15 @@ class Evenement
     private ?\DateTimeInterface $date_fin = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Entrez une description")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Entrez un lieu")]
     private ?string $lieu = null;
 
     #[ORM\Column]
+    #[Assert\Positive]
     private ?int $nbre_participants = null;
 
     #[ORM\Column]

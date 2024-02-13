@@ -1,0 +1,48 @@
+<h1 align="center">Liste des évenements </h1>
+
+<table align="center" border="1">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Lieu</th>
+            <th>Actions</th>
+            
+        
+            
+
+        </tr>
+    </thead>
+    <tbody>
+    <tr><a href="{{ path('add_evenement') }}"">Add</a></tr>
+    {% for e in events %}
+    
+        <tr>
+            <td>{{ e.image }}</td>
+            <td>{{ e.nom}}</td>
+            <td>{{ e.description}}</td>
+            <td>{{ e.lieu}}</td>
+           <td><a href="{{ path('editevent', {'id': e.id}) }}"">edit</a>
+                <a href="{{ path('deleteevent', {'id': e.id}) }}"">delete</a>
+                <a href="{{ path('event_details', {'id': e.id}) }}"">details</a>
+            </td>
+            
+            
+       
+       
+
+            
+       
+        </tr>
+        
+    {% else %}
+        <tr>
+            <td>no records found</td>
+        </tr>
+    {% endfor %}
+    
+    </tbody>
+
+</table>
+

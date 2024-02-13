@@ -1,0 +1,29 @@
+<div align="center">
+<h1>Evenement</h1>
+
+    <table align="center" border="1">
+        <tbody>
+            <tr>
+                <th>Image</th>
+                <td>{{ event.image }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ event.nom }}</td>
+            </tr>
+            <tr>
+            <th>Description</th>
+                <td> {{event.description}} </td>
+            </tr>
+            <tr>
+            <th>Lieu</th>
+                <td> {{event.lieu}} </td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <a href="{{ path('list_event') }}">back to list</a>
+
+    <a href="{{ path('editevent', {'id': event.id}) }}">edit</a>
+</div>

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+<h1>Add Event</h1>
+{% endblock %}
+{% block body %}
+{{form_start(form,{'attr':{'novalidate':'novalidate'}})}}
+
+<table>
+<tr>
+<td> {{form_label(form.nom,"Nom de l'évenement")}}</td>
+<td> {{form_widget(form.nom)}} </td>
+<td> {{form_errors(form.nom)}} </td>
+</tr>
+
+<tr>
+<td> {{form_label(form.description,"Description de l'évenement")}}</td>
+<td> {{form_widget(form.description)}} </td>
+<td> {{form_errors(form.description)}} </td>
+</tr>
+
+<tr>
+<td> {{form_label(form.lieu,"Lieu de l'évenement")}}</td>
+<td> {{form_widget(form.lieu)}} </td>
+<td> {{form_errors(form.lieu)}} </td>
+</tr>
+<tr>
+<td> {{form_label(form.date_debut,"Date Début")}}</td>
+<td> {{form_widget(form.date_debut)}} </td>
+<td> {{form_errors(form.date_debut)}} </td>
+</tr>
+<tr>
+<td> {{form_label(form.date_fin,"Date fin")}}</td>
+<td> {{form_widget(form.date_fin)}} </td>
+<td> {{form_errors(form.date_fin)}} </td>
+</tr>
+<tr>
+<td> {{form_label(form.nbre_participants,"Nombre de participants")}}</td>
+<td> {{form_widget(form.nbre_participants)}} </td>
+<td> {{form_errors(form.nbre_participants)}} </td>
+</tr>
+<tr>
+<td> {{form_label(form.nbre_max,"Nombre de participants maximale")}}</td>
+<td> {{form_widget(form.nbre_max)}} </td>
+<td> {{form_errors(form.nbre_max)}} </td>
+</tr>
+<tr>
+<td> {{form_label(form.image,"Image")}}</td>
+<td> {{form_widget(form.image)}} </td>
+<td> {{form_errors(form.image)}} </td>
+</tr>
+</table>
+{{form_widget(form.save)}}
+{{form_end(form)}}
+{% endblock %}
