@@ -3,41 +3,107 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[ORM\Table(name: "user")]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $role = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $mdp = null;
+    private ?string $prename = null;
 
     #[ORM\Column]
-    private ?int $tel = null;
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
+
+    #[ORM\Column]
+    private ?int $phone = null;
+
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private $isVerified = false;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_naissance = null;
+    private ?\DateTimeInterface $birthday = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $image = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    public function getImage()
+    {
+        return $this->image;
+    }
+    public function setImage($image): self
+    {
+        $this->image = $image;
+        return $this;
+    }
 
-    #[ORM\Column(length: 255)]
-    private ?string $prenom = null;
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
 
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPrename(): ?string
+    {
+        return $this->prename;
+    }
+
+    public function setPrename(string $prename): self
+    {
+        $this->prename = $prename;
+
+        return $this;
+    }
+    public function getBirthday(): ?\DateTimeInterface
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(\DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
+        return $this;
+    }
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(int $phone): self
+    {
+        $this->phone = $phone;
+        return $this;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -51,90 +117,80 @@ class User
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
-    public function getRole(): ?string
+    /**
+     * A visual identifier that represents this user.
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->role;
+        return (string) $this->email;
     }
 
-    public function setRole(string $role): static
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
     {
-        $this->role = $role;
+        return (string) $this->email;
+    }
 
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
         return $this;
     }
 
-    public function getMdp(): ?string
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
-        return $this->mdp;
+        return $this->password;
     }
 
-    public function setMdp(string $mdp): static
+    public function setPassword(string $password): static
     {
-        $this->mdp = $mdp;
-
+        $this->password = $password;
         return $this;
     }
 
-    public function getTel(): ?int
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
     {
-        return $this->tel;
+        return null;
     }
 
-    public function setTel(int $tel): static
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
     {
-        $this->tel = $tel;
-
-        return $this;
+    }
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
     }
 
-    public function getDateNaissance(): ?\DateTimeInterface
+    public function setIsVerified(bool $isVerified): self
     {
-        return $this->date_naissance;
-    }
-
-    public function setDateNaissance(\DateTimeInterface $date_naissance): static
-    {
-        $this->date_naissance = $date_naissance;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): static
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): static
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): static
-    {
-        $this->prenom = $prenom;
+        $this->isVerified = $isVerified;
 
         return $this;
     }

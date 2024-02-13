@@ -1,0 +1,56 @@
+{% extends "base.html.twig" %}
+{% block title %}Edit profile{% endblock %}
+{% block content %}
+	<div class="card mb-4">
+		<h5 class="card-header">Profile Details</h5>
+		<div class="card-body">
+			<div class="d-flex justify-content-center align-items-sm-center gap-4">
+				<img src="{{ asset('assets/pdp/' ~ app.user.image) }}" alt="user-avatar" class="d-block rounded" height="200" width="200" id="uploadedAvatar">
+			</div>
+		</div>
+		<hr class="my-0">
+		<div class="card-body" enctype="multipart/form-data">
+			<form method="POST">
+				{{ form_start(form) }}
+				<div class="row mb-3">
+					{{ form_row(form.image) }}
+				</div>
+				<div class="row mb-3">
+					{{ form_row(form.name, {'value': app.user.name}) }}
+				</div>
+				<div class="row mb-3">
+					{{ form_row(form.prename, {'value': app.user.prename}) }}
+				</div>
+				<div class="row mb-3">
+					{{ form_row(form.phone, {'value': app.user.phone}) }}
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-1" for="basic-default-company">Email :</label>
+					<label class="col-sm-10" for="basic-default-company">{{app.user.email}}</label>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-1" for="basic-default-company">Birthday :</label>
+					<label class="col-sm-10" for="basic-default-company">{{ app.user.birthday ? app.user.birthday|date('d/m/Y') : '' }}</label>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-1" for="basic-default-company">Role :</label>
+					<label class="col-sm-10" for="basic-default-company">
+						{% for role in app.user.roles %}
+							{% if role == "ROLE_USER" %}User
+								{% elseif role == "ROLE_ADMIN" %}Admin
+							{% endif %}
+							{% if not loop.last %},
+							{% endif %}
+						{% endfor %}
+					</label>
+				</div>
+				<div class="mt-2">
+					<button class="btn btn-primary me-2">{{ button_label|default('Save changes') }}</button>
+				</div>
+				{{ form_end(form) }}
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
