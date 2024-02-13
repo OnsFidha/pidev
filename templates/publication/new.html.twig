@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ajouter une publication {% endblock %}
+
+{% block body %}
+    <h1>Ajouter une publication</h1>
+
+    {{ include('publication/_form.html.twig') }}
+
+    <a href="{{ path('app_publication_index') }}">retour</a>
+{% endblock %}

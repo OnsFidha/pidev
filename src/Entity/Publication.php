@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
 class Publication
@@ -17,9 +18,11 @@ class Publication
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"le type est obligatoire")]
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"la description est obligatoire")]
     private ?string $text = null;
 
     #[ORM\Column(length: 255)]
@@ -39,6 +42,12 @@ class Publication
 
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'id_publication')]
     private Collection $commentaires;
+
+
+    public function __toString()
+    {
+        return $this->text;
+    }
 
     public function __construct()
     {
