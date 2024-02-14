@@ -17,6 +17,8 @@ class Reponse
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Entrez votre réponse s'il vous plait")]
+    #[Assert\Length(min:10, minMessage:"Votre réponse ne contient pas {{ limit }} caractères.")]
     private ?string $reponse = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]

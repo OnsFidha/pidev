@@ -18,13 +18,13 @@ class ReclamationType extends AbstractType
             
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                    'Publication non visible sur la plateforme ' => 'type1',
-                    'Difficulté à publier du contenu ' => 'type2',
-                    'Difficulté à trouver des collaborations appropriées' => 'type3',
-                    'Problèmes de communication avec les collaborateurs' => 'type4',
-                    'Difficulté à utiliser certaines fonctionnalités de l \'application' => 'type5',
-                    'Violation des conditions d\'utilisation de la plateforme' => 'type6',
-                    'Besoin d\'assistance pour résoudre des problèmes liés au compte' => 'type7',
+                    'Publication non visible sur la plateforme ' => 'Publication non visible sur la plateforme',
+                    'Difficulté à publier du contenu ' => 'Difficulté à publier du contenu',
+                    'Difficulté à trouver des collaborations appropriées' => 'Difficulté à trouver des collaborations appropriées',
+                    'Problèmes de communication avec les collaborateurs' => 'Problèmes de communication avec les collaborateurs',
+                    'Difficulté à utiliser certaines fonctionnalités de l \'application' => 'Difficulté à utiliser certaines fonctionnalités de l \'application',
+                    'Violation des conditions d\'utilisation de la plateforme' => 'Violation des conditions d\'utilisation de la plateforme',
+                    'Besoin d\'assistance pour résoudre des problèmes liés au compte' => 'Besoin d\'assistance pour résoudre des problèmes liés au compte',
                     
                 ],
                 'placeholder' => 'Choisir le type de réclamation', 

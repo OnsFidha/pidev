@@ -22,7 +22,7 @@
                 <td>{{ reclamation.id }}</td>
                 <td>{{ reclamation.type }}</td>
                 <td>{{ reclamation.description }}</td>
-                <td>{{ reclamation.etat ? 'Yes' : 'No' }}</td>
+                <td>{{ reclamation.etat ? 'Traitée' : 'Non traitée' }}</td>
                 <td>{{ reclamation.dateCreation ? reclamation.dateCreation|date('Y-m-d') : '' }}</td>
                 <td>
                     <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
