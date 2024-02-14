@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Reponse;
+use App\Entity\Reclamation;
 use App\Form\ReponseType;
 use App\Repository\ReponseRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,27 +24,61 @@ class ReponseController extends AbstractController
     }
 
     
+// 
+//     #[Route('/new', name: 'app_reponse_new', methods: ['GET', 'POST'])]
+//     public function new(Request $request, EntityManagerInterface $entityManager): Response
+//     {
+//         $reponse = new Reponse();
+//         $form = $this->createForm(ReponseType::class, $reponse);
+//         $form->handleRequest($request);
+// 
+//         if ($form->isSubmitted() && $form->isValid()) {
+//             $entityManager->persist($reponse);
+//             $entityManager->flush();
+// 
+//             return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
+//         }
+// 
+//         return $this->renderForm('reponse/new.html.twig', [
+//             'reponse' => $reponse,
+//             'form' => $form,
+//         ]);
+//     }
 
+
+
+// ::
+
+/**
+     * @Route("/new/{id}", name="app_reponse_new", methods={"GET", "POST"})
+     */
     #[Route('/new', name: 'app_reponse_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,$id): Response
     {
         $reponse = new Reponse();
         $form = $this->createForm(ReponseType::class, $reponse);
         $form->handleRequest($request);
+        $reclamation=new Reclamation();
+        $reclamation=$entityManager->getRepository(Reclamation::class)->find($id);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $reclamation->setEtat(true);
+            $reponse->setRelation($reclamation);
+            $reponse->setDateReponse(new \DateTime('now'));
             $entityManager->persist($reponse);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('reponse/new.html.twig', [
+        return $this->render('reponse/new.html.twig', [
             'reponse' => $reponse,
-            'form' => $form,
+            'form' => $form->createView(),
+
         ]);
     }
 
+// ::
     #[Route('/{id}', name: 'app_reponse_show', methods: ['GET'])]
     public function show(Reponse $reponse): Response
     {

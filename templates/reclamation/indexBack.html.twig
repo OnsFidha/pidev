@@ -27,6 +27,7 @@
                 <td>
                     <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
                     {# <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a> #}
+                     <a href="{{ path('app_reponse_new', {'id': reclamation.id}) }}">repondre</a> 
                 </td>
             </tr>
         {% else %}
@@ -37,5 +38,5 @@
         </tbody>
     </table>
 
-    {# <a href="{{ path('app_reclamation_new') }}">Create new</a> #}
+    {# <a href="{{ path('app_reclamation_new', {'id': reclamation.id}) }}">Create new</a> #}
 {% endblock %}

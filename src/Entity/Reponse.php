@@ -20,10 +20,16 @@ class Reponse
     private ?string $reponse = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_reponse = null;
+    private ?\DateTimeInterface $date_reponse ;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Reclamation $relation = null;
+
+
+    public function __construct()
+    {
+        $this->date_reponse = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -49,7 +55,12 @@ class Reponse
 
     public function setDateReponse(\DateTimeInterface $date_reponse): static
     {
-        $this->date_reponse = $date_reponse;
+        // $this->date_reponse = $date_reponse;
+         if ($this->date_reponse === null) {
+            $this->date_reponse = new \DateTime();
+        }
+
+        return $this;
 
         return $this;
     }

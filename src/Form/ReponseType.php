@@ -15,8 +15,8 @@ class ReponseType extends AbstractType
     {
         $builder
             ->add('reponse')
-            ->add('date_reponse')
-            ->add('relation')
+            // ->add('date_reponse')
+            // ->add('relation')
 //             ->add('relation', EntityType::class, [
 //                   'class' => 'App\Entity\Reclamation', 
 //                   'choice_label' => 'id', 
