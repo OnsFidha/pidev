@@ -9900,8 +9900,14 @@ a:focus {
 }
 
 .bg-gradient-primary {
+<<<<<<< HEAD
   background-color: #4e73df;
   background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+=======
+  background-color: #FEFCF3;
+  background-image: linear-gradient(180deg, #fefcf3 0%, #4e73df 10%, #224abe 100%);
+  ;
+>>>>>>> 5daf19f1078d40a1449ab3b4c22e41348970e8b7
   background-size: cover;
 }
 
@@ -10300,11 +10306,19 @@ a:focus {
 }
 
 .topbar.navbar-dark .navbar-nav .nav-item .nav-link:hover {
+<<<<<<< HEAD
   color: #fff;
 }
 
 .topbar.navbar-dark .navbar-nav .nav-item .nav-link:active {
   color: #fff;
+=======
+  color: #000;
+}
+
+.topbar.navbar-dark .navbar-nav .nav-item .nav-link:active {
+  color: #000;
+>>>>>>> 5daf19f1078d40a1449ab3b4c22e41348970e8b7
 }
 
 .topbar.navbar-light .navbar-nav .nav-item .nav-link {
