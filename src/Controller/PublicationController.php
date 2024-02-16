@@ -21,6 +21,13 @@ class PublicationController extends AbstractController
             'publications' => $publicationRepository->findAll(),
         ]);
     }
+    #[Route('/admin', name: 'app_publication_admin', methods: ['GET'])]
+    public function index2(PublicationRepository $publicationRepository): Response
+    {
+        return $this->render('publication/admin_pub.html.twig', [
+            'publications' => $publicationRepository->findAll(),
+        ]);
+    }
 
     #[Route('/new', name: 'app_publication_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
