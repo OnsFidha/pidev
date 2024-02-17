@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
+use App\Repository\ReponseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,6 +54,15 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/back', name: 'app_reclamation_show2', methods: ['GET'])]
+    public function show2(Reclamation $reclamation): Response
+    {
+        return $this->render('reclamation/showForAdmin.html.twig', [
+            'reclamation' => $reclamation,
+        ]);
+    }
+
+    //
     #[Route('/{id}', name: 'app_reclamation_show', methods: ['GET'])]
     public function show(Reclamation $reclamation): Response
     {
@@ -60,7 +70,7 @@ class ReclamationController extends AbstractController
             'reclamation' => $reclamation,
         ]);
     }
-
+    //
     #[Route('/{id}/edit', name: 'app_reclamation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reclamation $reclamation, EntityManagerInterface $entityManager): Response
     {
@@ -89,4 +99,45 @@ class ReclamationController extends AbstractController
 
         return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+    //
+    #[Route('/{id}/reponse', name: 'app_reclamation_reponse_show', methods: ['GET'])]
+    public function showReclamationReponse(Reclamation $reclamation, ReponseRepository $reponseRepository): Response
+    {
+        // Retrieve the response associated with the given reclamation
+        $reponse = $reponseRepository->findOneBy(['relation' => $reclamation]);
+
+        // Check if a response is found
+        if (!$reponse) {
+            throw $this->createNotFoundException('No response found for this reclamation.');
+        }
+
+        // Render the template with the response data
+        return $this->render('reponse/showForUser.html.twig', [
+            'reponse' => $reponse,
+        ]);
+    }
+    //
+    #[Route('/{id}/rep', name: 'app_reclamation_reponse_show2', methods: ['GET'])]
+    public function showReclamationReponse2(Reclamation $reclamation, ReponseRepository $reponseRepository): Response
+    {
+        // Retrieve the response associated with the given reclamation
+        $reponse = $reponseRepository->findOneBy(['relation' => $reclamation]);
+
+        // Check if a response is found
+        if (!$reponse) {
+            throw $this->createNotFoundException('No response found for this reclamation.');
+        }
+
+        // Render the template with the response data
+        return $this->render('reponse/show.html.twig', [
+            'reponse' => $reponse,
+        ]);
+    }
+    //
+
+
+    //
 }

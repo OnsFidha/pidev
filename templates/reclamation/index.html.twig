@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reclamation index{% endblock %}
+{% block title %}Liste des Reclamations{% endblock %}
 
 {% block body %}
-    <h1>Reclamation index</h1>
+    <h1>Liste des Reclamations </h1>
 
     <table class="table">
         <thead>
@@ -24,10 +24,21 @@
                 <td>{{ reclamation.description }}</td>
                 <td>{{ reclamation.etat ? 'Traitée' : 'Non traitée' }}</td>
                 <td>{{ reclamation.dateCreation ? reclamation.dateCreation|date('Y-m-d') : '' }}</td>
-                <td>
+                {% if (reclamation.etat == false) %}
+                     <td>
                     <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
                     <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
                 </td>
+                {% else %}
+                    <td>
+                        <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
+                        <a href="{{ path('app_reclamation_reponse_show', {'id': reclamation.id}) }}">reponse</a>
+                    </td>
+                     
+                    
+                {% endif %}
+                
+               
             </tr>
         {% else %}
             <tr>
@@ -37,5 +48,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_reclamation_new') }}">Create new</a>
+    <a href="{{ path('app_reclamation_new') }}">Ajouter une nouvelle réclamation</a>
 {% endblock %}

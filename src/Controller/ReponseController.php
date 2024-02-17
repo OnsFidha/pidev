@@ -87,6 +87,34 @@ class ReponseController extends AbstractController
         ]);
     }
 
+//
+
+   
+//     #[Route('/{id}/response', name: 'app_reclamation_response_show', methods: ['GET'])]
+//     public function showReclamationResponse(Reclamation $reclamation, ReponseRepository $responseRepository): Response
+//     {
+//         // Retrieve the response associated with the given reclamation
+//         $response = $responseRepository->findOneBy(['relation' => $reclamation]);
+// 
+//         // Check if a response is found
+//         if (!$response) {
+//             throw $this->createNotFoundException('No response found for this reclamation.');
+//         }
+// 
+//         // Render the template with the response data
+//         return $this->render('response/show.html.twig', [
+//             'response' => $response,
+//         ]);
+//     }
+//.....
+
+
+    //
+    
+    
+    
+    
+
     #[Route('/{id}/edit', name: 'app_reponse_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reponse $reponse, EntityManagerInterface $entityManager): Response
     {

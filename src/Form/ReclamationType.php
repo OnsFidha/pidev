@@ -33,7 +33,7 @@ class ReclamationType extends AbstractType
             ->add('description')
             // ->add('etat')
             //->add('date_creation')
-           ->add('save',SubmitType::class )
+           ->add('enregistrer',SubmitType::class )
         ;
     }
 

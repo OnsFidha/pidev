@@ -1,6 +1,6 @@
 {% extends 'baseBack.html.twig' %}
 
-{% block title %}Reclamation index{% endblock %}
+{% block title %}Reclamations{% endblock %}
 
 {% block body %}
     <h1>Reclamation index</h1>
@@ -25,9 +25,14 @@
                 <td>{{ reclamation.etat ? 'Traitée' : 'Non traitée' }}</td>
                 <td>{{ reclamation.dateCreation ? reclamation.dateCreation|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
-                    {# <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a> #}
-                     <a href="{{ path('app_reponse_new', {'id': reclamation.id}) }}">repondre</a> 
+                    {% if (reclamation.etat == false) %}
+                        <a href="{{ path('app_reclamation_show2', {'id': reclamation.id}) }}">show</a>
+                        <a href="{{ path('app_reponse_new', {'id': reclamation.id}) }}">repondre</a> 
+                    {% else %}    
+                        <a href="{{ path('app_reclamation_show2', {'id': reclamation.id}) }}">show</a>
+                        <a href="{{ path('app_reclamation_reponse_show2', {'id': reclamation.id}) }}">reponse</a>
+                    {% endif %}
+
                 </td>
             </tr>
         {% else %}
@@ -38,5 +43,5 @@
         </tbody>
     </table>
 
-    {# <a href="{{ path('app_reclamation_new', {'id': reclamation.id}) }}">Create new</a> #}
+    
 {% endblock %}

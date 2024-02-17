@@ -4,10 +4,12 @@
 
 {# {% block PageWrapper %} #}
 {% block body %}
-    <h1>Create new Reponse</h1>
+    <h1>Ajouter une Reponse</h1>
 
     {{ include('reponse/_form.html.twig') }}
 
-    <a href="{{ path('app_reponse_index') }}">back to list</a>
+    <a href="{{ path('app_reclamation_index2') }}">Retour à la liste des réclamation</a>
+    
+    <a href="{{ path('app_reponse_index') }}">Retour à la liste réponse</a>
 {% endblock %}
 {# {% endblock %} #}
