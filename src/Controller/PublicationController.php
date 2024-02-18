@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\File;
+
 
 #[Route('/publication')]
 class PublicationController extends AbstractController
@@ -64,22 +66,29 @@ class PublicationController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_publication_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(PublicationType::class, $publication,['attr' => ['enctype' => 'multipart/form-data']]);
+    {   $photoold=$publication->getPhoto();   
+        $path=$this->getParameter('images_directory').'/'.$photoold; 
+        
+        $publication->setPhoto($path);
+        $form = $this->createForm(PublicationType::class, $publication, [
+            'attr' => ['enctype' => 'multipart/form-data'],
+        ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $publication->setDateModification(new \DateTime());
-            $file = $form->get('photo')->getData();
-            $fileName = uniqid().'.'.$file->guessExtension();
-            $file->move($this->getParameter('images_directory'), $fileName);
-            $publication->setPhoto($fileName);
-            $entityManager->flush();
+            if($publication->getPhoto()!=null){
+                $file = $form->get('photo')->getData();
+                $fileName = uniqid().'.'.$file->guessExtension();
+                $file->move($this->getParameter('images_directory'), $fileName);
+                $publication->setPhoto($fileName);}
+                else{
+                $publication->setPhoto($photoold);}
+                $publication->setDateModification(new \DateTime());
+                $entityManager->flush();
 
             return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('publication/edit.html.twig', [
+        return $this->renderForm ('publication/edit.html.twig', [
             'publication' => $publication,
             'form' => $form,
         ]);

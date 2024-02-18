@@ -37,7 +37,7 @@
     <a href="{{ path('app_publication_index') }}" style='padding-right:15px'>Retour</a>
     <a href="{{ path('app_publication_edit', {'id': publication.id}) }}">Modifier</a>
     {{ include('publication/_delete_form.html.twig') }}
-
+<a href="{{ path('app_commentaire_new', {'id': publication.id}) }}">Ecrire un commentaire</a>
     <section id="testimonials" class="testimonials">
       <div class="container">
 

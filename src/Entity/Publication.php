@@ -30,6 +30,7 @@ class Publication
     private ?string $text = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"le lieu est obligatoire")]
     private ?string $lieu = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]

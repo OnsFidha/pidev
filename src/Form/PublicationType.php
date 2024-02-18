@@ -31,14 +31,12 @@ class PublicationType extends AbstractType
                 'attr' => ['class' => 'form-control', 'rows' => 4], 
             ])
             ->add('lieu', CountryType::class, [
-                'label' => 'Pays', 
+                'label' => 'Lieu', 
                 'required' => true, 
             ])
-            ->add('photo', FileType::class, [
-                'label' => 'Photo',
-                'required' => true, 
-                
-            ]);
+            ->add('photo', FileType::class,[
+            'mapped' => false] ,
+             array('data_class' => null,'required' => true));
             
             
     }

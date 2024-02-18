@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Commentaire;
+use App\Entity\Publication;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,10 +23,12 @@ class CommentaireController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new/{id}', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager,$id): Response
     {
         $commentaire = new Commentaire();
+        $publication = $entityManager->getRepository(Publication::class)->find($id);
+        $commentaire->setIdPublication($publication);
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
 
