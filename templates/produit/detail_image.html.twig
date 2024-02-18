@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+  
+<div style="margin-top:50px;margin-left:50px;width:90%">
+ 
+<div class="row">
+        
+            <div class="col">
+                <div class="product-item">
+                    <img  src="/uploads/images/{{produit.image}}" alt="{{produit.nom}}" height="500px"> 
+               </div>
+            </div>   
+                <div class="col">  
+                   <div class="product-item">
+                    <h5 class="mt-2"> {{ produit.nom}} </h5>
+ 
+                    <span class="product-price text-center" style="color:red"> <b>{{(produit.prix ) }}  DT </b> </span>
+                     <h5 class="mt-2"> {{ produit.description}} </h5>
+               </div>
+            </div>
+        
+    </div>
+
+
+
+  
+    </div>
+{% endblock %}

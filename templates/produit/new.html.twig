@@ -3,21 +3,18 @@
 {% block title %}New Produit{% endblock %}
 
 {% block body %}
- <a href="{{ path('app_produit_index') }}">Retour</a>
-<div style=" background-color:#F0FFF0;width:50%;margin-left:20%;padding-left:10%">
-    <h4><center>Créer nouveau Produit</center></h4>
-  
-   <div class="container">
-        
-           <div class="col-sm-6">
-              
-                   {{form_start(form)}}
-                   {{form_widget(form)}}
-                   {{form_end(form)}}
-           </div>
-       
-</div>
-</div>
+<div class="container-fluid">
+ <div style="color:red"><h6> {{message}}</h6></div>
+	    <div class="row justify-content-center">
+			
+                    <div class="col-10 text-primary">
+                        <h6 class="text-center ">Ajouter produit</h6>
+                        {{form(form)}}
+                    </div>    
+	    </div>
+	</div>
+
+
  
     
 {% endblock %}

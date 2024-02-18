@@ -9,14 +9,13 @@
     <br>
     <br>
    
-   <table class="table" style="width:80%">
+   <table class="table" >
         <thead>
             <tr>
                
                 <th>Nom</th>
                 <th>Prix</th>
                 <th>Quantite</th>
-                <th>Description</th>
                 <th>categorie</th>
                 <th>actions</th>
             </tr>
@@ -28,11 +27,13 @@
                 <td>{{ produit.nom }}</td>
                 <td>{{ produit.prix }}</td>
                 <td>{{ produit.quantite }}</td>
-                <td>{{ produit.description }}</td>
+               
                 <td>{{ produit.categorie.nom }}</td>
                 <td>
                     <a href="{{ path('app_produit_show', {'id': produit.id}) }}">Détail</a>
                     <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">Modifier</a>
+                     <a href="{{ path('app_produit_delete',{'id': produit.id}) }}" >Supprimer</a>
+                   
                 </td>
             </tr>
         {% else %}
