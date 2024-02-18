@@ -10,6 +10,7 @@ use App\Entity\Evenement;
 use App\Form\EvenementType;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\EvenementRepository;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 
 
@@ -49,6 +50,7 @@ class EvenementController extends AbstractController
 
         
     // }
+    
     public function addEvent(ManagerRegistry $manager, Request $request): Response
 {
     $em = $manager->getManager();
@@ -60,6 +62,10 @@ class EvenementController extends AbstractController
     $form->handleRequest($request);
    
     if ($form->isSubmitted() && $form->isValid()) {
+        $file = $form->get('image')->getData();
+        $fileName = uniqid().'.'.$file->guessExtension();
+        $file->move($this->getParameter('photo_dir'), $fileName);
+        $event->setImage($fileName);
         $em->persist($event);
         $em->flush();
 
