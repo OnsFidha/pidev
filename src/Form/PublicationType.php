@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
-
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 
 class PublicationType extends AbstractType
@@ -34,7 +34,11 @@ class PublicationType extends AbstractType
                 'label' => 'Pays', 
                 'required' => true, 
             ])
-            ->add('photo');
+            ->add('photo', FileType::class, [
+                'label' => 'Photo',
+                'required' => true, 
+                
+            ]);
             
             
     }

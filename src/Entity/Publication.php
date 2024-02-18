@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
@@ -23,6 +24,9 @@ class Publication
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"la description est obligatoire")]
+    #[Assert\Length(min:"5",max:"800",
+    minMessage:"La description doit contenir au moins {{ limit }} caractères",
+    maxMessage:"La description ne peut pas dépasser {{ limit }} caractères")]
     private ?string $text = null;
 
     #[ORM\Column(length: 255)]
@@ -38,6 +42,9 @@ class Publication
     private ?int $avis = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\File(maxSize:"5M",mimeTypes:["image/jpeg","image/png","image/gif"],
+    mimeTypesMessage:"Veuillez télécharger une image valide (JPEG, PNG ou GIF)")]
+    #[Assert\NotBlank(message:"la photo est obligatoire")]
     private ?string $photo = null;
 
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'id_publication')]

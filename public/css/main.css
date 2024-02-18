@@ -1104,7 +1104,14 @@ h6 {
   padding: 15px;
   font-weight: 600;
 }
-
+ .error-message {
+  display: none;
+  color: #000000;
+  background: #df1529;
+  text-align: left;
+  padding: 15px;
+  font-weight: 600;
+}
 .contact .php-email-form .error-message br+br {
   margin-top: 25px;
 }

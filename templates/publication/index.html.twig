@@ -18,16 +18,19 @@
                 <div class="col-xl-3 col-lg-4 col-md-6">
                     <a  style='color:white 'href="{{ path('app_publication_show', {'id': publication.id}) }}" >
                         <div class="gallery-item h-100"> 
-                        <img src="{{ publication.photo }}" class="img-fluid" alt="Paysage">
+                            <img src="{{ asset('pub/' ~ publication.photo) }}" class="img-fluid" alt="Paysage">
                             <div class="gallery-links d-flex align-items-center justify-content-center" >
-                                <div > Publié le {{publication.getDateCreation|date('d F Y') }} par xxxxx</div>
+                                <div > Publié le   {{publication.getDateCreation|date('d F Y') }} par xxxxx</div>
                             </div>
                         </div>
                     </a>
-                    {% for star in range(1,publication.avis) %}
-                        <i style=" color: #ffc107; margin: 0 1px;" class="bi bi-star-fill"></i>
-                    
+                 {% if publication.avis > 0 %}
+                    {% for star in range(0, publication.avis) %}
+                        <i style="color: #ffc107; margin: 0 1px;" class="bi bi-star-fill"></i>
                     {% endfor %}
+                {% else %}
+                    <span>Pas d'avis</span>
+                {% endif %}
 
 
                </div>

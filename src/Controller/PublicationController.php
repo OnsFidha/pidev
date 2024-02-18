@@ -34,10 +34,14 @@ class PublicationController extends AbstractController
     {
         $publication = new Publication();
         $publication->setDateCreation(new \DateTime()); 
-        $form = $this->createForm(PublicationType::class, $publication);
+        $form = $this->createForm(PublicationType::class, $publication, ['attr' => ['enctype' => 'multipart/form-data']] );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('photo')->getData();
+            $fileName = uniqid().'.'.$file->guessExtension();
+            $file->move($this->getParameter('images_directory'), $fileName);
+            $publication->setPhoto($fileName);
             $entityManager->persist($publication);
             $entityManager->flush();
 
@@ -61,11 +65,15 @@ class PublicationController extends AbstractController
     #[Route('/{id}/edit', name: 'app_publication_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(PublicationType::class, $publication);
+        $form = $this->createForm(PublicationType::class, $publication,['attr' => ['enctype' => 'multipart/form-data']]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $publication->setDateModification(new \DateTime());
+            $file = $form->get('photo')->getData();
+            $fileName = uniqid().'.'.$file->guessExtension();
+            $file->move($this->getParameter('images_directory'), $fileName);
+            $publication->setPhoto($fileName);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
