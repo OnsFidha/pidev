@@ -1,29 +1,69 @@
-<div align="center">
-<h1>Evenement</h1>
+{% extends 'base.html.twig' %}
 
-    <table align="center" border="1">
-        <tbody>
-            <tr>
-                <th>Image</th>
-                <td>{{ event.image }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ event.nom }}</td>
-            </tr>
-            <tr>
-            <th>Description</th>
-                <td> {{event.description}} </td>
-            </tr>
-            <tr>
-            <th>Lieu</th>
-                <td> {{event.lieu}} </td>
-            </tr>
-            
-        </tbody>
-    </table>
+{% block title %}Évènement{% endblock %}
 
-    <a href="{{ path('list_event') }}">back to list</a>
+{% block body %}
+    <h1>Évènement</h1>
+<section id="about" class="about">
+      <div class="container">
 
-    <a href="{{ path('editevent', {'id': event.id}) }}">edit</a>
-</div>
+        <div class="row gy-4 justify-content-center">
+          <div class="col-lg-4">
+            <img src="{{ asset('uploads/images/' ~ event.image) }}" class="img-fluid" alt="Paysage">
+          </div>
+          <div class="col-lg-5 content">
+            <div class="row">
+              <div class="col-lg-6">
+                <ul>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Nom:</strong> <span>{{ event.nom }}</span></li>
+                   <li><i class="bi bi-chevron-right"></i> <strong>Lieu:</strong> <span>{{ event.lieu }}</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Nombre de partcipants:</strong> <span>{{ event.getNbreMax }}</span></li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Date de début:</strong> <span>{{ event.getDateDebut|date('d F Y') }}</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Date de fin:</strong> <span>{{ event.getDateFin|date('d F Y') }}</span></li>
+                </ul>
+              </div>
+            </div>
+            <p class="py-3">
+            {{ event.description }} 
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <a href="{{ path('list_event') }}" style='padding-right:15px'>Retour</a>
+    <a href="{{ path('editevent', {'id': event.id}) }}">Modifier</a>
+    {{ include('evenement/delete.html.twig') }}
+    <a href="{{ path('editevent', {'id': event.id}) }}">Ecrire un commentaire</a>
+    <section id="testimonials" class="testimonials">
+      <div class="container">
+
+        <div class="section-header">
+          <p>Les commentaires</p>
+          <h2 style="color: black;">Mais qu'est ce qu'ils disent c'est du bla bla bla !!</h2>
+        </div>
+
+        <div class="slides-3 swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
+            <div class="swiper-wrapper" id="swiper-wrapper-7c2bf6baeb96dd37" aria-live="off" style="transform: translate3d(-2208px, 0px, 0px); transition-duration: 0ms;"><div class="swiper-slide swiper-slide-duplicate" style="width: 696px; margin-right: 40px;" role="group" aria-label="5 / 5" data-swiper-slide-index="4">
+              <div class="testimonial-item">
+                <p>
+                    text commentaires         
+                 </p>
+                <div class="profile mt-auto">
+                  <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+                  <h3>Nom</h3>
+                  <h4>prenom</h4>
+                </div>
+              </div>
+            </div>
+        </div>
+          <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 3" aria-current="true"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 4"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 5"></span></div>
+        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+
+      </div>
+    </section>
+{% endblock %}

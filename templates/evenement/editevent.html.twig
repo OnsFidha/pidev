@@ -1,9 +1,15 @@
-<div align="center">
-    <h2> Modifier Evenement </h2>
-    
-    {{form(form)}}
-    
+{% extends 'base.html.twig' %}
 
-    <a href="{{ path('list_event') }}">Retour</a>
+{% block title %}Modifier l'évènement{% endblock %}
 
-</div>
+{% block body %}
+    <h1>Modifier l'évènement</h1>
+    <div class="button-group">
+    {{ include('evenement/formevent.html.twig', {'button_label': 'Update'}) }}
+    {{ include('evenement/delete.html.twig') }}
+    </div>
+
+    <a href="{{ path('list_event') }}">back to list</a>
+
+    
+{% endblock %}
