@@ -23,31 +23,52 @@ class EvenementController extends AbstractController
         ]);
     }
     #[Route('/addevenement', name: 'add_evenement')]
-    public function addEvent(ManagerRegistry $manager, Request $request): Response
-    {
-        $em = $manager->getManager();
+    // public function addEvent(ManagerRegistry $manager, Request $request): Response
+    // {
+    //     $em = $manager->getManager();
 
-        $event = new Evenement();
-
-
-
-        $form = $this->createForm(EvenementType::class, $event);
+    //     $event = new Evenement();
 
 
-        $form->handleRequest($request);
+
+    //     $form = $this->createForm(EvenementType::class, $event);
+
+
+    //     $form->handleRequest($request);
        
-        if ($form->isSubmitted()) {
+    //     if ($form->isSubmitted() && $form->isValid()) {
 
 
-            $em->persist($event);
-            $em->flush();
+    //         $em->persist($event);
+    //         $em->flush();
 
-            return $this->redirectToRoute('list_event');
-        }
+    //         return $this->redirectToRoute('list_event');
+    //     }
 
-        return $this->renderForm('evenement/addevent.html.twig', ['form' => $form]);
+    //     return $this->renderForm('evenement/addevent.html.twig', ['form' => $form->createView()]);
+
         
+    // }
+    public function addEvent(ManagerRegistry $manager, Request $request): Response
+{
+    $em = $manager->getManager();
+
+    $event = new Evenement();
+
+    $form = $this->createForm(EvenementType::class, $event);
+
+    $form->handleRequest($request);
+   
+    if ($form->isSubmitted() && $form->isValid()) {
+        $em->persist($event);
+        $em->flush();
+
+        return $this->redirectToRoute('list_event');
     }
+
+    return $this->render('evenement/addevent.html.twig', ['form' => $form->createView()]);
+}
+
     #[Route('/listEvent', name: 'list_event')]
     public function listEvent(EvenementRepository $eventrepo): Response
     {
@@ -98,5 +119,12 @@ class EvenementController extends AbstractController
             );
             
         }
+        #[Route('/listadmin', name: 'list_admin')]
+    public function listEventA(EvenementRepository $eventrepo): Response
+    {
+        return $this->render('admin/eventadmin.html.twig', [
+            'events' => $eventrepo->findAll(),
+        ]);
+    }
     
 }

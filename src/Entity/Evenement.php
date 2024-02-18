@@ -22,13 +22,18 @@ class Evenement
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotNull]
+    #[Assert\LessThanOrEqual(propertyPath: "date_fin", message: "La date de fin doit être postérieure à la date de début.")]
+
     private ?\DateTimeInterface $date_debut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotNull]
     private ?\DateTimeInterface $date_fin = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Entrez une description")]
+    #[Assert\Length(max: 255, maxMessage: "La description ne peut pas dépasser {{ limit }} caractères.")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -36,10 +41,10 @@ class Evenement
     private ?string $lieu = null;
 
     #[ORM\Column]
-    #[Assert\Positive]
     private ?int $nbre_participants = null;
 
     #[ORM\Column]
+    #[Assert\Positive(message: "Le nombre doit être positif.")]
     private ?int $nbre_max = null;
 
     #[ORM\Column(length: 255)]

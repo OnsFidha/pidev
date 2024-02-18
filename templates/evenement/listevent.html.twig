@@ -1,48 +1,72 @@
-<h1 align="center">Liste des évenements </h1>
+{% extends 'base.html.twig' %}
 
-<table align="center" border="1">
-    <thead>
-        <tr>
-            <th>Image</th>
-            <th>Nom</th>
-            <th>Description</th>
-            <th>Lieu</th>
-            <th>Actions</th>
-            
-        
-            
+{% block title %}Évènement {% endblock %}
 
-        </tr>
-    </thead>
-    <tbody>
-    <tr><a href="{{ path('add_evenement') }}"">Add</a></tr>
-    {% for e in events %}
+
+
+{% block body %}
+
+    <h1>liste des évenements</h1>
+    <a href="{{ path('add_evenement') }}">
+        <i class="bi bi-plus-circle" style="font-size: 30px;"></i> Ajouter un nouvel évènement
+    </a>
+    {# float: right;#}
+  <section id="gallery" class="gallery">
+    <div class="container-fluid">
+        <div class="row gy-4 justify-content-center">
+            {% for e in events %}
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <a style='color:white' href="{{ path('list_event', {'id': e.id}) }}">
+                    <div class="gallery-item h-100"> 
+                        <img src="{{ e.image }}" class="img-fluid" alt="Paysage">
+                        <div class="gallery-links d-flex align-items-center justify-content-center">
+                            <div> Date début : {{e.getDateDebut|date('d F Y') }} par xxxxx</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+            {% if events|length == 0 %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">Pas d'évènements</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
     
-        <tr>
-            <td>{{ e.image }}</td>
-            <td>{{ e.nom}}</td>
-            <td>{{ e.description}}</td>
-            <td>{{ e.lieu}}</td>
-           <td><a href="{{ path('editevent', {'id': e.id}) }}"">edit</a>
-                <a href="{{ path('deleteevent', {'id': e.id}) }}"">delete</a>
-                <a href="{{ path('event_details', {'id': e.id}) }}"">details</a>
-            </td>
-            
-            
-       
-       
-
-            
-       
-        </tr>
-        
-    {% else %}
-        <tr>
-            <td>no records found</td>
-        </tr>
-    {% endfor %}
-    
-    </tbody>
-
-</table>
-
+    {#
+        <div class="row">
+            {% for e in events %}
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-head">
+                        <h5 class="card-title"> Évènement {{ e.nom }}</h5>
+                    </div>
+                    <img src="{{e.image}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">{{ e.description }}</p>
+                        <p class="card-text"><small class="text-muted">{{ e.date_debut ? e.date_fin|date('Y-m-d') : '' }}</small></p>
+                        <a href="{{ path('event_details', {'id': e.id}) }}" class="btn btn-primary">Show</a>
+                        <a href="{{ path('editevent', {'id': e.id}) }}" class="btn btn-secondary">Edit</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">Pas de publications</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    #}
+   
+{% endblock %}
