@@ -10,6 +10,7 @@ use App\Entity\Feedback;
 use App\Form\FeedbackType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Persistence\ManagerRegistry;
 
 class FeedbackController extends AbstractController
 {
@@ -40,40 +41,63 @@ class FeedbackController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_feedback_show', methods: ['GET'])]
-    public function show(Feedback $feedback): Response
+    #[Route('/feedback/{id}', name: 'app_feedback_show')]
+    // public function show(Feedback $feedback): Response
+    // {
+    //     return $this->render('feedback/show.html.twig', [
+    //         'feedback' => $feedback,
+    //     ]);
+    // }
+    public function show($id,FeedbackRepository $fbrep): Response 
     {
-        return $this->render('feedback/show.html.twig', [
-            'feedback' => $feedback,
-        ]);
+            $fb = $fbrep->find($id);
+            return $this->render(
+                'feedback/show.html.twig',
+                ['feedback' => $fb,]
+    
+            );
+            
     }
 
     #[Route('/{id}/edit', name: 'app_feedback_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Feedback $feedback, EntityManagerInterface $entityManager): Response
+    public function editFeedback(Request $request, ManagerRegistry $manager, $id, FeedbackRepository $fbrepository): Response
     {
-        $form = $this->createForm(FeedbackType::class, $feedback);
+        $em = $manager->getManager();
+    
+        $fb  = $fbrepository->find($id);
+        $form = $this->createForm(FeedbackType::class, $fb);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_feedback', [], Response::HTTP_SEE_OTHER);
+            
+            $em->persist($fb);
+            $em->flush();
+            return $this->redirectToRoute('app_feedback');
         }
-
+    
         return $this->renderForm('feedback/edit.html.twig', [
-            'feedback' => $feedback,
+            'feedback' => $fb,
             'form' => $form,
         ]);
     }
-
     #[Route('/{id}', name: 'app_feedback_delete', methods: ['POST'])]
-    public function delete(Request $request, Feedback $feedback, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$feedback->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($feedback);
-            $entityManager->flush();
-        }
+    // public function delete(Request $request, Feedback $feedback, EntityManagerInterface $entityManager): Response
+    // {
+    //     if ($this->isCsrfTokenValid('delete'.$feedback->getId(), $request->request->get('_token'))) {
+    //         $entityManager->remove($feedback);
+    //         $entityManager->flush();
+    //     }
 
-        return $this->redirectToRoute('app_feedback_index', [], Response::HTTP_SEE_OTHER);
-    }
+    //     return $this->redirectToRoute('app_feedback_index', [], Response::HTTP_SEE_OTHER);
+    // }
+    public function delete(Request $request, $id, ManagerRegistry $manager, FeedbackRepository $fbRepository): Response
+        {
+            $em = $manager->getManager();
+            $fb= $fbRepository->find($id);
+    
+            $em->remove($fb);
+            $em->flush();
+    
+            return $this->redirectToRoute('app_feedback');
+        }
 }

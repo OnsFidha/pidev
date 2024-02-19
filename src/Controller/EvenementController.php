@@ -91,7 +91,7 @@ class EvenementController extends AbstractController
         $form = $this->createForm(EvenementType::class, $event);
         $form->handleRequest($request);
     
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             
             $em->persist($event);
             $em->flush();

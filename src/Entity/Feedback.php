@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FeedbackRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FeedbackRepository::class)]
 class Feedback
@@ -14,6 +15,8 @@ class Feedback
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Entrez votre avis")]
+    #[Assert\Length(max: 255, maxMessage: "Le feedback ne peut pas dépasser {{ limit }} caractères.")]
     private ?string $text = null;
 
     #[ORM\ManyToOne(inversedBy: 'feedback')]
