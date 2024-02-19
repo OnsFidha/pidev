@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
 class ReclamationType extends AbstractType
@@ -30,7 +31,7 @@ class ReclamationType extends AbstractType
                 'placeholder' => 'Choisir le type de réclamation', 
                 'required' => true, 
             ])
-            ->add('description')
+            ->add('description',TextareaType::class)
             // ->add('etat')
             //->add('date_creation')
            ->add('enregistrer',SubmitType::class )

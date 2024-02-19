@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
@@ -136,7 +138,44 @@ class ReclamationController extends AbstractController
             'reponse' => $reponse,
         ]);
     }
+
     //
+    
+    #[Route('/listePdf/download', name:'reclamation_listePdf')]
+     
+    public function listePdf(EntityManagerInterface $entityManager): Response
+    {
+        $reclamations = $entityManager
+        ->getRepository(Reclamation::class)
+        ->findAll();
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('reclamation/listePdf.html.twig', [
+            'reclamations' => $reclamations,
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        return new Response($dompdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="mypdf.pdf"',
+        ]);
+
+
+
+    }
 
 
     //

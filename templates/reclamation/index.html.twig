@@ -47,6 +47,10 @@
         {% endfor %}
         </tbody>
     </table>
+    {# <form  method="post" action="{{ path('reclamation_listePdf') }}">
+                    <button > Download PDF</button>
+                </form> #}
 
     <a href="{{ path('app_reclamation_new') }}">Ajouter une nouvelle réclamation</a>
+    <a href="{{  path('reclamation_listePdf')  }}">pdf</a>
 {% endblock %}
