@@ -1,1 +1,82 @@
 {% extends 'baseBack.html.twig' %}
+{% block title %}Feedback index{% endblock %}
+
+{% block body %}
+    <h1>Evenements</h1>
+
+    <table class="table mt-4">
+     <a href="{{ path('admin_evenement') }}" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
+    
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>description</th>
+                <th>Image</th>
+                <th>Lieu</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Nombre de partcipants</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for e in event %}
+            <tr>
+                <td>{{ e.id }}</td>
+                <td>{{ e.nom}}</td>
+                <td>{{ e.description }}</td>
+                <td>{{ e.image }}</td>
+                <td>{{ e.lieu }}</td>
+                <td>{{ e.getDateDebut|date('d F Y')  }}</td>
+                <td>{{ e.getDateFin|date('d F Y')  }}</td>
+                <td>{{ e.getNbreMax }}</td>
+                <td>
+                    <a href="{{ path('admindeleteevent', {'id': e.id}) }}">Supprimer</a>
+                    <a href="{{ path('admineditevent', {'id': e.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+
+    <h1>Feedback index</h1>
+
+    <table class="table mt-4">
+    
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>IdEvenement</th>
+                <th>Text</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fb in feedback %}
+            <tr>
+                <td>{{ fb.id }}</td>
+                <td>{{ fb.getIdEvenement().id }}</td>
+                <td>{{ fb.text }}</td>
+                <td>
+                    <a href="{{ path('admin_feedback_delete', {'id': fb.id}) }}">Supprimer</a>
+                    <a href="{{ path('admin_feedback_edit', {'id': fb.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}
+

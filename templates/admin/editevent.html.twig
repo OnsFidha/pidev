@@ -1,0 +1,15 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Modifier l'évènement{% endblock %}
+
+{% block body %}
+    <h1>Modifier l'évènement</h1>
+    <div class="button-group">
+    {{ include('admin/formevent.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/delete.html.twig') }}
+    </div>
+
+    <a href="{{ path('app_admin') }}">back to list</a>
+
+    
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'baseBack.html.twig' %}
+{% block title %}Modifier Feedback{% endblock %}
+
+{% block body %}
+    <h1>Modifier feedback</h1>
+
+    {{ include('admin/feedbackform.html.twig', {'button_label': 'Update'} )}}
+
+    <a href="{{ path('app_admin') }}">Retour</a>
+
+
+    {{ include('feedback/_delete_form.html.twig') }}
+{% endblock %}
