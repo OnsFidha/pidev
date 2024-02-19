@@ -14,6 +14,9 @@
             <link href="{{asset('glightbox/css/glightbox.min.css')}}" rel="stylesheet">
             <link href="{{asset('aos/aos.css')}}" rel="stylesheet">
             <link href="{{asset('css/main.css')}}" rel="stylesheet">
+
+            <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css"/>
+            <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css"/>
         {% endblock %}
     
         
@@ -26,13 +29,13 @@
         {% block header %}
             <header  id="header" class="header d-flex align-items-center fixed-top">
                 <div class="container-fluid d-flex align-items-center justify-content-between">
-                    <a href="index.html" class="logo d-flex align-items-center  me-auto me-lg-0">
+                    <a href="indexp.html" class="logo d-flex align-items-center  me-auto me-lg-0">
                         <img src={{asset('img/logo.png')}} alt="" width="100" height="300"> 
 
                     </a>
                     <nav id="navbar" class="navbar">
                         <ul>
-                        <li><a href="index.html" class="active">Accueil</a></li>
+                        <li><a href="indexp.html" class="active">Accueil</a></li>
                         <li><a href="about.html">Magasin</a></li>
                         <li><a href="#"> Evènement</a></li>
                         <li><a href="services.html">Poste</a></li>
@@ -40,8 +43,14 @@
                         </ul>
                     </nav>
                     <div class="header-social-links">
-                        <a href="#"  class="">se connecter</a>
-                        <a href="#"   class="">s'inscrire</a>
+                    	<a class="nav-link hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="true">
+							<div class="avatar">
+								<img src="../assets/pdp/{{app.user.image}}" alt="" class="w-px-40 h-auto rounded-circle">
+							</div>
+						</a>
+                        
+                        <a href="{{ path('app_profile') }}"  class="">{{app.user.name}} {{app.user.prename}}</a>
+                        <a href="{{ path('app_logout') }}"  class="">Logout</a>
                     </div>
                 </div>
             </header>

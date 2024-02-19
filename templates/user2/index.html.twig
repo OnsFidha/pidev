@@ -1,0 +1,54 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Liste des Utilisateurs{% endblock %}
+
+{% block body %}
+    <h1 style="text-align: center;">Liste des Utilisateurs</h1>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Prename</th>
+                <th>arts</th>
+                {# <th>Password</th> #}
+                <th>Phone</th>
+                <th>IsVerified</th>
+                <th>Birthday</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.prename }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                {# <td>{{ user.password }}</td> #}
+                <td>{{ user.phone }}</td>
+                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                <td>{{ user.birthday ? user.birthday|date('Y-m-d') : '' }}</td>
+              <td><img src="{{ asset('assets/pdp/' ~ user.image) }}" alt="User Image"></td>
+
+                <td>
+                    <a href="{{ path('app_user2_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('app_user2_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user2_new') }}">Create new</a>
+    <a href="{{  path('listePdf')  }}">pdf</a>
+{% endblock %}
