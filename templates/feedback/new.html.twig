@@ -7,5 +7,5 @@
 
     {{ include('feedback/_form.html.twig') }}
 
-    <a href="{{ path('app_feedback') }}">Retour</a>
+    <a href="{{ path('event_details', {'id': feedback.getIdEvenement().id}) }}">Retour</a>
 {% endblock %}

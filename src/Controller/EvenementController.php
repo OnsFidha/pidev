@@ -11,6 +11,7 @@ use App\Form\EvenementType;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\EvenementRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use App\Repository\FeedbackRepository;
 
 
 
@@ -115,12 +116,14 @@ class EvenementController extends AbstractController
             return $this->redirectToRoute('list_event');
         }
         #[Route('/event/{id}',name:'event_details')]
-        public function detail($id,EvenementRepository $eventrep): Response 
+        public function detail($id,EvenementRepository $eventrep,FeedbackRepository $fbRepository): Response 
         {
+            $fb= $fbRepository->findBy(['id_evenement' => $id]);
             $event = $eventrep->find($id);
             return $this->render(
                 'evenement/showevent.html.twig',
-                ['event' => $event,]
+                ['event' => $event,
+                'fb'=>$fb]
     
             );
             

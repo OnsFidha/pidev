@@ -5,9 +5,10 @@
 {% block body %}
     <h1>Modifier feedback</h1>
 
-    {{ include('feedback/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('feedback/_form.html.twig', {'button_label': 'Update'}, {'id': feedback.id}) }}
 
-    <a href="{{ path('app_feedback') }}">retour</a>
+    <a href="{{ path('event_details', {'id': feedback.getIdEvenement().id}) }}">Retour</a>
+
 
     {{ include('feedback/_delete_form.html.twig') }}
 {% endblock %}

@@ -11,6 +11,7 @@ use App\Form\FeedbackType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Evenement;
 
 class FeedbackController extends AbstractController
 {
@@ -21,10 +22,12 @@ class FeedbackController extends AbstractController
             'feedback' => $fbRepository->findAll(),
         ]);
     }
-    #[Route('/new', name: 'app_feedback_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new/{id}', name: 'app_feedback_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager,$id): Response
     {
         $feedback = new Feedback();
+        $event = $entityManager->getRepository(Evenement::class)->find($id);
+        $feedback->setIdEvenement($event);
         $form = $this->createForm(FeedbackType::class, $feedback);
         $form->handleRequest($request);
 
@@ -32,7 +35,7 @@ class FeedbackController extends AbstractController
             $entityManager->persist($feedback);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_feedback', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('event_details', ['id' => $feedback->getIdEvenement()->getId()]);
         }
 
         return $this->renderForm('feedback/new.html.twig', [
@@ -64,6 +67,7 @@ class FeedbackController extends AbstractController
     {
         $em = $manager->getManager();
     
+       
         $fb  = $fbrepository->find($id);
         $form = $this->createForm(FeedbackType::class, $fb);
         $form->handleRequest($request);
@@ -72,15 +76,16 @@ class FeedbackController extends AbstractController
             
             $em->persist($fb);
             $em->flush();
-            return $this->redirectToRoute('app_feedback');
+            return $this->redirectToRoute('event_details', ['id' => $fb->getIdEvenement()->getId()]);
         }
     
         return $this->renderForm('feedback/edit.html.twig', [
             'feedback' => $fb,
+           
             'form' => $form,
         ]);
     }
-    #[Route('/{id}', name: 'app_feedback_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_feedback_delete')]
     // public function delete(Request $request, Feedback $feedback, EntityManagerInterface $entityManager): Response
     // {
     //     if ($this->isCsrfTokenValid('delete'.$feedback->getId(), $request->request->get('_token'))) {
@@ -98,6 +103,6 @@ class FeedbackController extends AbstractController
             $em->remove($fb);
             $em->flush();
     
-            return $this->redirectToRoute('app_feedback');
+            return $this->redirectToRoute('event_details', ['id' => $fb->getIdEvenement()->getId()]);
         }
 }
