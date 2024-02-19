@@ -3,30 +3,33 @@
 {% block title %}Modifier votre reclamation{% endblock %}
 
 {% block body %}
-    <h1>Modifier votre reclamation</h1>
-     {{form_start(form,{'attr':{'novalidate':'novalidate'}})}}
-
-<table>
-<tr>
-<td> {{form_label(form.type,"type de reclamation")}}</td>
-<td> {{form_widget(form.type)}} </td>
-<td> {{form_errors(form.type)}} </td>
-</tr>
-
-<tr>
-<td> {{form_label(form.description,"Description de la réclamation")}}</td>
-<td> {{form_widget(form.description)}} </td>
-<td> {{form_errors(form.description)}} </td>
-</tr>
+<h1>Modification de votre réclamation</h1>
+    {{ include('reclamation/_form.html.twig', {'button_label': 'Update'}) }}
 
 
-</table>
-{{form_widget(form.enregistrer)}}
-{{form_end(form)}}
 
-    {# {{ include('reclamation/_form.html.twig', {'button_label': 'Update'}) }} #}
+    
+    <div style="display: flex; gap: 15px; justify-content:center;">
+        <button class="styled-button"><a href="{{ path('app_reclamation_index') }}" style="color: white; text-decoration: none;">retour à la liste des réclamations</a></button>
+        {{ include('reclamation/_delete_form.html.twig') }}
+    </div>
+    
 
-    <a href="{{ path('app_reclamation_index') }}">Retour à la liste</a>
+<style>
+.styled-button {
+    background-color: #BEE5B4;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
 
-    {{ include('reclamation/_delete_form.html.twig') }} 
+
+.styled-button a {
+    color: inherit; /* Assure que la couleur du lien reste blanche */
+    text-decoration: none; /* Supprime le soulignement par défaut du lien */
+}
+</style>
+
 {% endblock %}

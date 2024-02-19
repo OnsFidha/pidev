@@ -34,7 +34,7 @@ class ReclamationType extends AbstractType
             ->add('description',TextareaType::class)
             // ->add('etat')
             //->add('date_creation')
-           ->add('enregistrer',SubmitType::class )
+        //    ->add('enregistrer',SubmitType::class )
         ;
     }
 

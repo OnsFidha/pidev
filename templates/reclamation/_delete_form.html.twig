@@ -1,4 +1,14 @@
 <form method="post" action="{{ path('app_reclamation_delete', {'id': reclamation.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reclamation.id) }}">
-    <button class="btn">Supprimer</button>
+    <button class="styled-button">Supprimer</button>
 </form>
+<style>
+.styled-button {
+    background-color: #BEE5B4;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #fff;
+}
+</style>

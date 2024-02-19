@@ -4,12 +4,33 @@
 
 {# {% block PageWrapper %} #}
 {% block body %}
-    <h1>Ajouter une Reponse</h1>
+    <center><h1>Reponse </h1></center>
 
     {{ include('reponse/_form.html.twig') }}
 
-    <a href="{{ path('app_reclamation_index2') }}">Retour à la liste des réclamation</a>
-    
-    <a href="{{ path('app_reponse_index') }}">Retour à la liste réponse</a>
+    <div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 30px;">
+        <button class="styled-button" style="margin-right: 10px;"><a href="{{ path('app_reclamation_index2') }}" style="color: white; text-decoration: none;">Retour à la liste des réclamation</a></button>
+        <button class="styled-button"><a href="{{ path('app_reponse_index') }}" style="color: white; text-decoration: none;">Retour à la liste réponse</a></button>
+    </div>
+<style>
+.styled-button {
+    background-color: #BEE5B4;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.styled-button:hover {
+    background-color: #A5D6A7; /* Changez la couleur au survol */
+}
+
+.styled-button a {
+    color: inherit; /* Assure que la couleur du lien reste blanche */
+    text-decoration: none; /* Supprime le soulignement par défaut du lien */
+}
+</style>
+
 {% endblock %}
 {# {% endblock %} #}

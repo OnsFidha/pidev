@@ -3,30 +3,64 @@
 {% block title %}Reponse{% endblock %}
 {# {% block PageWrapper %} #}
 {% block body %}
-    <h1>Reponse</h1>
+    <center><h1>Reponse</h1></center>
+    <div style="margin: 35px;">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ reponse.id }}</td>
+                </tr>
+                <tr>
+                    <th>Reponse</th>
+                    <td>{{ reponse.reponse }}</td>
+                </tr>
+                <tr>
+                    <th>Date_reponse</th>
+                    <td>{{ reponse.dateReponse ? reponse.dateReponse|date('Y-m-d') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ reponse.id }}</td>
-            </tr>
-            <tr>
-                <th>Reponse</th>
-                <td>{{ reponse.reponse }}</td>
-            </tr>
-            <tr>
-                <th>Date_reponse</th>
-                <td>{{ reponse.dateReponse ? reponse.dateReponse|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_reponse_index') }}">Retour à la liste réponse</a>
+    {# <a href="{{ path('app_reponse_index') }}">Retour à la liste réponse</a>
     <a href="{{ path('app_reclamation_index2') }}">Retour à la liste des réclamation</a>
 
     <a href="{{ path('app_reponse_edit', {'id': reponse.id}) }}">Modifier</a>
 
     {{ include('reponse/_delete_form.html.twig') }}
+ #}
+
+
+    
+    <div style="display: flex; gap: 15px; justify-content:center;">
+        <button class="styled-button"><a href="{{ path('app_reponse_index') }}" style="color: white; text-decoration: none;">Retour à la liste réponse</a></button>
+        <button class="styled-button"><a href="{{ path('app_reclamation_index2') }}"  style="color: white; text-decoration: none;">Retour à la liste des réclamation</a></button>
+        <button class="styled-button"><a href="{{ path('app_reponse_edit', {'id': reponse.id}) }}"  style="color: white; text-decoration: none;">Modifier</a></button>
+        {{ include('reponse/_delete_form.html.twig') }}
+    </div>
+    </div>
+
+<style>
+.styled-button {
+    background-color: #BEE5B4;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.styled-button:hover {
+    background-color: #A5D6A7; /* Changez la couleur au survol */
+}
+
+.styled-button a {
+    color: inherit; /* Assure que la couleur du lien reste blanche */
+    text-decoration: none; /* Supprime le soulignement par défaut du lien */
+}
+</style>
+
 {% endblock %}
 {# {% endblock %} #}

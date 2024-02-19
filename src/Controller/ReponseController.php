@@ -68,7 +68,7 @@ class ReponseController extends AbstractController
             $entityManager->persist($reponse);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_reclamation_index2', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('reponse/new.html.twig', [
