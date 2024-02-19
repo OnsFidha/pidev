@@ -1,4 +1,37 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<style>
+  .table tr,
+    .table th,
+    .table td {
+        background-color: #FEFCF3;
+    }
+</style>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'enctype': 'multipart/form-data', 'class': 'custom-form'}}) }}
+<div class="row justify-content-center">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body" style="background-color:#FEFCF3">
+                <table class="table">
+                   
+                        <tr>
+                            <th>{{ form_label(form.text, 'Le texte de commentaire', { 'label_attr': {'class': 'custom-label'} }) }}</th>
+                        </tr>
+                        <tr>
+                            <td class="align-middle text-center" style="width: 350px;">{{ form_widget(form.text, { 'attr': {'class': 'form-control custom-input'}}) }}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% if form_errors(form.text)|length > 0 %}
+                                    <div class="alert alert-danger">{{ form_errors(form.text) }}</div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                  
+                </table>
+
+                <button class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{ form_end(form) }}

@@ -1,12 +1,20 @@
+<style>
+  .table tr,
+    .table th,
+    .table td {
+        background-color: #FEFCF3;
+    }
+</style>
+
 {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'enctype': 'multipart/form-data'}}) }}
 <div class="row justify-content-center">
  <div class="col-sm-6">
     <div class="card">
-        <div class="card-body">
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>{{ form_label(form.type) }}</th>
+        <div class="card-body" style='background-color:#FEFCF3'>
+            <table class="table" >
+                <tbody >
+                    <tr >
+                        <th >{{ form_label(form.type) }}</th>
                         <td>{{ form_widget(form.type, {'attr': {'class': 'form-select'}}) }}</td>
                         <td>
                             {% if form_errors(form.type)|length > 0 %}

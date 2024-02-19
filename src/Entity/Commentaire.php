@@ -15,11 +15,14 @@ class Commentaire
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    public function __toString() {
+        return $this->text;
+    }
     #[ORM\Column(length: 255)]
     #[Assert\Length(min:"5",max:"60",
-    minMessage:"La description doit contenir au moins {{ limit }} caractères",
-    maxMessage:"La description ne peut pas dépasser {{ limit }} caractères")]
+    minMessage:"Le commentaire doit contenir au moins {{ limit }} caractères",
+    maxMessage:"La commentaire ne peut pas dépasser {{ limit }} caractères")]
+    #[Assert\NotBlank( message: "Le commentaire  est obligatoire.")]
     private ?string $text = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]

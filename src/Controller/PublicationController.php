@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Publication;
+use App\Entity\Commentaire;
 use App\Form\PublicationType;
+use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
 use App\Repository\PublicationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,16 +58,30 @@ class PublicationController extends AbstractController
             'form' => $form,
         ]);
     }
-
-    #[Route('/{id}', name: 'app_publication_show', methods: ['GET'])]
-    public function show(Publication $publication,CommentaireRepository $commentaireRepository): Response
+    #[Route('/{id}', name: 'app_publication_show', methods: ['GET', 'POST'])]
+    public function show(Publication $publication, CommentaireRepository $commentaireRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $commentaires= $commentaireRepository->findBy(['id_publication' => $publication]);
+        $commentaires = $commentaireRepository->findBy(['id_publication' => $publication]);
+        $commentaire = new Commentaire();
+        $commentaire->setDateCreation(new \DateTime());
+        $commentForm = $this->createForm(CommentaireType::class, $commentaire);
+        $commentForm->handleRequest($request);
+    
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $commentaire->setIdPublication($publication);
+            $entityManager->persist($commentaire);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_publication_show', ['id' => $publication->getId()]);
+        }
+    
         return $this->render('publication/show.html.twig', [
             'publication' => $publication,
-            'commentaires'=>$commentaires
+            'commentaires' => $commentaires,
+            'commentForm' => $commentForm->createView(),
         ]);
     }
+    
+
 
     #[Route('/{id}/edit', name: 'app_publication_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
@@ -97,8 +113,27 @@ class PublicationController extends AbstractController
         ]);
     }
 
+    
+     #[Route('/get/{id}', name: 'app_publication_showAdd', methods: ['GET'])]
+    public function showAd(Publication $publication,CommentaireRepository $commentaireRepository): Response
+    {
+        $commentaires= $commentaireRepository->findBy(['id_publication' => $publication]);
+        return $this->render('publication/showAd.html.twig', [
+            'publication' => $publication
+        ]);
+    }
     #[Route('/{id}', name: 'app_publication_delete', methods: ['POST'])]
     public function delete(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$publication->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($publication);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_publication_admin', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/d/{id}', name: 'app_publication_deleteA', methods: ['POST'])]
+    public function deleteA(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$publication->getId(), $request->request->get('_token'))) {
             $entityManager->remove($publication);

@@ -1,0 +1,36 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block body %}
+<div class='container'>
+    <h1 class='text-center'>Détails de la publication</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Type</th>
+                <td>{{ publication.type }}</td>
+            </tr>
+            <tr>
+                <th>Lieu</th>
+                <td>{{ publication.lieu }}</td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ publication.getDateCreation|date('d F Y') }}</td>
+            </tr>
+            <tr>
+                <th>Date de modification</th>
+                <td>{{ publication.getDateModification|date('d F Y') }}</td>
+            </tr>
+            <tr>
+                <th>Texte</th>
+                <td>{{ publication.text }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td><img src="{{ asset('pub/' ~ publication.photo) }}" width="250px" height="300px" class="img-fluid" alt="Paysage"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

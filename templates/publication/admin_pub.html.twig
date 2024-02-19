@@ -2,37 +2,40 @@
 
 {% block title %}Publication {% endblock %}
 
-
-
 {% block body %}
-
-    <h1>liste des publications</h1>
-        <div class="row">
-            {% for publication in publications %}
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-head">
-                        <h5 class="card-title"> Publication {{ publication.type }}</h5>
-                    </div>
-                    <img src="{{ publication.photo }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text">{{ publication.text }}</p>
-                        <p class="card-text"><small class="text-muted">{{ publication.dateCreation ? publication.dateCreation|date('Y-m-d') : '' }}</small></p>
-                        <a href="{{ path('app_publication_show', {'id': publication.id}) }}" class="btn btn-primary">Show</a>
-                        <a href="{{ path('app_publication_edit', {'id': publication.id}) }}" class="btn btn-secondary">Edit</a>
-                    </div>
-                </div>
-            </div>
-            {% else %}
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-text">Pas de publications</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+<div class='container'>
+<div class='card'>
+    <h1>Liste des publications</h1>
     
-   
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Photo</th>
+                <th>Texte</th>
+                <th>Date de création</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for publication in publications %}
+            <tr>
+                <td>{{ publication.type }}</td>
+                <td><img src="{{ asset('pub/' ~ publication.photo) }}" class="img-fluid" alt="Paysage" width="100px" height="150px"></td>
+                <td>{{ publication.text }}</td>
+                <td>{{ publication.dateCreation ? publication.dateCreation|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_publication_showAdd', {'id': publication.id}) }}" class="btn btn-primary">Détails</a>
+                      {{ include('publication/_delete_form.html.twig') }}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Pas de publications</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
 {% endblock %}

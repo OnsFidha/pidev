@@ -34,9 +34,8 @@ class PublicationType extends AbstractType
                 'label' => 'Lieu', 
                 'required' => true, 
             ])
-            ->add('photo', FileType::class,[
-            'mapped' => false] ,
-             array('data_class' => null,'required' => true));
+            ->add('photo', FileType::class,
+             array('data_class' => null));
             
             
     }

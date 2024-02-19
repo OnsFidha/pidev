@@ -34,10 +34,43 @@
 
       </div>
     </section>
-    <a href="{{ path('app_publication_index') }}" style='padding-right:15px'>Retour</a>
-    <a href="{{ path('app_publication_edit', {'id': publication.id}) }}">Modifier</a>
-    {{ include('publication/_delete_form.html.twig') }}
-<a href="{{ path('app_commentaire_new', {'id': publication.id}) }}">Ecrire un commentaire</a>
+    <btn style='color:black' class='btn'><a href="{{ path('app_publication_edit', {'id': publication.id}) }}">Modifier</a></btn>
+    {{ include('publication/deletA.html.twig') }}
+<a id="comment-link" href="{{ path('app_commentaire_new', {'id': publication.id}) }}" data-toggle="modal" data-target="#commentModal">Ecrire un commentaire</a>
+<!-- Modale pour le formulaire de commentaire -->
+<div class="modal fade" id="commentModal" width='400px' tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="commentModalLabel">Ajouter un commentaire</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ form_start(commentForm) }}
+                {{ form_label(commentForm.text) }}<br>
+                {{ form_widget(commentForm.text, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(commentForm.text)|length > 0 %}
+                    {% for error in form_errors(commentForm.text) %}
+                        <div class="alert alert-danger">{{ error.message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <br>
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+                {{ form_end(commentForm) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Assurez-vous que jQuery et Bootstrap sont inclus -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+
     <section id="testimonials" class="testimonials">
       <div class="container">
 
@@ -57,6 +90,8 @@
                         <h3 >Nom</h3>
                         <h4 >Prenom</h4>
                     </div>
+                          <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}">Edit</a>
+
                 </div>
             </div>
         {% endfor %}
@@ -64,18 +99,14 @@
     <div class="swiper-pagination" style='color:black'></div>
 </div>
 
-<script>
-    var swiper = new Swiper('.slides-3', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-            
-        },
-    });
-</script>
-
+ <script>
+        $(document).ready(function() {
+            $('#comment-link').click(function(e) {
+                e.preventDefault(); // Empêche le lien de suivre son URL
+                $('#commentModal').modal('show'); // Affiche la modale
+            });
+        });
+    </script>
       </div>
     </section>
 {% endblock %}
