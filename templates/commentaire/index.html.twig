@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseBack.html.twig' %}
 
-{% block title %}Commentaire index{% endblock %}
+{% block title %}Commentaire {% endblock %}
 
 {% block body %}
-    <h1>Commentaire index</h1>
+    <h1>Listes commentaire </h1>
 
     <table class="table">
         <thead>
@@ -21,8 +21,8 @@
                 <td>{{ commentaire.text }}</td>
                 <td>{{ commentaire.dateCreation ? commentaire.dateCreation|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}">show</a>
-                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}">edit</a>
+                <a  class='btn btn-primary' href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}">show</a>
+                      {{ include('commentaire/deletA.html.twig') }}
                 </td>
             </tr>
         {% else %}

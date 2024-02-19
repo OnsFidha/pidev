@@ -122,7 +122,7 @@ class PublicationController extends AbstractController
             'publication' => $publication
         ]);
     }
-    #[Route('/{id}', name: 'app_publication_delete', methods: ['POST'])]
+    #[Route('/de/{id}', name: 'app_publication_delete', methods: ['POST'])]
     public function delete(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$publication->getId(), $request->request->get('_token'))) {
@@ -130,7 +130,7 @@ class PublicationController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_publication_admin', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
     }
     #[Route('/d/{id}', name: 'app_publication_deleteA', methods: ['POST'])]
     public function deleteA(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
@@ -140,6 +140,6 @@ class PublicationController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_publication_admin', [], Response::HTTP_SEE_OTHER);
     }
 }

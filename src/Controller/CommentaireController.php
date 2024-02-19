@@ -63,7 +63,7 @@ class CommentaireController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_publication_show', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('commentaire/edit.html.twig', [
@@ -74,6 +74,17 @@ class CommentaireController extends AbstractController
 
     #[Route('/{id}', name: 'app_commentaire_delete', methods: ['POST'])]
     public function delete(Request $request, Commentaire $commentaire, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$commentaire->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($commentaire);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/d/{id}', name: 'app_commentaire_deleteA', methods: ['POST'])]
+    public function deleteA(Request $request, Commentaire $commentaire, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$commentaire->getId(), $request->request->get('_token'))) {
             $entityManager->remove($commentaire);
