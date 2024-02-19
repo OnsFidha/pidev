@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Publication;
 use App\Form\PublicationType;
+use App\Repository\CommentaireRepository;
 use App\Repository\PublicationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,10 +58,12 @@ class PublicationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_publication_show', methods: ['GET'])]
-    public function show(Publication $publication): Response
+    public function show(Publication $publication,CommentaireRepository $commentaireRepository): Response
     {
+        $commentaires= $commentaireRepository->findBy(['id_publication' => $publication]);
         return $this->render('publication/show.html.twig', [
             'publication' => $publication,
+            'commentaires'=>$commentaires
         ]);
     }
 

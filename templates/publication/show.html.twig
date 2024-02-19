@@ -45,23 +45,36 @@
           <p>Les commentaires</p>
           <h2 style="color: black;">Mais qu'est ce qu'ils disent c'est du bla bla bla !!</h2>
         </div>
-
-        <div class="slides-3 swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
-            <div class="swiper-wrapper" id="swiper-wrapper-7c2bf6baeb96dd37" aria-live="off" style="transform: translate3d(-2208px, 0px, 0px); transition-duration: 0ms;"><div class="swiper-slide swiper-slide-duplicate" style="width: 696px; margin-right: 40px;" role="group" aria-label="5 / 5" data-swiper-slide-index="4">
-              <div class="testimonial-item">
-                <p>
-                    text commentaires         
-                 </p>
-                <div class="profile mt-auto">
-                  <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                  <h3>Nom</h3>
-                  <h4>prenom</h4>
+<div class="slides-3 swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
+    <div class="swiper-wrapper"  style="height:300px;">
+        {% for commentaire in commentaires %}
+            <div class="swiper-slide" role="group" aria-label="{{ loop.index }} / {{ commentaires|length }}">
+                <div class="testimonial-item" style="text-align: center;">
+                    <p > ~~ {{ commentaire.text }} ~~</p>
+                    <br><br><br>
+                    <div class="profile ">
+                        {# <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt=""> #}
+                        <h3 >Nom</h3>
+                        <h4 >Prenom</h4>
+                    </div>
                 </div>
-              </div>
             </div>
-        </div>
-          <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 3" aria-current="true"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 4"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 5"></span></div>
-        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+        {% endfor %}
+    </div>
+    <div class="swiper-pagination" style='color:black'></div>
+</div>
+
+<script>
+    var swiper = new Swiper('.slides-3', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+            
+        },
+    });
+</script>
 
       </div>
     </section>

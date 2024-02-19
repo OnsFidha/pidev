@@ -6,6 +6,8 @@ use App\Repository\CommentaireRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: CommentaireRepository::class)]
 class Commentaire
 {
@@ -15,6 +17,9 @@ class Commentaire
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:"5",max:"60",
+    minMessage:"La description doit contenir au moins {{ limit }} caractères",
+    maxMessage:"La description ne peut pas dépasser {{ limit }} caractères")]
     private ?string $text = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]

@@ -13,8 +13,6 @@ class CommentaireType extends AbstractType
     {
         $builder
             ->add('text')
-            ->add('date_creation')
-            ->add('id_publication')
         ;
     }
 

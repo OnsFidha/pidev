@@ -27,6 +27,7 @@ class CommentaireController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager,$id): Response
     {
         $commentaire = new Commentaire();
+        $commentaire->setDateCreation(new \DateTime());
         $publication = $entityManager->getRepository(Publication::class)->find($id);
         $commentaire->setIdPublication($publication);
         $form = $this->createForm(CommentaireType::class, $commentaire);
@@ -36,7 +37,7 @@ class CommentaireController extends AbstractController
             $entityManager->persist($commentaire);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_publication_show', ['id'=>$id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('commentaire/new.html.twig', [
