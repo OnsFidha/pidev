@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class PublicationType extends AbstractType
 {
@@ -30,7 +30,7 @@ class PublicationType extends AbstractType
                 'label' => 'Description', 
                 'attr' => ['class' => 'form-control', 'rows' => 4], 
             ])
-            ->add('lieu', CountryType::class, [
+            ->add('lieu', TextType::class, [
                 'label' => 'Lieu', 
                 'required' => true, 
             ])

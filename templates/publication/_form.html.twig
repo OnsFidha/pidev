@@ -1,61 +1,111 @@
 <style>
-  .table tr,
+    .table tr,
     .table th,
     .table td {
         background-color: #FEFCF3;
     }
+
+    #map-container {
+        display: flex;
+    }
+
+    #map {
+        flex: 1; /* Utiliser tout l'espace disponible */
+        height: 400px;
+    }
+
+    #form-container {
+        flex: 1; /* Utiliser tout l'espace disponible */
+        margin-left: 20px; /* Marge à gauche pour l'espace entre la carte et le formulaire */
+    }
 </style>
 
-{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'enctype': 'multipart/form-data'}}) }}
-<div class="row justify-content-center">
- <div class="col-sm-6">
-    <div class="card">
-        <div class="card-body" style='background-color:#FEFCF3'>
-            <table class="table" >
-                <tbody >
-                    <tr >
-                        <th >{{ form_label(form.type) }}</th>
-                        <td>{{ form_widget(form.type, {'attr': {'class': 'form-select'}}) }}</td>
-                        <td>
-                            {% if form_errors(form.type)|length > 0 %}
-                                <div class="alert alert-danger">{{ form_errors(form.type) }}</div>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{ form_label(form.lieu) }}</th>
-                        <td>{{ form_widget(form.lieu, {'attr': {'class': 'form-control'}}) }}</td>
-                        <td>
-                            {% if form_errors(form.lieu)|length > 0 %}
-                                <div class="alert alert-danger">{{ form_errors(form.lieu) }}</div>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{ form_label(form.text) }}</th>
-                        <td>{{ form_widget(form.text) }}</td>
-                        <td>
-                            {% if form_errors(form.text)|length > 0 %}
-                                <div class="alert alert-danger">{{ form_errors(form.text) }}</div>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{ form_label(form.photo) }}</th>
-                        <td>{{ form_widget(form.photo, {'attr': {'class': 'form-control', 'type': 'file'}}) }}</td>
-                        <td>
-                            {% if form_errors(form.photo)|length > 0 %}
-                                <div class="alert alert-danger">{{ form_errors(form.photo) }}</div>
-                            {% endif %}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+<!-- Inclure Leaflet via CDN -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
+<div id="map-container">
+    <div id="map"></div>
+
+    <div id="form-container">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'enctype': 'multipart/form-data'}}) }}
+        <div class="card">
+            <div class="card-body" style='background-color:#FEFCF3'>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>{{ form_label(form.type) }}</th>
+                            <td>{{ form_widget(form.type, {'attr': {'class': 'form-select'}}) }}</td>
+                            <td>
+                                {% if form_errors(form.type)|length > 0 %}
+                                    <div class="alert alert-danger">{{ form_errors(form.type) }}</div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ form_label(form.lieu) }}</th>
+                            <td>{{ form_widget(form.lieu, {'attr': {'class': 'form-control', 'id': 'form_lieu'}}) }}</td>
+                            <td>
+                                {% if form_errors(form.lieu)|length > 0 %}
+                                    <div class="alert alert-danger">{{ form_errors(form.lieu) }}</div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ form_label(form.text) }}</th>
+                            <td>{{ form_widget(form.text) }}</td>
+                            <td>
+                                {% if form_errors(form.text)|length > 0 %}
+                                    <div class="alert alert-danger">{{ form_errors(form.text) }}</div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ form_label(form.photo) }}</th>
+                            <td>{{ form_widget(form.photo, {'attr': {'class': 'form-control', 'type': 'file'}}) }}</td>
+                            <td>
+                                {% if form_errors(form.photo)|length > 0 %}
+                                    <div class="alert alert-danger">{{ form_errors(form.photo) }}</div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
         </div>
+        {{ form_end(form) }}
     </div>
- </div>
 </div>
 
-{{ form_end(form) }}
+<script>
+    var map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Ajouter un marqueur lorsque l'utilisateur clique sur la carte
+    var marker;
+    map.on('click', function(e) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker(e.latlng).addTo(map);
+
+        // Envoyer une requête pour obtenir les informations du lieu
+        fetch('https://nominatim.openstreetmap.org/reverse?lat=' + e.latlng.lat + '&lon=' + e.latlng.lng + '&format=json')
+            .then(response => response.json())
+            .then(data => {
+                // Récupérer le nom du pays et de la ville
+                var country = data.address.country;
+                var city = data.address.city || data.address.town || data.address.village || data.address.hamlet;
+
+                // Mettre à jour le champ 'form_lieu' avec le pays et la ville
+                //adresse exacte: document.getElementById('publication_lieu').value = data.display_name;
+
+                document.getElementById('publication_lieu').value = city + ', ' + country;
+
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
