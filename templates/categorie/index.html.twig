@@ -3,20 +3,28 @@
 {% block title %}Catégorie{% endblock %}
 
 {% block body %}
+
    <h3><center>Liste des catégories</center></h3>
    
   <a href="{{ path('app_categorie_new') }}">Créer Catégorie</a>
     <br>
     <br>
+    {% for message in app.flashes('notice') %}
+    <div class="flash-notice" style="color:green">
+       <center> <h3>{{ message }}</h3></center>
+    </div>
+{% endfor %}
+     
     <table class="table" style="width:70%">
         <thead>
             <tr>
                
                 <th>Nom</th>
                 <th>Description</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
+
         <tbody>
         {% for categorie in categories %}
             <tr>
@@ -24,17 +32,17 @@
                 <td>{{ categorie.nom }}</td>
                 <td>{{ categorie.description }}</td>
                 <td>
-                    <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}">Détail</a>
+                
                     <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">Modifier</a>
+                    <a href="{{ path('app_categorie_delete', {'id': categorie.id}) }}">Supprimer</a>
                 </td>
-            </tr>
+            </tr>   
         {% else %}
             <tr>
                 <td colspan="4">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-
-  
+    </table> 
+    
 {% endblock %}

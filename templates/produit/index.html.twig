@@ -8,7 +8,11 @@
     <a href="{{ path('app_produit_new') }}">Créer un produit</a>
     <br>
     <br>
-   
+       {% for message in app.flashes('notice') %}
+    <div class="flash-notice" style="color:green">
+       <center> <h3>{{ message }}</h3></center>
+    </div>
+{% endfor %}
    <table class="table" >
         <thead>
             <tr>

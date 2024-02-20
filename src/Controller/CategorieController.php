@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/categorie')]
 class CategorieController extends AbstractController
@@ -25,6 +26,7 @@ class CategorieController extends AbstractController
     #[Route('/new', name: 'app_categorie_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        
         $categorie = new Categorie();
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
@@ -32,13 +34,15 @@ class CategorieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($categorie);
             $entityManager->flush();
-
+        
+            $this->addFlash('notice','Insertion avec succès');
             return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('categorie/new.html.twig', [
             'categorie' => $categorie,
             'form' => $form,
+           
         ]);
     }
 
@@ -68,14 +72,23 @@ class CategorieController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_categorie_delete', methods: ['POST'])]
-    public function delete(Request $request, Categorie $categorie, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_categorie_delete', methods: ['GET', 'POST'])]
+    public function delete(CategorieRepository $categorieRepository,Request $request, Categorie $categorie, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$categorie->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($categorie);
+
+        $id=$categorie->getId();
+        $cat=$categorieRepository->findOneBySomeField($id);
+
+         
+            $entityManager->remove($cat);
             $entityManager->flush();
-        }
+            $this->addFlash('notice','Suppression avec succès');
 
         return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
+        
+         
+            
+         
+            
     }
 }

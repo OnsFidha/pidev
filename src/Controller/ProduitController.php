@@ -42,11 +42,11 @@ class ProduitController extends AbstractController
            // echo  $qte ;
          if($prix <0)
          {
-            $message='Le prix est invalide';
+            $message='Le prix doit etre positif';
          }
          else if($qte <=0)
          {
-          $message='La quantité est invalide';
+          $message='La quantité doit etre strictement superieur à Zéros';
          } else if(! $imageFile){
             $message='Il faut choisir une image';
          }
@@ -76,7 +76,7 @@ class ProduitController extends AbstractController
 
             $entityManager->persist($produit);
             $entityManager->flush();
-
+            $this->addFlash('notice','Insertion avec succès');
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }
     }
@@ -109,29 +109,35 @@ class ProduitController extends AbstractController
        
         $p=$produitRepository->findOneBySomeField($id);
         $aimage= $p->getImage();
-          
+         
+        
+       
         $message='';
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
-        
+       
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('image')->getData();
              
             $prix = $form->get('prix')->getData();
             $qte = $form->get('quantite')->getData();
+            
 
             if($prix <0)
             {
-               $message='Le prix est invalide';
+               $message='Le prix doit etre positif';
             }
             else if($qte <=0)
             {
-             $message='La quantité est invalide';
+             $message='La quantité doit etre strictement superieur à Zéros';
             }
          else if (! $imageFile) {
             
             $produit->setImage($aimage);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
 
             }else {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -155,13 +161,14 @@ class ProduitController extends AbstractController
 
                $produit->setImage($newFilename);
                
+            $entityManager->flush();
+            $this->addFlash('notice','Modification avec succès');
+            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+               
             }
 
 
 
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
          
@@ -175,17 +182,17 @@ class ProduitController extends AbstractController
     #[Route('/{id}/delete', name: 'app_produit_delete', methods: ['GET','POST'])]
     public function delete(ProduitRepository $produitRepository,Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
-          $message='';
+        
           $id=$produit->getId();
           $p=$produitRepository->findOneBySomeField($id);
        
             $entityManager->remove($p);
             $entityManager->flush();
-            $message='Suppression avec succées';
+            $this->addFlash('notice','Suppression avec succès');
      
 
         return $this->render('produit/index.html.twig',
-        ['message' => $message,
+        [ 
         'produits' => $produitRepository->findAll()]);
     }
 }

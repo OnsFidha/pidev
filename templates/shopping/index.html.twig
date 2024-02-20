@@ -8,8 +8,8 @@
   
         {% for produit in produits %}
           <div class="col-md-4">
-                <div class="product-item" style="width:350px">
-                    <a href="{{ path('detail_image', {'id': produit.id}) }}"><img class="img-fluid" src="/uploads/images/{{produit.image}}" alt="{{produit.nom}}"></a>
+                <div class="product-item">
+                    <a href="{{ path('detail_image', {'id': produit.id}) }}"><img class="img-fluid" src="/uploads/images/{{produit.image}}" alt="{{produit.nom}}" width="800px";height="800px"></a>
                     <h5 class="mt-2"><center>{{ produit.nom}}</center></h5>
  
                     <span class="product-price text-center" style="color:red"><center><b>{{(produit.prix ) }}  DT </b></center></span>
