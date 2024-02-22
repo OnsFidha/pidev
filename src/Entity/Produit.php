@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -14,26 +15,34 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id ;
 
+    #[Assert\NotNull]
     #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    private ?string $nom ;
 
+    #[Assert\Positive]
+    #[Assert\NotNull]
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 3, nullable: true)]
-    private ?string $prix = null;
+    
+    private ?string $prix ;
 
+   
+    #[Assert\Positive]
     #[ORM\Column]
-    private ?int $quantite = null;
+    private ?int $quantite ;
+
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $description = null;
+    private ?string $description ;
 
+    #[Assert\NotNull]
     #[ORM\Column(length: 255)]
-    private ?string $image = null;
+    private ?string $image ;
 
     #[ORM\ManyToOne(inversedBy: 'produits')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Categorie $categorie = null;
+    private ?Categorie $categorie ;
 
 
    

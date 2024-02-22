@@ -23,16 +23,16 @@ class ProduitType extends AbstractType
             ->add('nom',TextType::class, array('label'=> 'Nom',
              'attr' => array('class' => 'form-control', 
              'style' => 'margin-bottom:15px',
-             'required' => True
+              
              )))
 
             ->add('prix',NumberType::class, array('label'=> 'Prix', 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px',
-            'required' => true,'error_bubbling' => true,
+              'error_bubbling' => true,
             )))
 
             ->add('quantite',NumberType::class, array('label'=> 'Quantité', 
             'attr' => array('class' => 'form-control', 
-            'style' => 'margin-bottom:15px','required' => true,
+            'style' => 'margin-bottom:15px', 
             'error_bubbling' => true,
             )))
 
@@ -68,7 +68,7 @@ class ProduitType extends AbstractType
                 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px'),
                 // uses the User.username property as the visible option string
                 'choice_label' => 'nom',
-                'required' => true
+                
             
                 // used to render a select box, check boxes or radios
                 // 'multiple' => true,

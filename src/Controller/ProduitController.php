@@ -35,22 +35,12 @@ class ProduitController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $imageFile = $form->get('image')->getData();
-            $prix = $form->get('prix')->getData();
-            $qte = $form->get('quantite')->getData();
+           
+            
 
            // echo $prix;
            // echo  $qte ;
-         if($prix <0)
-         {
-            $message='Le prix doit etre positif';
-         }
-         else if($qte <=0)
-         {
-          $message='La quantité doit etre strictement superieur à Zéros';
-         } else if(! $imageFile){
-            $message='Il faut choisir une image';
-         }
-         else{
+         
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
@@ -79,12 +69,12 @@ class ProduitController extends AbstractController
             $this->addFlash('notice','Insertion avec succès');
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }
-    }
+    
 
         return $this->renderForm('produit/new.html.twig', [
             'produit' => $produit,
             'form' => $form,
-            'message' => $message,
+           
         ]);
     }
 
@@ -112,29 +102,19 @@ class ProduitController extends AbstractController
          
         
        
-        $message='';
+      
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
        
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('image')->getData();
-             
-            $prix = $form->get('prix')->getData();
-            $qte = $form->get('quantite')->getData();
-            
-
-            if($prix <0)
-            {
-               $message='Le prix doit etre positif';
-            }
-            else if($qte <=0)
-            {
-             $message='La quantité doit etre strictement superieur à Zéros';
-            }
-         else if (! $imageFile) {
+           
+             if (! $imageFile) {
             
             $produit->setImage($aimage);
+            echo 'gggg';
+           // echo $form->get('image')->getData();
             $entityManager->flush();
 
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
@@ -175,7 +155,7 @@ class ProduitController extends AbstractController
         return $this->renderForm('produit/edit.html.twig', [
             'produit' => $produit,
             'form' => $form,
-            'message' => $message,
+            
         ]);
     }
 

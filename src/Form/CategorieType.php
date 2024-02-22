@@ -16,7 +16,7 @@ class CategorieType extends AbstractType
             ->add('nom',TextType::class, array('label'=> 'Nom',
             'attr' => array('class' => 'form-control', 
             'style' => 'margin-bottom:15px',
-            'required' => True
+           
             )))
             ->add('description',TextareaType::class, array('label'=> 'Description',
             'attr' => array('class' => 'form-control', 
