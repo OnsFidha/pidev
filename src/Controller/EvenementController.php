@@ -110,5 +110,30 @@ class EvenementController extends AbstractController
             'events' => $eventrepo->findAll(),
         ]);
     }
+    #[Route('/calendrier', name: 'app_evenement')]
+    public function calendar(EvenementRepository $calendar): Response
+    {
+        $events = $calendar->findAll();
+
+        $rdvs = [];
+
+        foreach($events as $event){
+            $rdvs[] = [
+                'id' => $event->getId(),
+                'start' => $event->getDateDebut()->format('Y-m-d H:i:s'),
+                'end' => $event->getDateFin()->format('Y-m-d H:i:s'),
+                'title' => $event->getNom(),
+                'description' => $event->getDescription(),
+                // 'backgroundColor' => $event->getBackgroundColor(),
+                // 'borderColor' => $event->getBorderColor(),
+                // 'textColor' => $event->getTextColor(),
+                // 'allDay' => $event->getAllDay(),
+            ];
+        }
+
+        $data = json_encode($rdvs);
+
+        return $this->render('evenement/calendrier.html.twig', compact('data'));
+    }
     
 }

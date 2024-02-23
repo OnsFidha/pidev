@@ -1,0 +1,43 @@
+
+
+{% block title %}Calendrier{% endblock %}
+
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+{% block stylesheets %}
+    <style>
+        #calendrier{
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div id="calendrier">
+    </div>
+{% endblock %}
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
+{% block javascripts %}
+<script>
+    window.onload = () => {
+        let calendarElt = document.querySelector("#calendrier")
+
+        let calendar = new FullCalendar.Calendar(calendarElt, {
+            initialView: 'dayGridMonth',
+            locale: 'fr',
+            timeZone: 'Afrique/Tunisie',
+            headerToolbar: {
+                start: 'prev,next today',
+                center: 'title',
+                end: ''
+            },
+            events: {{data | raw}}
+        })
+
+
+        calendar.render()
+    }
+</script>
+
+{% endblock %}
