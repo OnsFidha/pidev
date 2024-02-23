@@ -35,6 +35,9 @@
         
         <div style="display: flex; gap: 15px; justify-content:center;">
             <button class="styled-button"><a href="{{ path('app_reclamation_index2') }}" style="color: white; text-decoration: none;">retour à la liste des réclamations</a></button>
+            {%  if ( reclamation.etat == false) %}
+                <button class="styled-button"><a href="{{ path('app_reponse_new', {'id': reclamation.id}) }}" style="color: white; text-decoration: none;"> Répondre</a>
+           {% endif %}
             
         </div>
     </div>

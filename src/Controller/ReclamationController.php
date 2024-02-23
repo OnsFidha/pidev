@@ -179,4 +179,43 @@ class ReclamationController extends AbstractController
 
 
     //
+
+    //
+
+    
+     
+    #[Route('/reclamations/date', name:'reclamations_date')]
+    public function reclamationsByDate(ReclamationRepository $reclamationRepository): Response
+    {
+        $reclamations = $reclamationRepository->findByDate();
+        
+        return $this->render('reclamation/indexBack.html.twig', [
+            'reclamations' => $reclamations,
+        ]);
+    }
+
+
+    #[Route('/reclamations/etat', name:'reclamations_etat')]
+     
+    public function reclamationsByEtat(ReclamationRepository $reclamationRepository): Response
+    {
+        $reclamations = $reclamationRepository->findByEtat();
+        
+        return $this->render('reclamation/indexBack.html.twig', [
+            'reclamations' => $reclamations,
+        ]);
+    }
+
+         
+    #[Route('/reclamations/type', name:'reclamations_type')]
+    
+    public function reclamationsByType(ReclamationRepository $reclamationRepository): Response
+    {
+        $reclamations = $reclamationRepository->findByType();
+        
+        return $this->render('reclamation/indexBack.html.twig', [
+            'reclamations' => $reclamations,
+        ]);
+    }
+    //
 }

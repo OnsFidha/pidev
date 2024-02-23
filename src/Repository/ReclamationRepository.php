@@ -45,4 +45,32 @@ class ReclamationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+    // Fonction pour récupérer les réclamations triées par date
+    public function findByDate()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.date_creation', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    // Fonction pour récupérer les réclamations triées par état
+    public function findByEtat()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.etat', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    // Fonction pour récupérer les réclamations triées par type
+    public function findByType()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.type', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
