@@ -66,16 +66,16 @@
 
 {% block body %}
     <center><h1>Liste des Réclamations</h1></center>
-     
+    
     
 
-    <li class="dropdown" style="list-style: none; margin-left: 30px; margin-bottom: 100px;">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: #91DAF0; font-size: 25px; ">Tri <span class="caret"></span></a>
-        <ul class="dropdown-menu" style="background-color: #FEFCF3; border: none;">
-            <li><a href="{{ path('reclamations_date')}}" style="color: #F9A936; text-decoration: none; font-size: 20px;">Trie par date</a></li> 
-            <li><a href="{{ path('reclamations_etat')}}" style="color: #F26A77; text-decoration: none; font-size: 20px;">Trie par état</a></li> 
-            <li><a href="{{ path('reclamations_type')}}" style="color: #BEE5B4; text-decoration: none; font-size: 20px;">Trie par type</a></li>
-        </ul>
+    <li class="dropdown" style="list-style: none; margin-bottom: 100px; display:flex; justify-content: center  ">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: #91DAF0; font-size: 25px; ">Trier les réclamations <span class="caret"></span></a>
+            <ul class="dropdown-menu" style="background-color: #FEFCF3; border: none;">
+                <li><a href="{{ path('reclamations_date')}}" style="color: #F9A936; text-decoration: none; font-size: 20px;">Tri par date</a></li> 
+                <li><a href="{{ path('reclamations_etat')}}" style="color: #F26A77; text-decoration: none; font-size: 20px;">Tri par état</a></li> 
+                <li><a href="{{ path('reclamations_type')}}" style="color: #BEE5B4; text-decoration: none; font-size: 20px;">Tri par type</a></li>
+            </ul>
     </li>
 
 

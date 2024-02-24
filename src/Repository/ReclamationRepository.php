@@ -73,4 +73,49 @@ class ReclamationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+
+
+    
+    public function findTypes(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->select('DISTINCT r.type')
+            ->orderBy('r.type', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    
+    public function countByType(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r.type, COUNT(r.id) as count')
+            ->groupBy('r.type')
+            ->orderBy('r.type', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+     public function searchByTerm(string $searchTerm): array
+    {
+        // Convert search term to lowercase to ensure case-insensitive search
+        $searchTerm = mb_strtolower($searchTerm);
+
+        return $this->createQueryBuilder('r')
+            ->andWhere('
+                r.type LIKE :searchTerm 
+                OR r.description LIKE :searchTerm 
+                OR r.id LIKE :searchTerm 
+                OR r.date_creation LIKE :searchTerm
+                OR r.etat = :etat
+            ')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->setParameter('etat', $searchTerm === 'traité') 
+            ->getQuery()
+            ->getResult();
+        }
 }

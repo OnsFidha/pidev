@@ -1,0 +1,78 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Statistiques{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Répartition des Réclamations</div>
+
+                <div class="card-body">
+                    <canvas id="donutChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('donutChart').getContext('2d');
+
+        var donutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Réclamations avec réponse', 'Réclamations sans réponse'],
+                datasets: [{
+                    data: [{{ pourcentage_reclamations_avec_reponse }}, {{ 100 - pourcentage_reclamations_avec_reponse }}],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(255, 99, 132, 0.8)',
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        fontColor: 'rgba(0, 0, 0, 0.8)',
+                        fontSize: 14,
+                        fontFamily: 'Arial',
+                        padding: 20
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        formatter: (value, ctx) => {
+                            let percentage = value + '%';
+                            return percentage;
+                        },
+                        font: {
+                            size: 16,
+                            family: 'Arial'
+                        }
+                    }
+                },
+                animation: {
+                    duration: 0 // Remove animation
+                }
+            }
+        });
+    });
+</script>
+
+
+
+{% endblock %}

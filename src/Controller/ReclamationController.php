@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
+use App\Form\SearchFormType;
 use App\Repository\ReclamationRepository;
 use App\Repository\ReponseRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
@@ -217,5 +219,35 @@ class ReclamationController extends AbstractController
             'reclamations' => $reclamations,
         ]);
     }
+    //
+
+   
+    //
+    //search
+    #[Route('/reclamations/search', name:'reclamations_search')]
+     public function searchReclam(Request $request , ReclamationRepository $reclamationRepository): Response
+    {
+        // $searchTerm = $request->query->get('searchTerm');
+         $searchTerm = $request->query->get('searchTerm');
+        dump($searchTerm);
+        $reclamations = [];
+
+        if ($searchTerm) {
+            // If a search term is provided, perform the search
+            $reclamations = $reclamationRepository->searchByTerm($searchTerm);
+        } else {
+            // If no search term provided, retrieve all reclamations
+            $reclamations = $reclamationRepository->findAll();
+        }
+
+        // Create the search form
+        $form = $this->createForm(SearchFormType::class);
+
+        return $this->render('reclamation/indexBack.html.twig', [
+            'form' => $form->createView(),
+            'reclamations' => $reclamations,
+        ]);
+    }
+
     //
 }

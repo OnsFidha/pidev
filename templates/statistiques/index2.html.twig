@@ -1,0 +1,39 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Statistiques{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Statistiques des Réclamations</div>
+
+                <div class="card-body">
+                    <canvas id="polarAreaChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Statistiques des Réclamations</div>
+
+                <div class="card-body">
+                    <p>Nombre total de réclamations: {{ totalReclamations }}</p>
+                    <p>Nombre de types de réclamations: {{ types|length }}</p>
+                    <ul>
+                        {% for item in counts %}
+                            <li>{{ item.type }}: {{ item.count }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+{% endblock %}

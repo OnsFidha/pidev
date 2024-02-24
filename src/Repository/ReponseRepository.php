@@ -45,4 +45,12 @@ class ReponseRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function countReclamationsWithResponse(): int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(DISTINCT r.relation)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
