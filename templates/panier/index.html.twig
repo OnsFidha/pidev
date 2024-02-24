@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}panier!{% endblock %}
+
+{% block body %}
+<table class="table">
+<thead>
+<tr>
+<th>produit</th>
+<th>prix</th>
+<th>quantite</th>
+<th>total</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+{% for element in data  %}
+<tr>
+<td>{{element.produit.nom}}</td>
+<td>{{element.produit.prix}}</td>
+<td>{{element.quantite}}</td>
+<td>{{element.produit.prix *element.quantite}}</td>
+<td>
+<a href="{{path('app_add_panier',{'id':element.produit.id})}}" class ="btn btn-success">+</a>
+<a href="{{path('app_remove_panier',{'id':element.produit.id})}}" class ="btn btn-warning">-</a>
+<a href="{{path('app_delete_panier',{'id':element.produit.id})}}" class ="btn btn-danger">Supprimer</a>
+</td>
+</tr>
+{% else %}
+<tr>
+<td colspan="5">votre panier est vide</td>
+</tr>
+{% endfor %}
+<tr>
+<td colspan="3">total</td>
+<td>{{total}}</td>
+<td><a href="{{path('app_empty_panier')}}" class ="btn btn-danger">Vider le panier</a></td>
+</tr>
+
+</tbody>
+
+
+</table>
+<a href="" class ="btn btn-success">commander</a>
+<a href="{{path('app_shopping')}}" class ="btn btn-success">continuer</a>
+{% endblock %}

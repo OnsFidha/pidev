@@ -16,7 +16,7 @@ class ShoppingController extends AbstractController
     public function index(ProduitRepository $produitRepository,CategorieRepository $categorieRepository): Response
     {
         return $this->render('shopping/index.html.twig', [
-            'produits' => $produitRepository->findAll(),
+            'produits' => $produitRepository->findByExampleField(),
             'categories' => $categorieRepository->findAll(),
         ]);
     }

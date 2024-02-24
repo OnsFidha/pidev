@@ -36,7 +36,7 @@ class Produit
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description ;
 
-    #[Assert\NotNull]
+    
     #[ORM\Column(length: 255)]
     private ?string $image ;
 
