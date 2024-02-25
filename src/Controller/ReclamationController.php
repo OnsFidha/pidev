@@ -48,7 +48,7 @@ class ReclamationController extends AbstractController
 
         //whatsapp
         $sid    = "AC0caafa1f675f3f429a7df499c1e754b7";
-        $token  = "0014dbafb89d52b244da0ee8aa13b8ad";
+        $token  = "**********************************";
         $twilio = new Client($sid, $token);
         //
         $reclamation = new Reclamation();
