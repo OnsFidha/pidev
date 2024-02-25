@@ -61,9 +61,37 @@ class Reclamation
 
     public function setDescription(string $description): static
     {
-        $this->description = $description;
+//         $this->description = $description;
+// 
+//         return $this;
+         // Vérifier si la description contient des mots interdits
+        $descriptionCleaned = $this->filterBadWords($description);
+    
+        // Affecter la description nettoyée
+        $this->description = $descriptionCleaned;
 
-        return $this;
+    return $this;
+
+        
+
+    return $this;
+    }
+
+    private function filterBadWords(string $description): string
+    {   
+        // Read the list of bad words from the text file
+        $badWords = file('C:\Users\21624\Desktop\pidev\full-list-of-bad-words_text-file_2022_05_05.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        // Convertir la description en minuscules pour éviter les correspondances de casse
+        $descriptionLowercase = strtolower($description);
+        
+        // Remplacer les mots interdits par des astérisques
+        foreach ($badWords as $badWord) {
+            $descriptionLowercase = str_ireplace($badWord, str_repeat('*', strlen($badWord)), $descriptionLowercase);
+        }
+
+        // Retourner la description nettoyée
+        return $descriptionLowercase;
     }
 
     public function isEtat(): ?bool

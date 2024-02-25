@@ -34,8 +34,20 @@ class StatistiquesController extends AbstractController
         // Calculer le pourcentage
         $pourcentageReclamationsAvecReponse = $nombreTotalReclamations > 0 ? ($nombreReclamationsAvecReponse / $nombreTotalReclamations) * 100 : 0;
 
+        //
+        $types = $reclamationRepository->findTypes();
+        $counts = $reclamationRepository->countByType();
+    
+        // Calculate total number of reclamations
+        $totalReclamations = array_reduce($counts, function ($carry, $item) {
+            return $carry + $item['count'];
+        }, 0);
+
         return $this->render('statistiques/index.html.twig', [
             'pourcentage_reclamations_avec_reponse' => $pourcentageReclamationsAvecReponse,
+            'types' => $types,
+            'counts' => $counts,
+            'totalReclamations' => $totalReclamations,
         ]);
     }
 

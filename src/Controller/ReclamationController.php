@@ -14,6 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Twilio\Rest\Client;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
 
 
 #[Route('/reclamation')]
@@ -39,18 +43,53 @@ class ReclamationController extends AbstractController
     /////
 
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
+
+        //whatsapp
+        $sid    = "AC0caafa1f675f3f429a7df499c1e754b7";
+        $token  = "0014dbafb89d52b244da0ee8aa13b8ad";
+        $twilio = new Client($sid, $token);
+        //
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($reclamation);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
+           try {
+                $message = $twilio->messages->create(
+                    "whatsapp:+21624171676",
+                    [
+                        "from" => "whatsapp:+14155238886",
+                        // "body" => $user->getNom()." a envoyee une Reclamation , vous pouvez le contacter sur ".$user->getNumTel(),
+                        "body" => "Il a envoyé une Reclamation, vous pouvez le contacter sur num :",
+                    ]
+                );
+                
+                // Output message SID for debugging
+                $this->addFlash('success', "Message SID: " . $message->sid);
+                $entityManager->persist($reclamation);
+                $entityManager->flush();
+                
+                
+                return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
+            } catch (\Exception $e) {
+                $this->addFlash('error', "Failed to send WhatsApp message: " . $e->getMessage());
+            }
         }
+        //mailling
+                        
+                        $email = (new Email())
+                        ->from('sana.khiari2002@gmail.com')
+                        ->to('sana.khiari@esprit.tn')
+                        ->subject('Reclamation Artist')
+                        ->text('Votre demande sera prise en compte et nous vous répondrons dans les meilleurs délais.
+                        Vous serez notifiés via une maill les details de traitement de votre reclamation
+                        Merci !!');
+                        
+                    $mailer->send($email);
+
+                //
 
         return $this->renderForm('reclamation/new.html.twig', [
             'reclamation' => $reclamation,
