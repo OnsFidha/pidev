@@ -1,39 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Publication {% endblock %}
-
-
+{% block title %}Publication{% endblock %}
 
 {% block body %}
-
-    <h1>liste des publications</h1>
+    <h1>Liste des publications</h1>
     <a href="{{ path('app_publication_new') }}">
-        <i class="bi bi-plus-circle" style="font-size: 30px;"></i> Ajouter une nouvelle publication
+        <i class="bi bi-plus-circle" style="font-size: 25px;"></i> Ajouter une nouvelle publication
     </a>
-    {# float: right;#}
+    
+    <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="float: right;">
+        <input type="radio" class="btn-check" name="publicationType" id="offreBtn" autocomplete="off" value="offre">
+        <label class="btn btn-outline-primary" for="offreBtn">Offre</label>
+
+        <input type="radio" class="btn-check" name="publicationType" id="ordinaireBtn" autocomplete="off" value="ordinaire">
+        <label class="btn btn-outline-primary" for="ordinaireBtn">Ordinaire</label>
+    </div>
+    
     <section id="gallery" class="gallery">
         <div class="container-fluid">
             <div class="row gy-4 justify-content-center">
                 {% for publication in publications %}
                 <div class="col-xl-3 col-lg-4 col-md-6">
-                    <a  style='color:white 'href="{{ path('app_publication_show', {'id': publication.id}) }}" >
+                    <a style='color:white' href="{{ path('app_publication_show', {'id': publication.id}) }}">
                         <div class="gallery-item h-100"> 
                             <img src="{{ asset('pub/' ~ publication.photo) }}" class="img-fluid" alt="Paysage">
-                            <div class="gallery-links d-flex align-items-center justify-content-center" >
-                                <div > Publié le   {{publication.getDateCreation|date('d F Y') }} par xxxxx</div>
+                            <div class="gallery-links d-flex align-items-center justify-content-center">
+                                <div>Publié le {{ publication.getDateCreation|date('d F Y') }} par xxxxx</div>
                             </div>
                         </div>
                     </a>
-                 {% if publication.avis > 0 %}
-                    {% for star in range(0, publication.avis) %}
-                        <i style="color: #ffc107; margin: 0 1px;" class="bi bi-star-fill"></i>
-                    {% endfor %}
-                {% else %}
-                    <span>Pas d'avis</span>
-                {% endif %}
-
-
-               </div>
+                    {% if publication.avis > 0 %}
+                        {% for star in range(0, publication.avis) %}
+                            <i style="color: #ffc107; margin: 0 1px;" class="bi bi-star-fill"></i>
+                        {% endfor %}
+                    {% else %}
+                        <span>Pas d'avis</span>
+                    {% endif %}
+                </div>
                 {% else %}
                 <div class="col">
                     <div class="card">
@@ -46,34 +49,27 @@
             </div>
         </div>
     </section>
-    
-    {#
-        <div class="row">
-            {% for publication in publications %}
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-head">
-                        <h5 class="card-title"> Publication {{ publication.type }}</h5>
-                    </div>
-                    <img src="{{ publication.photo }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text">{{ publication.text }}</p>
-                        <p class="card-text"><small class="text-muted">{{ publication.dateCreation ? publication.dateCreation|date('Y-m-d') : '' }}</small></p>
-                        <a href="{{ path('app_publication_show', {'id': publication.id}) }}" class="btn btn-primary">Show</a>
-                        <a href="{{ path('app_publication_edit', {'id': publication.id}) }}" class="btn btn-secondary">Edit</a>
-                    </div>
-                </div>
-            </div>
-            {% else %}
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-text">Pas de publications</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    #}
-   
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('input[name="publicationType"]').change(function() {
+                var selectedType = $(this).val();
+                $.ajax({
+                    url: '{{ path('filter_publications') }}',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { publicationType: selectedType },
+                    success: function(data) {
+                        console.log(data); // Afficher les données dans la console
+                        // Mettre à jour l'interface utilisateur avec les données renvoyées si nécessaire
+                    },
+                  error: function(xhr, status, error) {
+    console.error('Une erreur s\'est produite lors de la requête:', error,xhr.responseText);
+    console.log(xhr.responseText);
+}
+                });
+            });
+        });
+    </script>
 {% endblock %}

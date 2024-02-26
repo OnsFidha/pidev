@@ -20,6 +20,14 @@ class PublicationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Publication::class);
     }
+    public function findByType($type)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.type = :type')
+            ->setParameter('type', $type)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Publication[] Returns an array of Publication objects

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Publication;
 use App\Entity\Commentaire;
 use App\Form\PublicationType;
@@ -132,6 +133,25 @@ class PublicationController extends AbstractController
 
         return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
     }
+  
+    #[Route("/filter-publications", name: "filter_publications", methods: ["POST"])]
+    public function filterPublications(Request $request, PublicationRepository $publicationRepository)
+    {
+        $type = $request->request->get('publicationType');
+    
+        if ($type === 'offre') {
+            $publications = $publicationRepository->findByType('offre');
+        } elseif ($type === 'ordinaire') {
+            $publications = $publicationRepository->findByType('ordinaire');
+        } else {
+            $publications = $publicationRepository->findAll();
+        }
+        $response = new Response(json_encode($publications));
+        $response->headers->set('Content-Type', 'application/json');
+    
+        return $response;  
+    }
+    
     #[Route('/d/{id}', name: 'app_publication_deleteA', methods: ['POST'])]
     public function deleteA(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {

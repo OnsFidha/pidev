@@ -20,7 +20,6 @@
     }
 </style>
 
-<!-- Inclure Leaflet via CDN -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
@@ -83,8 +82,6 @@
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-
-    // Ajouter un marqueur lorsque l'utilisateur clique sur la carte
     var marker;
     map.on('click', function(e) {
         if (marker) {
@@ -96,11 +93,8 @@
         fetch('https://nominatim.openstreetmap.org/reverse?lat=' + e.latlng.lat + '&lon=' + e.latlng.lng + '&format=json')
             .then(response => response.json())
             .then(data => {
-                // Récupérer le nom du pays et de la ville
                 var country = data.address.country;
                 var city = data.address.city || data.address.town || data.address.village || data.address.hamlet;
-
-                // Mettre à jour le champ 'form_lieu' avec le pays et la ville
                 //adresse exacte: document.getElementById('publication_lieu').value = data.display_name;
 
                 document.getElementById('publication_lieu').value = city + ', ' + country;
