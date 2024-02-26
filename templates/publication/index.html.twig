@@ -3,6 +3,8 @@
 {% block title %}Publication{% endblock %}
 
 {% block body %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <h1>Liste des publications</h1>
     <a href="{{ path('app_publication_new') }}">
         <i class="bi bi-plus-circle" style="font-size: 25px;"></i> Ajouter une nouvelle publication
@@ -72,4 +74,18 @@
             });
         });
     </script>
+    
+    {% for flashMessage in app.session.flashBag.get('success') %}
+        <script>
+            // Affiche la SweetAlert après 3 secondes
+       
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succès!',
+                    text: '{{ flashMessage }}',
+                    confirmButtonText: 'OK'
+                });
+        </script>
+    {% endfor %}
+
 {% endblock %}

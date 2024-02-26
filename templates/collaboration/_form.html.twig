@@ -1,0 +1,59 @@
+<style>
+    .table tr,
+    .table th,
+    .table td {
+        background-color: #FEFCF3;
+    }
+
+    #map-container {
+        display: flex;
+    }
+
+    #map {
+        flex: 1; /* Utiliser tout l'espace disponible */
+        height: 400px;
+    }
+
+    #form-container {
+        flex: 1; 
+        margin-left: 20px; 
+    }
+</style>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'enctype': 'multipart/form-data'}}) }}
+<div class="card">
+    <div class="card-body" style='background-color:#FEFCF3'>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>{{ form_label(form.competence) }}</th>
+                    <td>{{ form_widget(form.competence, {'attr': {'class': 'form-control'}}) }}</td>
+                    <td>
+                        {% if form_errors(form.competence)|length > 0 %}
+                            <div class="alert alert-danger">{{ form_errors(form.competence) }}</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.disponibilite) }}</th>
+                    <td>{{ form_widget(form.disponibilite, {'attr': {'class': 'form-control'}}) }}</td>
+                    <td>
+                        {% if form_errors(form.disponibilite)|length > 0 %}
+                            <div class="alert alert-danger">{{ form_errors(form.disponibilite) }}</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.cv) }}</th>
+                    <td>{{ form_widget(form.cv, {'attr': {'class': 'form-control', 'type': 'file'}}) }}</td>
+                    <td>
+                        {% if form_errors(form.cv)|length > 0 %}
+                            <div class="alert alert-danger">{{ form_errors(form.cv) }}</div>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    </div>
+</div>
+{{ form_end(form) }}

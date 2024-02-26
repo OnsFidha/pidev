@@ -34,9 +34,20 @@
 
       </div>
     </section>
-    <btn style='color:black' class='btn'><a href="{{ path('app_publication_edit', {'id': publication.id}) }}">Modifier</a></btn>
-      {{ include('publication/_delete_form.html.twig') }}
-    <a id="comment-link" href="{{ path('app_commentaire_new', {'id': publication.id}) }}" data-toggle="modal" data-target="#commentModal">Ecrire un commentaire</a>
+    <div class="btn-group" role="group">
+        <a href="{{ path('app_publication_edit', {'id': publication.id}) }}" class="btn btn-primary">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a href="{{ path('app_commentaire_new', {'id': publication.id}) }}" class="btn btn-success" data-toggle="modal" data-target="#commentModal">
+            <i class="fas fa-comment"></i>
+        </a>
+    </div>
+    {{ include('publication/_delete_form.html.twig', {'button_class': 'btn btn-danger'}) }}
+
+   <a href="{{ path('app_collaboration_new', {'id': publication.id}) }}" class="btn btn-primary">
+            Collaborer
+        </a>
+
     <!-- Modale pour le formulaire de commentaire -->
     <div class="modal fade" id="commentModal" width='400px' tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -63,7 +74,7 @@
             </div>
         </div>
     </div>
-
+    <script>
 
 <!-- Assurez-vous que jQuery et Bootstrap sont inclus -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

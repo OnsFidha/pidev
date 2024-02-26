@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Commentaire;
+use App\Service\BadWordDetector;
 use App\Entity\Publication;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
@@ -24,7 +25,7 @@ class CommentaireController extends AbstractController
     }
 
     #[Route('/new/{id}', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,$id): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, $id, BadWordDetector $badWordDetector): Response
     {
         $commentaire = new Commentaire();
         $commentaire->setDateCreation(new \DateTime());
@@ -32,20 +33,26 @@ class CommentaireController extends AbstractController
         $commentaire->setIdPublication($publication);
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
+            $commentText = $commentaire->getText();
+            $apiResponse = $badWordDetector->callBadWordApi($commentText);
+            if ($apiResponse && isset($apiResponse['censored_content'])) {
+                $commentaire->setText($apiResponse['censored_content']);
+            } else {
+                $commentaire->setText($commentText);
+            }
             $entityManager->persist($commentaire);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_publication_show', ['id'=>$id], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->renderForm('commentaire/new.html.twig', [
             'commentaire' => $commentaire,
             'form' => $form,
         ]);
     }
-
+    
     #[Route('/{id}', name: 'app_commentaire_show', methods: ['GET'])]
     public function show(Commentaire $commentaire): Response
     {

@@ -6,7 +6,9 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="description">
         <meta content="" name="keywords">
+        
         {% block css %}
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
             <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
             <link href="{{asset('bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
             <link href="{{asset('swiper/swiper-bundle.min.css')}}" rel="stylesheet">
@@ -76,5 +78,7 @@
         <script src="{{asset('aos/aos.js')}}"></script>
         <script src="{{asset('php-email-form/validate.js')}}"></script>
         <script src="{{asset('js/main.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     {% endblock %}
 </html>

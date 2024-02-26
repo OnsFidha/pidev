@@ -51,6 +51,10 @@ class Publication
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'id_publication')]
     private Collection $commentaires;
 
+    #[ORM\ManyToMany(targetEntity: Collaboration::class, mappedBy: 'pub')]
+    private Collection $collaborations;
+
+
 
     public function __toString()
     {
@@ -60,6 +64,7 @@ class Publication
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
+        $this->collaborations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,4 +185,32 @@ class Publication
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Collaboration>
+     */
+    public function getCollaborations(): Collection
+    {
+        return $this->collaborations;
+    }
+
+    public function addCollaboration(Collaboration $collaboration): static
+    {
+        if (!$this->collaborations->contains($collaboration)) {
+            $this->collaborations->add($collaboration);
+            $collaboration->addPub($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCollaboration(Collaboration $collaboration): static
+    {
+        if ($this->collaborations->removeElement($collaboration)) {
+            $collaboration->removePub($this);
+        }
+
+        return $this;
+    }
+
 }

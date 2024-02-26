@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+
 class User
 {
     #[ORM\Id]
@@ -37,6 +40,14 @@ class User
 
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
+
+    #[ORM\ManyToMany(targetEntity: Collaboration::class, mappedBy: 'user')]
+    private Collection $collaborations;
+
+    public function __construct()
+    {
+        $this->collaborations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -138,4 +149,33 @@ class User
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Collaboration>
+     */
+    public function getCollaborations(): Collection
+    {
+        return $this->collaborations;
+    }
+
+    public function addCollaboration(Collaboration $collaboration): static
+    {
+        if (!$this->collaborations->contains($collaboration)) {
+            $this->collaborations->add($collaboration);
+            $collaboration->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCollaboration(Collaboration $collaboration): static
+    {
+        if ($this->collaborations->removeElement($collaboration)) {
+            $collaboration->removeUser($this);
+        }
+
+        return $this;
+    }
+
+   
 }
