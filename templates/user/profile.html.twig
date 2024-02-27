@@ -31,7 +31,7 @@
 				<label class="col-sm-10" for="basic-default-company">{{ app.user.birthday ? app.user.birthday|date('d/m/Y') : '' }}</label>
 			</div>
 			<div class="row mb-3">
-    <label class="col-sm-1" for="basic-default-company">art :</label>
+    <label class="col-sm-1" for="basic-default-company">intérêt :</label>
     <label class="col-sm-10" for="basic-default-company">
         {{ app.user.roles|join(', ') }}
     </label>
@@ -42,7 +42,7 @@
 			</div>
 			<div class="mt-2">
 				<button type="button" class="btn btn-primary me-2" onclick="location.href='{{ path('app_edit_profile', {'id': app.user.id}) }}'">Edit profile</button>
-				<button type="submit" class="btn btn-warning">Reset password</button>
+			<a href="{{ path('app_forgot_password_request') }}">	<button type="submit" class="btn btn-warning">Reset password</button> </a>
 			</div>
 		</div>
 	</div>
@@ -54,9 +54,15 @@
 			</div>
 			<form id="formAccountDeactivation" onsubmit="return false">
 				<div class="form-check mb-3">
-					<input class="form-check-input" type="checkbox" name="accountActivation" id="accountActivation">
-					<label class="form-check-label" for="accountActivation">I confirm deleting my account</label>
+					{# <input class="form-check-input" type="checkbox" name="accountActivation" id="accountActivation"> #}
+					{# <label class="form-check-label" for="accountActivation">I confirm deleting my account</label>
 				</div>
+				<script> if (checkBox.checked == true) {
+            deleteButton.disabled = false;
+        } else {
+            deleteButton.disabled = true;
+        } 
+		</script> #}
 				<button  onclick="location.href='{{ path('userdelete', {'id': app.user.id}) }}'"  type="submit" class="btn btn-danger deactivate-account">Delete Account</button>
 			</form>
 		</div>

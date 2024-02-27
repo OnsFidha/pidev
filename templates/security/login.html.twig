@@ -39,8 +39,8 @@
 									<a><img src={{asset('img/logo.png')}}  width="85" height="50"> </a>
 								</a>
 							</div>
-							<h4 class="mb-2">Welcome to Artistool! 👋</h4>
-							<p class="mb-4">Please sign-in to your account and start the adventure</p>
+						<h4 class="mb-2 text-center">Welcome to Artistool! 🚀</h4>
+							<p class="mb-4 text-center">Please sign-in to your account and start the adventure</p>
 
 							<form id="formAuthentication" class="mb-3" method="POST">
 								{% if error %}
@@ -72,6 +72,7 @@
 											<i class="bx bx-hide"></i>
 										</span>
 									</div>
+									{# token #}
 									<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 									<div class="mb-3">
 										<button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
@@ -82,6 +83,12 @@
 									<span>New on our platform?</span>
 									<a href="{{ path('app_register') }}">
 										<span>Create an account</span>
+									</a>
+								</p>
+									<p class="text-center">
+									
+									<a href="{{ path('app_forgot_password_request') }}">
+										<span> mot de passe oublie? </span>
 									</a>
 								</p>
 							</div>

@@ -27,12 +27,13 @@
 					<div class="card">
 						<div class="card-body">
 							<div class="app-brand justify-content-center">
-								<a href="indexp.html" class="app-brand-link gap-2">
-									<span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+						<a href="indexp.html" class="app-brand-link gap-2">
+									<a><img src={{asset('img/logo.png')}}  width="85" height="50"> </a>
 								</a>
 							</div>
-							<h4 class="mb-2">Adventure starts here 🚀</h4>
-							<p class="mb-4">Make your app management easy and fun!</p>
+							<h4 class="mb-2 text-center">Welcome to Artistool! 🚀</h4>
+
+							
 							<form id="formAuthentication" class="mb-3" method="POST">
 								{{ form_start(form) }}
 								{% if form_errors(form) %}
@@ -48,32 +49,24 @@
 									<div class="col mb-0">
 										{{ form_row(form.prename) }}
 									</div>
+									
 								</div>
 								<div class="mb-3">
-    <label for="roles" class="form-label">Roles (max 3)</label>
+    {# <label for="roles" class="form-label">Roles (max 3)</label>
     <select id="roles" name="roles[]" class="form-select" multiple>
         <option value="role1">Role 1</option>
         <option value="role2">Role 2</option>
         <option value="role3">Role 3</option>
         <!-- Ajoutez autant d'options que nécessaire -->
-    </select>
+    </select> #}
+</div>
+<div class="row g-2 mb-3">
+<div class="col mb-0">
+										{{ form_row(form.roles) }}
+									</div>
 </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var select = document.getElementById("roles");
-    var maxSelections = 3;
 
-    select.addEventListener("change", function() {
-        var selectedOptions = Array.from(select.selectedOptions);
-        if (selectedOptions.length > maxSelections) {
-            alert("Vous ne pouvez sélectionner que " + maxSelections + " choix.");
-            // Décochez la dernière option sélectionnée pour limiter à 3 choix
-            selectedOptions[selectedOptions.length - 1].selected = false;
-        }
-    });
-});
-</script>
 
 								<div class="row g-2 mb-3">
 									<div class="col mb-0">
@@ -90,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function() {
 									{{ form_row(form.email) }}
 								</div>
 								<div class="mb-2 form-password-toggle">
+								{# mot de pass #}
 									{{ form_row(form.password, {'attr': {'id': 'passwordInput', 'oninput': 'updatePasswordStrength(this.value)'}}) }}
 								</div>
 								<div class="progress mb-3">

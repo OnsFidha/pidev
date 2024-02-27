@@ -6,126 +6,56 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-
-use Symfony\Component\Validator\Constraints\Email;
-
-
-use Symfony\Component\Validator\Constraints\File;
-
-class userType extends AbstractType
+class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('image', FileType::class, [
-                'mapped' => false,
-                'required' => false,
-                'label' => 'Profile picture :',
-                'attr' => [
-                    'class' => 'form-control',
-                    'id' => 'formFile',
-                ],
-                'constraints' => [
-                    new File([
-                        'maxSize' => '40M',
-                        'mimeTypes' => [
-                            'image/*',"image/jpeg" , "image/png" , "image/tiff" , "image/svg+xml", "image/gif", "image/webp",
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid image file',
-                    ])
-                ],
+            ->add('email', null, [
+                'attr' => ['class' => 'form-control']
             ])
-            ->add('name', TextType::class, [
-                'label' => 'Name :',
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                    'id' => 'nameBasic',
-                ],
+            ->add('name', null, [
+                'attr' => ['class' => 'form-control']
             ])
-            ->add('prename', TextType::class, [
-                'label' => 'Prename :',
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                    'id' => 'nameBasic',
-                ],
+            ->add('prename', null, [
+                'attr' => ['class' => 'form-control']
             ])
-             ->add('roles', ChoiceType::class, [
-                'label' => 'Roles :',
-                    'required' => true, // adjust as needed
-                    'attr' => [
-                        'class' => 'form-control',
-                        'id' => 'roles'],
-                    'choices' => [
-                        'Musique' => 'Musique',
-                        'Peinture' => 'Peinture',
-                        'Danse' => 'Danse',
-                        'Sculpture' => 'Sculpture',
-                        'Photographie' => 'Photographie',
-                        'Cinema' => 'Cinema',
-                        'Theatre' => 'Theatre',
-                        'Litterature' => 'Litterature',
-                        'Arts_plastiques' => 'Arts_plastiques',
-                        'Artisanat' => 'Artisanat',
-                        'Mode' => 'Mode',
-                        'Design' => 'Design',
-                        // Add more roles here if needed
-                    ],
-                    'multiple' => true, // This allows selecting multiple roles
-                    'expanded' => true, // This displays checkboxes instead of a select dropdown
-                    // You can add more options or constraints as needed
-                ])
-            ->add('phone', TextType::class, [
-                'label' => 'Phone :',
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                    'id' => 'phone',
-                    'maxlength' => 8, // Limiter à 8 caractères
-                    'minlength' => 8, // Limiter à 8 caractères
-                    'pattern' => '^[0-9]*$', // Uniquement des chiffres
+            ->add('roles', ChoiceType::class, [
+                'label' => 'intérêt:',
+                'required' => true,
+                'attr' => ['class' => 'form-select'], // Using form-select class for Bootstrap 5 styling
+                'choices' => [
+                    'Musique' => 'Musique',
+                    'Peinture' => 'Peinture',
+                    'Danse' => 'Danse',
+                    'Sculpture' => 'Sculpture',
+                    'Photographie' => 'Photographie',
+                    'Cinema' => 'Cinema',
+                    'Theatre' => 'Theatre',
+                    'Litterature' => 'Litterature',
+                    'Arts_plastiques' => 'Arts_plastiques',
+                    'Artisanat' => 'Artisanat',
+                    'Mode' => 'Mode',
+                    'Design' => 'Design',
+                    // Add more roles here if needed
                 ],
-                'constraints' => [
-                    new Regex([
-                        'pattern' => '/^[0-9]*$/',
-                        'message' => 'Le numéro de téléphone ne peut contenir que des chiffres.',
-                    ]),
-                ],
+                'multiple' => true,
+                'expanded' => true,
             ])
-            ->add('email', TextType::class, [
-                'label' => 'Email :',
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                    'id' => 'email',
-                ],
-                'constraints' => [
-                    new Email([
-                        'message' => 'L\'adresse email "{{ value }}" n\'est pas valide.',
-                        
-                    ]),
-                ],
+            ->add('phone', null, [
+                'attr' => ['class' => 'form-control']
             ])
-            ->add('birthday', DateType::class, [
-                'label' => 'Birthday',
-                'html5' => true,
-                'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'form-control',
-                    'id' => 'html5-date-input'
-                ],
-                'constraints' => [new NotBlank()]
-                ]) 
-               ;
+            ->add('isVerified', null, [
+                'attr' => ['class' => 'form-check-input'] // Using form-check-input class for Bootstrap 5 styling
+            ])
+            ->add('birthday', null, [
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('image', null, [
+                'attr' => ['class' => 'form-control']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -135,3 +65,4 @@ class userType extends AbstractType
         ]);
     }
 }
+

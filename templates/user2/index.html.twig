@@ -13,7 +13,7 @@
                 <th>Email</th>
                 <th>Name</th>
                 <th>Prename</th>
-                <th>arts</th>
+                <th>intérêt</th>
                 {# <th>Password</th> #}
                 <th>Phone</th>
                 <th>IsVerified</th>
@@ -37,8 +37,8 @@
               <td><img src="{{ asset('assets/pdp/' ~ user.image) }}" alt="User Image"></td>
 
                 <td>
-                    <a href="{{ path('app_user2_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user2_edit', {'id': user.id}) }}">edit</a>
+                  <btn class='btn btn-primary'>  <a href="{{ path('app_user2_show', {'id': user.id}) }}">show</a></btn>
+                       <btn class='btn btn-primary'>  <a href="{{ path('app_user2_edit', {'id': user.id}) }}">edit</a></btn>
                 </td>
             </tr>
         {% else %}
@@ -48,7 +48,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_user2_new') }}">Create new</a>
-    <a href="{{  path('listePdf')  }}">pdf</a>
+{# 
+    <a href="{{ path('app_user2_new') }}">Create new</a> #}
+    <btn class='btn btn-primary'><a href="{{  path('listePdf')  }}">pdf</a></btn>
 {% endblock %}

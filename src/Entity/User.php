@@ -39,6 +39,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column]
+    #[Assert\Length(
+             min : 8,
+            max :8,
+            exactMessage : "Le numéro de téléphone doit avoir exactement {{ limit }} chiffres",
+             normalizer : "trim"
+         )]
     private ?int $phone = null;
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]

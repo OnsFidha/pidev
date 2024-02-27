@@ -1,3 +1,8 @@
+#framework:
+#    mailer:
+#        dsn: '%env(MAILER_DSN)%'
+#        dsn: 'smtp://alamousssa1@gmail.com:sblyhbmzhvaqwyqb@smtp.gmail.com:587'
 framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
+        message_bus: false

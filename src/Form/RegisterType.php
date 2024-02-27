@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 
 class RegisterType extends AbstractType
@@ -57,14 +59,44 @@ class RegisterType extends AbstractType
                 ],
                 'constraints' => [new NotBlank()]
                 ])
-            ->add('email', null, [
-                'label' => 'Email',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Enter your email',
-                    'id' => 'email',
-                ],
-                'constraints' => [new NotBlank()]
+                ->add('roles', ChoiceType::class, [
+                    'label' => 'intérêt :',
+                        'required' => true, // adjust as needed
+                        'attr' => [
+                            'class' => 'form-control',
+                            'id' => 'roles'],
+                        'choices' => [
+                            'Musique' => 'Musique',
+                            'Peinture' => 'Peinture',
+                            'Danse' => 'Danse',
+                            'Sculpture' => 'Sculpture',
+                            'Photographie' => 'Photographie',
+                            'Cinema' => 'Cinema',
+                            'Theatre' => 'Theatre',
+                            'Litterature' => 'Litterature',
+                            'Arts_plastiques' => 'Arts_plastiques',
+                            'Artisanat' => 'Artisanat',
+                            'Mode' => 'Mode',
+                            'Design' => 'Design',
+                            // Add more roles here if needed
+                        ],
+                        'multiple' => true, // This allows selecting multiple roles
+                        'expanded' => true, // This displays checkboxes instead of a select dropdown
+                        // You can add more options or constraints as needed
+                    ])
+                ->add('email', TextType::class, [
+                    'label' => 'Email :',
+                    'required' => false,
+                    'attr' => [
+                        'class' => 'form-control',
+                        'id' => 'email',
+                    ],
+                    'constraints' => [
+                        new Email([
+                            'message' => 'L\'adresse email "{{ value }}" n\'est pas valide.',
+                            
+                        ]),
+                    ],
                 ])
                 ->add('phone', TextType::class, [
                     'label' => 'Phone :',
@@ -72,17 +104,17 @@ class RegisterType extends AbstractType
                     'attr' => [
                         'class' => 'form-control',
                         'id' => 'phone',
-                        'maxlength' => 8, // Limiter à 8 caractères
-                        'minlength' => 8, // Limiter à 8 caractères
+                        // 'maxlength' => 8, // Limiter à 8 caractères
+                        // 'minlength' => 8, // Limiter à 8 caractères
 
-                        'pattern' => '^[0-9]*$', // Uniquement des chiffres
+                        // 'pattern' => '^[0-9]*$', // Uniquement des chiffres
                     ],
-                    'constraints' => [
-                        new Regex([
-                            'pattern' => '/^[0-9]*$/',
-                            'message' => 'Le numéro de téléphone ne peut contenir que des chiffres.',
-                        ]),
-                    ],
+                    // 'constraints' => [
+                    //     new Regex([
+                    //         'pattern' => '/^[0-9]*$/',
+                    //         'message' => 'Le numéro de téléphone ne peut contenir que des chiffres.',
+                    //     ]),
+                    // ],
                 ])
             ->add('birthday', DateType::class, [
                 'label' => 'Birthday',

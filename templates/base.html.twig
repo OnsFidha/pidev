@@ -43,15 +43,26 @@
                         </ul>
                     </nav>
                     <div class="header-social-links">
-                    	<a class="nav-link hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="true">
-							<div class="avatar">
-								<img src="../assets/pdp/{{app.user.image}}" alt="" class="w-px-40 h-auto rounded-circle">
-							</div>
-						</a>
-                        
-                        <a href="{{ path('app_profile') }}"  class="">{{app.user.name}} {{app.user.prename}}</a>
-                        <a href="{{ path('app_logout') }}"  class="">Logout</a>
-                    </div>
+    <a class="nav-link hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="true">
+        <div class="avatar">
+            {% if app.user %}
+                <img src="../assets/pdp/{{ app.user.image }}" alt="" class="w-px-40 h-auto rounded-circle">
+            {% else %}
+                <!-- Placeholder for avatar -->
+                <img src="../assets/default_avatar.jpg" alt="Default Avatar" class="w-px-40 h-auto rounded-circle">
+            {% endif %}
+        </div>
+    </a>
+
+    {% if app.user %}
+        <a href="{{ path('app_profile') }}" class="">{{ app.user.name }} {{ app.user.prename }}</a>
+        <a href="{{ path('app_logout') }}" class="">Logout</a>
+    {% else %}
+        <a href="{{ path('app_login') }}" class="">Login</a>
+        <!-- You may add a registration link here if needed -->
+    {% endif %}
+</div>
+    
                 </div>
             </header>
         {% endblock %}
