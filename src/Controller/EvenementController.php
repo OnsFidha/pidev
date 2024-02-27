@@ -12,6 +12,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\EvenementRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use App\Repository\FeedbackRepository;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 
 
@@ -120,20 +122,33 @@ class EvenementController extends AbstractController
         foreach($events as $event){
             $rdvs[] = [
                 'id' => $event->getId(),
-                'start' => $event->getDateDebut()->format('Y-m-d H:i:s'),
-                'end' => $event->getDateFin()->format('Y-m-d H:i:s'),
+                'start' => $event->getDateDebut()->format('Y-m-d'),
+                'end' => $event->getDateFin()->format('Y-m-d'),
                 'title' => $event->getNom(),
                 'description' => $event->getDescription(),
-                // 'backgroundColor' => $event->getBackgroundColor(),
-                // 'borderColor' => $event->getBorderColor(),
-                // 'textColor' => $event->getTextColor(),
-                // 'allDay' => $event->getAllDay(),
+                'backgroundColor' => '#fcb97e',
+                'borderColor' => '#fba22e',
             ];
         }
 
         $data = json_encode($rdvs);
 
         return $this->render('evenement/calendrier.html.twig', compact('data'));
+    }
+    #[Route('/email',name: 'email')]
+    public function Participer(MailerInterface $mailer): Response
+    {
+        $email = (new Email())
+            ->from('syrine.zaier@esprit.tn')
+            ->to('Syrinezaier283@gmail.com')
+            ->subject('Invitation')
+            ->text('Vous etes invité à ....');
+          
+
+        $mailer->send($email);
+        return $this->redirectToRoute('list_event');
+
+       
     }
     
 }

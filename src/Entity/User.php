@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,6 +39,14 @@ class User
 
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
+
+    #[ORM\ManyToMany(targetEntity: Participation::class, mappedBy: 'IdUser')]
+    private Collection $participations;
+
+    public function __construct()
+    {
+        $this->Idevent = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,6 +145,33 @@ class User
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getIdevent(): Collection
+    {
+        return $this->Idevent;
+    }
+
+    public function addIdevent(Participation $idevent): static
+    {
+        if (!$this->Idevent->contains($idevent)) {
+            $this->Idevent->add($idevent);
+            $idevent->addIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdevent(Participation $idevent): static
+    {
+        if ($this->Idevent->removeElement($idevent)) {
+            $idevent->removeIdUser($this);
+        }
 
         return $this;
     }

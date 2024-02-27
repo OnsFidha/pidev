@@ -7,9 +7,17 @@
 {% block body %}
 
     <h1>liste des évenements</h1>
+   <div style="text-align: left;">
     <a href="{{ path('add_evenement') }}">
         <i class="bi bi-plus-circle" style="font-size: 30px;"></i> Ajouter un nouvel évènement
     </a>
+    <br> <!-- Add a line break for vertical spacing -->
+    <a href="{{ path('app_evenement') }}">
+        <i class="bi bi-calendar" style="font-size: 30px;"></i> Calendrier
+    </a>
+</div>
+
+
     {# float: right;#}
   <section id="gallery" class="gallery">
     <div class="container-fluid">

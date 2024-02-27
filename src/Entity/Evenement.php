@@ -56,9 +56,13 @@ class Evenement
     #[ORM\OneToMany(targetEntity: Feedback::class, mappedBy: 'id_evenement')]
     private Collection $feedback;
 
+    #[ORM\ManyToMany(targetEntity: Participation::class, mappedBy: 'Idevent')]
+    private Collection $participations;
+
     public function __construct()
     {
         $this->feedback = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -199,6 +203,33 @@ class Evenement
             if ($feedback->getIdEvenement() === $this) {
                 $feedback->setIdEvenement(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipations(): Collection
+    {
+        return $this->participations;
+    }
+
+    public function addParticipation(Participation $participation): static
+    {
+        if (!$this->participations->contains($participation)) {
+            $this->participations->add($participation);
+            $participation->addIdevent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipation(Participation $participation): static
+    {
+        if ($this->participations->removeElement($participation)) {
+            $participation->removeIdevent($this);
         }
 
         return $this;

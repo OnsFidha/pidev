@@ -38,6 +38,7 @@
     <a href="{{ path('list_event') }}" style='padding-right:15px'>Retour</a>
     <a href="{{ path('editevent', {'id': event.id}) }}">Modifier</a>
     {{ include('evenement/delete.html.twig') }}
+       <a href="{{ path('email') }}"> Participer </a>
     <a href="{{ path('app_feedback_new', {'id': event.id}) }}">Ajouter un feedback</a>
     <section id="testimonials" class="testimonials">
       <div class="container">
