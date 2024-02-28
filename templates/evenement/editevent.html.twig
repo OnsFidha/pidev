@@ -3,13 +3,25 @@
 {% block title %}Modifier l'évènement{% endblock %}
 
 {% block body %}
-    <h1>Modifier l'évènement</h1>
-    <div class="button-group">
-    {{ include('evenement/formevent.html.twig', {'button_label': 'Update'}) }}
-    {{ include('evenement/delete.html.twig') }}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Modifier l'évènement</h1>
+        
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-8">
+                {{ include('evenement/formevent.html.twig', {'button_label': 'Update'}) }}
+            </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center mt-4">
+            <div class="col-md-4 text-center">
+                {{ include('evenement/delete.html.twig') }}
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8 text-center">
+                <a href="{{ path('list_event') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Retour à la liste</a>
+            </div>
+        </div>
     </div>
-
-    <a href="{{ path('list_event') }}">back to list</a>
-
-    
 {% endblock %}

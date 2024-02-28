@@ -18,7 +18,7 @@ class Participation
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'participations')]
     private Collection $IdUser;
 
-    #[ORM\ManyToMany(targetEntity: evenement::class, inversedBy: 'participations')]
+    #[ORM\ManyToMany(targetEntity: Evenement::class, inversedBy: 'participations')]
     private Collection $Idevent;
 
     public function __construct()

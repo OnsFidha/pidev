@@ -175,4 +175,13 @@ class User
 
         return $this;
     }
+    // App\Entity\User
+
+// ...
+
+public function __toString(): string
+{
+    return $this->getNom(); // Assuming getUsername() returns a string property of the User entity
+}
+
 }

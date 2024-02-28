@@ -3,114 +3,83 @@
 {% block title %}Évènement{% endblock %}
 
 {% block body %}
-    <h1>Évènement</h1>
-<section id="about" class="about">
-      <div class="container">
-
-        <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
-            <img src="{{ asset('uploads/images/' ~ event.image) }}" class="img-fluid" alt="Paysage">
-          </div>
-          <div class="col-lg-5 content">
-            <div class="row">
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Nom:</strong> <span>{{ event.nom }}</span></li>
-                   <li><i class="bi bi-chevron-right"></i> <strong>Lieu:</strong> <span>{{ event.lieu }}</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Nombre de partcipants:</strong> <span>{{ event.getNbreMax }}</span></li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Date de début:</strong> <span>{{ event.getDateDebut|date('d F Y') }}</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Date de fin:</strong> <span>{{ event.getDateFin|date('d F Y') }}</span></li>
-                </ul>
-              </div>
+  <section id="about" class="about" style="padding: 30px;">
+    <div class="container">
+      <div class="row gy-4 justify-content-center">
+        <div class="col-lg-4">
+          <img src="{{ asset('uploads/images/' ~ event.image) }}" class="img-fluid" alt="Paysage">
+        </div>
+        <div class="col-lg-5 content">
+          <div class="row">
+            <div class="col-lg-6">
+              <ul class="list-group">
+                <li class="list-group-item"><strong>Nom:</strong> {{ event.nom }}</li>
+                <li class="list-group-item"><strong>Lieu:</strong> {{ event.lieu }}</li>
+                <li class="list-group-item"><strong>Nombre de participants:</strong> {{ event.getNbreMax }}</li>
+              </ul>
             </div>
-            <p class="py-3">
-            {{ event.description }} 
-            </p>
+            <div class="col-lg-6">
+              <ul class="list-group">
+                <li class="list-group-item"><strong>Date de début:</strong> {{ event.getDateDebut|date('d F Y') }}</li>
+                <li class="list-group-item"><strong>Date de fin:</strong> {{ event.getDateFin|date('d F Y') }}</li>
+              </ul>
+            </div>
           </div>
+          <p class="py-3">{{ event.description }}</p>
         </div>
-
       </div>
-    </section>
-    <a href="{{ path('list_event') }}" style='padding-right:15px'>Retour</a>
-    <a href="{{ path('editevent', {'id': event.id}) }}">Modifier</a>
+    </div>
+  </section>
+
+  <div class="container">
+    <a href="{{ path('list_event') }}" class="btn btn-secondary" style="margin-right: 15px;"><i class="bi bi-arrow-left"></i> Retour</a>
+    <a href="{{ path('editevent', {'id': event.id}) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Modifier</a>
     {{ include('evenement/delete.html.twig') }}
-       <a href="{{ path('email') }}"> Participer </a>
-    <a href="{{ path('app_feedback_new', {'id': event.id}) }}">Ajouter un feedback</a>
-    <section id="testimonials" class="testimonials">
-      <div class="container">
+    <a href="{{ path('app_particip_new', {'id': event.id}) }}" class="btn btn-info"><i class="bi bi-person-plus"></i> Participer</a>
+    <a href="{{ path('app_feedback_new', {'id': event.id}) }}" class="btn btn-success"><i class="bi bi-chat-dots"></i> Ajouter un feedback</a>
+  </div>
 
-        <div class="section-header">
-          <p>Les feedbacks</p>
-        </div>
-        
+  <section id="testimonials" class="testimonials" style="margin-top: 30px;">
+    <div class="container">
+      <div class="section-header">
+        <p>Les feedbacks</p>
+      </div>
 
-        
-        {% for feedb in fb %}
-        
-<section style="background-color: #f7f6f6;">
-  <div class="container my-5 py-5 text-dark">
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-12 col-lg-10 col-xl-8">
-        
-
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="d-flex flex-start">
-              <img class="rounded-circle shadow-1-strong me-3"
-                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp" alt="avatar" width="40"
-                height="40" />
-              <div class="w-100">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <h6 class="text-primary fw-bold mb-0">
-                    lara_stewart
-                    <span class="text-dark ms-2">{{feedb.text}}</span>
-                  </h6>
-                 
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <p class="small mb-0" style="color: #aaa;">
-                    <a href="{{ path('app_feedback_delete', {'id': feedb.id}) }}" class="link-grey">Supprimer</a> •
-                    <a href="{{ path('app_feedback_edit', {'id': feedb.id}) }}" class="link-grey">Modifier</a> 
-                    
-                  </p>
-                  <div class="d-flex flex-row">
-                    <i class="fas fa-star text-warning me-2"></i>
-                    <i class="far fa-check-circle" style="color: #aaa;"></i>
+      {% for feedb in fb %}
+        <section class="feedback-section" style="background-color: #f7f6f6; padding: 20px;">
+          <div class="container my-5 py-5 text-dark">
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-12 col-lg-10 col-xl-8">
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="d-flex flex-start">
+                      <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp" alt="avatar" width="40" height="40" />
+                      <div class="w-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                          <h6 class="text-primary fw-bold mb-0">
+                            lara_stewart
+                            <span class="text-dark ms-2">{{ feedb.text }}</span>
+                          </h6>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <p class="small mb-0" style="color: #aaa;">
+                            <a href="{{ path('app_feedback_delete', {'id': feedb.id}) }}" class="link-grey"><i class="bi bi-trash"></i> Supprimer</a> •
+                            <a href="{{ path('app_feedback_edit', {'id': feedb.id}) }}" class="link-grey"><i class="bi bi-pencil"></i> Modifier</a>
+                          </p>
+                          <div class="d-flex flex-row">
+                            <i class="fas fa-star text-warning me-2"></i>
+                            <i class="far fa-check-circle" style="color: #aaa;"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-        
-      </div>
+        </section>
+      {% endfor %}
     </div>
-  </div>
-</section>
-            
-        {% endfor %}
-    </div>
-    <div class="swiper-pagination" style='color:black'></div>
-</div>
-
-<script>
-    var swiper = new Swiper('.slides-3', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-            
-        },
-    });
-</script>
-
-
-      </div>
-    </section>
+  </section>
 {% endblock %}

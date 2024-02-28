@@ -95,14 +95,31 @@ class FeedbackController extends AbstractController
 
     //     return $this->redirectToRoute('app_feedback_index', [], Response::HTTP_SEE_OTHER);
     // }
+    // public function delete(Request $request, $id, ManagerRegistry $manager, FeedbackRepository $fbRepository): Response
+    //     {
+    //         $em = $manager->getManager();
+    //         $fb= $fbRepository->find($id);
+    
+    //         $em->remove($fb);
+    //         $em->flush();
+    
+    //         return $this->redirectToRoute('event_details', ['id' => $fb->getIdEvenement()->getId()]);
+    //     }
     public function delete(Request $request, $id, ManagerRegistry $manager, FeedbackRepository $fbRepository): Response
-        {
-            $em = $manager->getManager();
-            $fb= $fbRepository->find($id);
-    
-            $em->remove($fb);
-            $em->flush();
-    
-            return $this->redirectToRoute('event_details', ['id' => $fb->getIdEvenement()->getId()]);
-        }
+{
+    $em = $manager->getManager();
+    $fb = $fbRepository->find($id);
+
+    // Check if the entity exists
+    if (!$fb) {
+        // Handle the case where the entity is not found, e.g., redirect or show an error message
+        return $this->redirectToRoute('list_event');
+    }
+
+    $em->remove($fb);
+    $em->flush();
+
+    return $this->redirectToRoute('event_details', ['id' => $fb->getIdEvenement()->getId()]);
+}
+
 }

@@ -234,4 +234,8 @@ class Evenement
 
         return $this;
     }
+    public function __toString(): string
+{
+    return $this->getNom(); // Assuming getUsername() returns a string property of the User entity
+}
 }
