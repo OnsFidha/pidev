@@ -5,6 +5,15 @@
 {% block body %}
     <h1 style="text-align: center;">Liste des Utilisateurs</h1>
 
+    {# Afficher le formulaire de recherche #}
+    <form id="search-form">
+        <input type="text" id="search-input" placeholder="Rechercher...">
+        <button type="submit">Rechercher</button>
+    </form>
+
+    <div id="search-results">
+        <!-- Les résultats de la recherche seront affichés ici -->
+    </div>
 
     <table class="table">
         <thead>
@@ -14,41 +23,59 @@
                 <th>Name</th>
                 <th>Prename</th>
                 <th>intérêt</th>
-                {# <th>Password</th> #}
                 <th>Phone</th>
                 <th>IsVerified</th>
                 <th>Birthday</th>
                 <th>Image</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.prename }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                {# <td>{{ user.password }}</td> #}
-                <td>{{ user.phone }}</td>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-                <td>{{ user.birthday ? user.birthday|date('Y-m-d') : '' }}</td>
-              <td><img src="{{ asset('assets/pdp/' ~ user.image) }}" alt="User Image"></td>
-
-                <td>
-                  <btn class='btn btn-primary'>  <a href="{{ path('app_user2_show', {'id': user.id}) }}">show</a></btn>
-                       <btn class='btn btn-primary'>  <a href="{{ path('app_user2_edit', {'id': user.id}) }}">edit</a></btn>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.prename }}</td>
+                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                    <td>{{ user.birthday ? user.birthday|date('Y-m-d') : '' }}</td>
+                    <td><img src="{{ asset('assets/pdp/' ~ user.image) }}" alt="User Image"></td>
+                    <td>
+                        <button class="btn btn-primary">
+                            <a href="{{ path('app_user2_show', {'id': user.id}) }}">Show</a>
+                        </button>
+                        <button class="btn btn-primary">
+                            <a href="{{ path('app_user2_edit', {'id': user.id}) }}">Edit</a>
+                        </button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="11">no records found</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
-{# 
-    <a href="{{ path('app_user2_new') }}">Create new</a> #}
-    <btn class='btn btn-primary'><a href="{{  path('listePdf')  }}">pdf</a></btn>
+
+    <btn class='btn btn-primary'><a href="{{ path('listePdf') }}">pdf</a></btn>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#search-form').on('submit', function(event) {
+                event.preventDefault();
+                var query = $('#search-input').val();
+                $.ajax({
+                    url: '{{ path('search_route') }}',
+                    method: 'POST',
+                    data: { query: query },
+                    success: function(response) {
+                        $('#search-results').html(response);
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

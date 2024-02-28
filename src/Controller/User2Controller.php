@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Controller;
-
+use App\Form\SearchType;
 use App\Entity\User;
 use App\Form\UserType;
+
+
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,9 +16,35 @@ use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
+
+
+
 #[Route('/user2')]
 class User2Controller extends AbstractController
 {
+    /**
+     * @Route("/search", name="search_route", methods={"POST"})
+     */
+    #[Route('/search', name: 'search_route', methods: ['POST'])]
+    public function search(Request $request)
+    {
+        // Récupérer le terme de recherche depuis la requête
+        $query = $request->request->get('query');
+    
+        // Si le terme de recherche est vide, retourner un tableau vide
+        if (empty($query)) {
+            return new JsonResponse([]);
+        }
+    
+        // Rechercher les utilisateurs dont le nom contient le terme de recherche
+        $entityManager = $this->getDoctrine()->getManager();
+        $userRepository = $entityManager->getRepository(User::class);
+        $results = $userRepository->findByPartialName($query);
+    
+        // Retourner les résultats au format JSON
+        return $this->json($results);
+    }
+
     #[Route('/', name: 'app_user2_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
