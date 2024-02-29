@@ -1,5 +1,21 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<table class='text-center'>
+    <tr>
+        <td>{{ form_label(form.Idevent) }}</td>
+        <td>{{ form_widget(form.Idevent) }} </td>
+    </tr>
+    
+    <tr>
+        <td>{{ form_label(form.IdUser) }}</td>
+        <td>{{ form_widget(form.IdUser) }}  </td>
+    </tr>
+   
+</table>
+
+<button type="submit" class="btn btn-primary">Enregistrer</button>
+
 {{ form_end(form) }}

@@ -35,7 +35,9 @@
     <a href="{{ path('list_event') }}" class="btn btn-secondary" style="margin-right: 15px;"><i class="bi bi-arrow-left"></i> Retour</a>
     <a href="{{ path('editevent', {'id': event.id}) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Modifier</a>
     {{ include('evenement/delete.html.twig') }}
-    <a href="{{ path('app_particip_new', {'id': event.id}) }}" class="btn btn-info"><i class="bi bi-person-plus"></i> Participer</a>
+    <a href="#" class="btn btn-info" id="participerBtn" data-event-id="{{ event.id }}">
+    <i class="bi bi-person-plus"></i> Participer
+</a>
     <a href="{{ path('app_feedback_new', {'id': event.id}) }}" class="btn btn-success"><i class="bi bi-chat-dots"></i> Ajouter un feedback</a>
   </div>
 
@@ -82,4 +84,27 @@
       {% endfor %}
     </div>
   </section>
+  <script>
+    document.getElementById('participerBtn').addEventListener('click', function(event) {
+        // Prevent the default link behavior
+        event.preventDefault();
+
+        // Get the event ID from the data attribute
+        var eventId = this.getAttribute('data-event-id');
+
+        // Show a confirmation dialog
+        var isConfirmed = confirm('Voulez-vous vraiment participer ?');
+
+        // If confirmed, redirect to the participation page
+        if (isConfirmed) {
+            window.location.href = "{{ path('app_particip_new', {'id': event.id}) }}";
+        }
+    });
+
+
+    
+
+    
+</script>
+
 {% endblock %}

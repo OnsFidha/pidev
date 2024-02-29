@@ -7,5 +7,5 @@
 
     {{ include('particip/_form.html.twig') }}
 
-    <a href="{{ path('app_particip_index') }}">back to list</a>
+    <a href="{{ path('event_details', {'id': event.id}) }}">Back</a>
 {% endblock %}

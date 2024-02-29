@@ -16,6 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\User;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 //#[Route('/particip')]
@@ -89,12 +90,12 @@ public function new(ManagerRegistry $manager, Request $request, $id, EvenementRe
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+       
             // Assuming you have a property $nbreParticipants in your Event entity
             if ($event->getNbreParticipants() >= $event->getNbreMax()) {
                 // Handle the case where the participation limit is reached
-                // Replace this line with the appropriate response for your application
-                return new Response('Participation limit reached', Response::HTTP_BAD_REQUEST);
+                // Return a JSON response with the error message
+                return new JsonResponse(['error' => 'Participation limit reached'], JsonResponse::HTTP_BAD_REQUEST);
             }
 
             // Increase the number of participants
@@ -105,16 +106,16 @@ public function new(ManagerRegistry $manager, Request $request, $id, EvenementRe
             $em->persist($participation);
             $em->flush();
 
-            return $this->redirectToRoute('app_particip_index');
-        }
-        $email = (new Email())
-        ->from('syrine.zaier@esprit.tn')
-        ->to('Syrinezaier283@gmail.com')
-        ->subject('Invitation')
-        ->text('Vous etes invité à ....');
+            return $this->redirectToRoute('list_event');
+        
+    //     $email = (new Email())
+    //     ->from('syrine.zaier@esprit.tn')
+    //     ->to('Syrinezaier283@gmail.com')
+    //     ->subject('Invitation')
+    //     ->text('Vous etes invité à ....');
       
 
-    $mailer->send($email);
+    // $mailer->send($email);
 
         return $this->renderForm('particip/new.html.twig', [
             'participation' => $participation,
@@ -122,6 +123,7 @@ public function new(ManagerRegistry $manager, Request $request, $id, EvenementRe
             'form' => $form,
         ]);
     }
+    
 
     #[Route('particip/p/{id}', name: 'app_particip_show', methods: ['GET'])]
     // public function show(Participation $participation): Response
