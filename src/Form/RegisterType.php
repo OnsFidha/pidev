@@ -61,29 +61,31 @@ class RegisterType extends AbstractType
                 ])
                 ->add('roles', ChoiceType::class, [
                     'label' => 'intérêt :',
-                        'required' => true, // adjust as needed
-                        'attr' => [
-                            'class' => 'form-control',
-                            'id' => 'roles'],
-                        'choices' => [
-                            'Musique' => 'Musique',
-                            'Peinture' => 'Peinture',
-                            'Danse' => 'Danse',
-                            'Sculpture' => 'Sculpture',
-                            'Photographie' => 'Photographie',
-                            'Cinema' => 'Cinema',
-                            'Theatre' => 'Theatre',
-                            'Litterature' => 'Litterature',
-                            'Arts_plastiques' => 'Arts_plastiques',
-                            'Artisanat' => 'Artisanat',
-                            'Mode' => 'Mode',
-                            'Design' => 'Design',
-                            // Add more roles here if needed
-                        ],
-                        'multiple' => true, // This allows selecting multiple roles
-                        'expanded' => true, // This displays checkboxes instead of a select dropdown
-                        // You can add more options or constraints as needed
-                    ])
+                    'required' => true, // adjust as needed
+                    'attr' => [
+                        'class' => 'form-control',
+                        'id' => 'roles'
+                    ],
+                    'choices' => [
+                        'Musique' => 'Musique',
+                        'Peinture' => 'Peinture',
+                        'Danse' => 'Danse',
+                        'Sculpture' => 'Sculpture',
+                        'Photographie' => 'Photographie',
+                        'Cinema' => 'Cinema',
+                        'Theatre' => 'Theatre',
+                        'Litterature' => 'Litterature',
+                        'Arts_plastiques' => 'Arts_plastiques',
+                        'Artisanat' => 'Artisanat',
+                        'Mode' => 'Mode',
+                        'Design' => 'Design',
+                        // Add more roles here if needed
+                    ],
+                    'multiple' => true, // This allows selecting multiple roles
+                    'expanded' => false, // This displays a select dropdown
+                    // You can add more options or constraints as needed
+                ])
+                
                 ->add('email', TextType::class, [
                     'label' => 'Email :',
                     'required' => false,

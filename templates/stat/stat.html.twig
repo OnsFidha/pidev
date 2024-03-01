@@ -3,12 +3,13 @@
 {% block title %}Stat{% endblock %}
 
 {% block body %}
+<h1 style="text-align: center;">statistique des interets</h1>
     <div style="display: flex; justify-content: center;">
         <canvas id="pieChart" width="400" height="400" style="margin: 0 auto;"></canvas>
     </div>
     
     <div style="text-align: center; margin-top: 20px;">
-        <p>Nombre totale d'Utilisateurs: {{ totalUsers }}</p>
+        <h1>Nombre total d'Utilisateurs: {{ totalUsers }}</h1>
          <p>Les Utilisateurs verifiés: {{ verifiedUsers }}</p>
     </div>
 
@@ -57,9 +58,23 @@
                 maintainAspectRatio: false,
                 legend: {
                     display: true,
-                    position: 'right' // positionnez la légende sur le côté droit
+                    position: 'right'
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var dataset = data.datasets[tooltipItem.datasetIndex];
+                            var currentValue = dataset.data[tooltipItem.index];
+                            var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                return previousValue + currentValue;
+                            });
+                            var percent = Math.round((currentValue / total) * 100);
+                            return data.labels[tooltipItem.index] + ': ' + currentValue + ' (' + percent + '%)';
+                        }
+                    }
                 }
             }
         });
     </script>
 {% endblock %}
+
