@@ -13,6 +13,8 @@
         "doctrine/orm": "^2.17",
         "dompdf/dompdf": "^2.0",
         "gedmo/doctrine-extensions": "^3.13",
+        "knpuniversity/oauth2-client-bundle": "^2.18",
+        "league/oauth2-google": "^4.0",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.24",
         "sensio/framework-extra-bundle": "^6.2",

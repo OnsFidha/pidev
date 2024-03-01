@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
+
 /**
  * @extends ServiceEntityRepository<User>
 * @implements PasswordUpgraderInterface<User>
@@ -20,6 +21,14 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    public function countUsersByRole(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.roles, COUNT(u.id) as userCount')
+            ->groupBy('u.roles')
+            ->getQuery()
+            ->getResult();
+    }
     public function findByPartialName($query)
     {
         return $this->createQueryBuilder('e')
@@ -46,7 +55,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
-
+    public function getTotalUsersCount(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    public function getVerifiedUsersCount(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->andWhere('u.isVerified = :verified')
+            ->setParameter('verified', true)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
