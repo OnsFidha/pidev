@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use App\Repository\FeedbackRepository;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 
@@ -54,10 +55,16 @@ class EvenementController extends AbstractController
 }
 
     #[Route('/listEvent', name: 'list_event')]
-    public function listEvent(EvenementRepository $eventrepo): Response
+    public function listEvent(Request $request,EvenementRepository $eventrepo,PaginatorInterface $paginator): Response
     {
+        $events= $eventrepo->findAll();
+        $events = $paginator->paginate(
+            $events, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            2/*limit per page*/
+        );
         return $this->render('evenement/listevent.html.twig', [
-            'events' => $eventrepo->findAll(),
+            'events' => $events,
         ]);
     }
     #[Route('/editevent/{id}', name: 'editevent')]

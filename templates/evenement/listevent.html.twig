@@ -32,8 +32,11 @@
                         </div>
                     </div>
                 </a>
+                  
             </div>
+          
             {% endfor %}
+            {{ knp_pagination_render(events) }}
             {% if events|length == 0 %}
             <div class="col">
                 <div class="card">
@@ -46,8 +49,19 @@
         </div>
     </div>
 </section>
+<style>
+.pagination .page-item.active .page-link {
+    background-color: #f29d88;
+    border-color: #f29d88;
+    color: #ffffff;
+}
 
-    
+.pagination .page-item .page-link {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #f29d88;
+}
+</style>
    
    
 {% endblock %}
