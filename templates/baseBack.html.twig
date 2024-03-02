@@ -12,6 +12,7 @@
     <title>{% block title %}Artistool - Dashboard{% endblock %}</title>
 
     <!-- Custom fonts for this template-->
+
     {% block css%} 
     <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link
@@ -153,6 +154,11 @@
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('stats') }}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts évènements</span></a>
             </li>
 
         
@@ -411,7 +417,7 @@
     
 
     
-    
+
 
     {% block js %}
 
@@ -424,6 +430,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+    
 
     <!-- Page level plugins -->
     <script src="{{asset('vendor/chart.js/Chart.min.js') }}"></script>
@@ -431,6 +438,8 @@
     <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/chart-area-demo.js') }}"></script>
     <script src="{{asset('js/demo/chart-pie-demo.js ') }}"></script>
+
+    
     {% endblock %}
 
 </body>

@@ -79,4 +79,9 @@ class Participation
 
         return $this;
     }
+    public function __toString(): string
+    {
+        return $this->getIdevent();
+        return $this->getIdUser(); // Assuming getUsername() returns a string property of the User entity
+    }
 }

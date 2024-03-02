@@ -14,6 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Evenement;
 use App\Form\EvenementType;
 use App\Repository\EvenementRepository;
+use App\Repository\ParticipationRepository;
 
 class AdminController extends AbstractController
 {
@@ -24,6 +25,7 @@ class AdminController extends AbstractController
             
             'feedback' => $fbRepository->findAll(),
             'event' => $eventRepository->findAll(),
+            
         ]);
     }
     #[Route('/newfbadmin/{id}', name: 'admin_feedback_new', methods: ['GET', 'POST'])]
@@ -142,6 +144,35 @@ class AdminController extends AbstractController
             $em->flush();
     
             return $this->redirectToRoute('app_admin');
+        }
+
+        #[Route('/stats', name: 'stats')]
+        public function statistiques(EvenementRepository $eventRepo){
+            // On va chercher toutes les catégories
+             $events = $eventRepo->findAll();
+    
+             $eventNom = [];
+             $eventpartCount = [];
+             $eventCount = [];
+
+    
+            // On "démonte" les données pour les séparer tel qu'attendu par ChartJS
+             foreach($events as $event){
+                 $eventNom[] = $event->getNom();
+            //     $categColor[] = $categorie->getColor();
+                 $eventCount[] = count($event->getFeedback());
+                 $eventpartCount[] = count($event->getParticipations());
+             }
+    
+            
+    
+            return $this->render('admin/stats.html.twig', [
+                'eventNom' => json_encode($eventNom),
+                
+                'eventCount' => json_encode($eventCount),
+                'eventpartCount' => json_encode($eventpartCount),
+               
+            ]);
         }
     
 

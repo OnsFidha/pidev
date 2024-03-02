@@ -1,0 +1,108 @@
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous">
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        margin-top:10%;
+        color: #6a9486;
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 28px;
+      
+    }
+
+    canvas {
+        margin-bottom: 20px;
+        max-width: 100%;
+        height: auto;
+    }
+
+   .back-button {
+        display: inline-block;
+        float: left; 
+        background-color: #b8f5f0;
+        color: #ffffff;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .back-button i {
+        margin-right: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <button class="back-button" onclick="window.history.back()">
+        <i class="fa-solid fa-arrow-left">Retour</i>
+    </button>
+    <h1>Statistiques</h1>
+    <canvas id="evenements" width="600" height="300"></canvas>
+    <canvas id="eventpart" width="600" height="300"></canvas>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+<script>
+    let evenements = document.querySelector("#evenements");
+    let eventGraph = new Chart(evenements, {
+        type: "pie",
+        data: {
+            labels: {{ eventNom|raw }},
+            datasets: [{
+                label: "Nombre de feedback par évènement",
+                data: {{ eventCount|raw }},
+                backgroundColor: ["#d2d4fa","#b8f5f0","#f4b8f5","#e0f5b8","#fad2f4"]
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Nombre de feedback par évènement",
+                fontSize: 16,
+                fontColor: 'black'
+            }
+        }
+    });
+
+    let eventpart = document.querySelector("#eventpart");
+    let eventpartGraph = new Chart(eventpart, {
+        type: "pie",
+        data: {
+            labels: {{ eventNom|raw }},
+            datasets: [{
+                label: "Nombre de participation par évènement",
+                data: {{ eventpartCount|raw }},
+                backgroundColor: ["#bac7ff","#e2baff","#ffbafa","#bafff2"]
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Nombre de participation par évènement",
+                fontSize: 16,
+                fontColor: 'black'
+            }
+        }
+    });
+</script>
+{% endblock %}

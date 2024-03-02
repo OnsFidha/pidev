@@ -2,81 +2,129 @@
 {% block title %}Feedback index{% endblock %}
 
 {% block body %}
-    <h1>Evenements</h1>
 
-    <table class="table mt-4">
-     <a href="{{ path('admin_evenement') }}" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
-    
-        <thead>
-            <tr>
-                <th>Id</th>
+
+<h1 style="color: teal; text-align: center; font-weight: bold; font-size: 2em;">Evenements</h1>
+
+<a href="{{ path('admin_evenement') }}" class="btn btn-info add-new" style="background-color: teal; border-color: teal;">
+    <i class="fa fa-plus"></i> Add New
+</a>
+
+<div class="table-responsive mt-4">
+    <table class="table table-bordered table-hover" style="border-color: teal;">
+        <thead class="thead-light">
+            <tr style="background-color: teal; color: white;">
+                <th>ID</th>
                 <th>Nom</th>
-                <th>description</th>
+                <th>Description</th>
                 <th>Image</th>
                 <th>Lieu</th>
                 <th>Date de début</th>
                 <th>Date de fin</th>
-                <th>Nombre de partcipants</th>
-                <th>actions</th>
+                <th>Nombre de participants</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for e in event %}
-            <tr>
-                <td>{{ e.id }}</td>
-                <td>{{ e.nom}}</td>
-                <td>{{ e.description }}</td>
-                <td>{{ e.image }}</td>
-                <td>{{ e.lieu }}</td>
-                <td>{{ e.getDateDebut|date('d F Y')  }}</td>
-                <td>{{ e.getDateFin|date('d F Y')  }}</td>
-                <td>{{ e.getNbreMax }}</td>
-                <td>
-                    <a href="{{ path('admindeleteevent', {'id': e.id}) }}">Supprimer</a>
-                    <a href="{{ path('admineditevent', {'id': e.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for e in event %}
+                <tr>
+                    <td>{{ e.id }}</td>
+                    <td>{{ e.nom}}</td>
+                    <td>{{ e.description }}</td>
+                    <td>{{ e.image }}</td>
+                    <td>{{ e.lieu }}</td>
+                    <td>{{ e.getDateDebut|date('d F Y')  }}</td>
+                    <td>{{ e.getDateFin|date('d F Y')  }}</td>
+                    <td>{{ e.getNbreMax }}</td>
+                    <td>
+                        <a href="{{ path('admindeleteevent', {'id': e.id}) }}" class="btn btn-danger" style="background-color: #50C878; border-color: #50C878; height: 40px; width: 40px; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s;">
+    <i class="fas fa-trash-alt"></i>
+</a>
+
+<a href="{{ path('admineditevent', {'id': e.id}) }}" class="btn btn-primary" style="background-color: #008080; border-color: #008080; height: 40px; width: 40px; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s;">
+    <i class="fas fa-edit"></i>
+</a>
+
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9" style="color: teal;">No records found</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
+</div>
+
 
     
 
-    <h1>Feedback index</h1>
+   <h1 style="color: teal; text-align: center; font-weight: bold; font-size: 2em;">Feedback</h1>
 
-    <table class="table mt-4">
-    
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>IdEvenement</th>
+
+<div class="table-responsive mt-4">
+    <table class="table table-bordered table-hover" style="border-color: teal;">
+        <thead class="thead-light">
+            <tr style="background-color: teal; color: white;">
+                <th>ID</th>
+                <th>Event ID</th>
                 <th>Text</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for fb in feedback %}
-            <tr>
-                <td>{{ fb.id }}</td>
-                <td>{{ fb.getIdEvenement().id }}</td>
-                <td>{{ fb.text }}</td>
-                <td>
-                    <a href="{{ path('admin_feedback_delete', {'id': fb.id}) }}">Supprimer</a>
-                    <a href="{{ path('admin_feedback_edit', {'id': fb.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for fb in feedback %}
+                <tr>
+                    <td>{{ fb.id }}</td>
+                    <td>{{ fb.getIdEvenement().id }}</td>
+                    <td>{{ fb.text }}</td>
+                    <td>
+                       <a href="{{ path('admin_feedback_delete', {'id': fb.id}) }}" class="btn btn-primary" title="Delete" style="background-color: #50C878; border-color: #50C878; height: 40px; width: 40px; display: flex; align-items: center; justify-content: center;">
+    <i class="fas fa-trash-alt"></i>
+</a>
+
+<a href="{{ path('admin_feedback_edit', {'id': fb.id}) }}" class="btn btn-primary" title="Edit" style="background-color: #008080; border-color: #008080; height: 40px; width: 40px; display: flex; align-items: center; justify-content: center;">
+    <i class="fas fa-edit"></i>
+</a>
+
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" style="color: teal;">No records found</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
+</div>
 
-    
+</div>
+ 
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    let evenements = document.querySelector("#evenements");
+    let eventGraph = new Chart(evenements, {
+        type: "pie",
+        data: {
+            labels: ["cat1", "cat 2", "cat3"],
+            datasets: [{
+                label: "Répartition des catégories",
+                data: [2, 5, 4],
+                backgroundColor: ["red", "blue", "green"]
+            }]
+        }
+    });
+</script>
+
+</script>
+
+{% endblock %}
