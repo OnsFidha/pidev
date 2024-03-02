@@ -35,7 +35,12 @@ class CollaborationController extends AbstractController
         }
         $message = 'Contenu de l\'e-mail'; 
         foreach ($users as $user) {
-            $mailService->sendEmail($user->getEmail(), 'Sujet de l\'e-mail', $message);
+            try {
+                $mailService->sendEmail($user->getEmail(), 'Sujet de l\'e-mail', $message);
+            } catch (\Exception $e) {
+                echo "Une erreur s'est produite lors de l'envoi de l'e-mail : " . $e->getMessage();
+            }
+            
         }
     
         return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);

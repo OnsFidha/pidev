@@ -15,17 +15,17 @@ class MailService
         $this->mailer = $mailer;
     }
 
-    public function sendEmail(string $to,  string $message): void
+    public function sendEmail(): void
     {
         $email = (new Email())
             ->from('onsfidha3@gmail.com')
-            ->to($to)
+            ->to('onsfidhaa@gmail.com')
             ->subject('Collaboration de Artistool')
-            ->html($message);
-try {
-    $this->mailer->send($email);
-} catch (TransportExceptionInterface $e) {
- throw new \RuntimeException("Impossible denv");
-}
+            ->html('hiii');
+    try {
+        $this->mailer->send($email);
+    } catch (TransportExceptionInterface $e) {
+    throw new \RuntimeException("Impossible denv");
+    }
     }
 }
