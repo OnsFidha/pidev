@@ -10,6 +10,7 @@ use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
 use App\Repository\PublicationRepository;
 use App\Repository\CollaborationRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,9 +54,11 @@ class PublicationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_publication_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function new(Request $request, EntityManagerInterface $entityManager,UserRepository $repU): Response
+    {    $userId=1;
+        $user = $repU->find($userId);
         $publication = new Publication();
+        $publication->setIdUser($user);
         $publication->setDateCreation(new \DateTime()); 
         $form = $this->createForm(PublicationType::class, $publication, ['attr' => ['enctype' => 'multipart/form-data']] );
         $form->handleRequest($request);

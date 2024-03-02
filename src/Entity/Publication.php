@@ -54,6 +54,9 @@ class Publication
     #[ORM\ManyToMany(targetEntity: Collaboration::class, mappedBy: 'pub')]
     private Collection $collaborations;
 
+    #[ORM\ManyToOne(inversedBy: 'publications')]
+    private ?User $id_user = null;
+
 
 
     public function __toString()
@@ -209,6 +212,18 @@ class Publication
         if ($this->collaborations->removeElement($collaboration)) {
             $collaboration->removePub($this);
         }
+
+        return $this;
+    }
+
+    public function getIdUser(): ?User
+    {
+        return $this->id_user;
+    }
+
+    public function setIdUser(?User $id_user): static
+    {
+        $this->id_user = $id_user;
 
         return $this;
     }

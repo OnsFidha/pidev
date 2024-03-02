@@ -23,27 +23,23 @@ class CollaborationController extends AbstractController
     #[Route('/mail/{id}', name: 'email')]
     public function contactUser(Request $request, MailService $mailService, $id,CollaborationRepository $collaborationRepository)
     {
-        // Récupérer la collaboration en fonction de l'ID
-        $collaboration = $collaborationRepository->find($id);
+        $mailService->sendEmail();
+        // // Récupérer la collaboration en fonction de l'ID
+        // $collaboration = $collaborationRepository->find($id);
     
-        if (!$collaboration) {
-            throw $this->createNotFoundException('La collaboration avec l\'ID ' . $id . ' n\'a pas été trouvée.');
-        }
-        $users = $collaboration->getUser();
-        if ($users->isEmpty()) {
-            throw $this->createNotFoundException('Aucun utilisateur associé à la collaboration avec l\'ID ' . $id);
-        }
-        $message = 'Contenu de l\'e-mail'; 
-        foreach ($users as $user) {
-            try {
-                $mailService->sendEmail($user->getEmail(), 'Sujet de l\'e-mail', $message);
-            } catch (\Exception $e) {
-                echo "Une erreur s'est produite lors de l'envoi de l'e-mail : " . $e->getMessage();
-            }
-            
-        }
+        // if (!$collaboration) {
+        //     throw $this->createNotFoundException('La collaboration avec l\'ID ' . $id . ' n\'a pas été trouvée.');
+        // }
+        // $users = $collaboration->getUser();
+        // if ($users->isEmpty()) {
+        //     throw $this->createNotFoundException('Aucun utilisateur associé à la collaboration avec l\'ID ' . $id);
+        // }
+        // $message = 'Contenu de l\'e-mail'; 
+        // foreach ($users as $user) {
+        //     $mailService->sendEmail($user->getEmail(), 'Sujet de l\'e-mail', $message);
+        // }
     
-        return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
+         return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
 
     }
     

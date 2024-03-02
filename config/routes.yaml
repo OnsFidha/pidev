@@ -4,3 +4,4 @@
 filtre:
   path: /filter-publications
   controller : App\Controller\PublicationController::filterPublications
+  

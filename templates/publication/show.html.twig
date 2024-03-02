@@ -3,6 +3,7 @@
 {% block title %}Publication{% endblock %}
 
 {% block body %}
+<div class='container'>
     <h1>Publication</h1>
     {% if publication.type == 'offre' %}
         <div class="d-flex justify-content-end mb-3">
@@ -136,25 +137,5 @@
         });
     </script>
 
-    {% if errors is defined and errors is not empty %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var modal = document.getElementById('commentModal');
-            if (modal) {
-                modal.classList.add('show');
-                modal.style.display = 'block';
-                modal.setAttribute('aria-modal', true);
-            }
-            var closeModalButton = document.querySelector('#commentModal .close');
-
-            if (closeModalButton && modal) {
-                closeModalButton.addEventListener('click', function() {
-                    modal.classList.remove('show');
-                    modal.style.display = 'none';
-                    modal.setAttribute('aria-modal', false);
-                });
-            }
-        });
-    </script>
-    {% endif %}
+    </div>
 {% endblock %}

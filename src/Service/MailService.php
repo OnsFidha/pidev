@@ -22,10 +22,8 @@ class MailService
             ->to('onsfidhaa@gmail.com')
             ->subject('Collaboration de Artistool')
             ->html('hiii');
-    try {
+ 
         $this->mailer->send($email);
-    } catch (TransportExceptionInterface $e) {
-    throw new \RuntimeException("Impossible denv");
-    }
+    
     }
 }

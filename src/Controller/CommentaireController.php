@@ -7,6 +7,7 @@ use App\Service\BadWordDetector;
 use App\Entity\Publication;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +26,11 @@ class CommentaireController extends AbstractController
     }
 
     #[Route('/new/{id}', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, $id, BadWordDetector $badWordDetector): Response
-    {
+    public function new(Request $request, EntityManagerInterface $entityManager,UserRepository $repU, $id, BadWordDetector $badWordDetector): Response
+    {  $userId=1;
+        $user = $repU->find($userId);
         $commentaire = new Commentaire();
+        $commentaire->setIdUser( $user);
         $commentaire->setDateCreation(new \DateTime());
         $publication = $entityManager->getRepository(Publication::class)->find($id);
         $commentaire->setIdPublication($publication);
