@@ -28,6 +28,13 @@ class PublicationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function trie_decroissant_date()
+    {
+        return $this->createQueryBuilder('publication')
+            ->orderBy('publication.date_creation','DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Publication[] Returns an array of Publication objects

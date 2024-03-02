@@ -2,19 +2,22 @@
 
 namespace App\Controller;
 
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Publication;
 use App\Entity\Commentaire;
 use App\Form\PublicationType;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
 use App\Repository\PublicationRepository;
+use App\Repository\CollaborationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\File\File;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 
 #[Route('/publication')]
@@ -24,14 +27,28 @@ class PublicationController extends AbstractController
     public function index(PublicationRepository $publicationRepository): Response
     {
         return $this->render('publication/index.html.twig', [
-            'publications' => $publicationRepository->findAll(),
+            'publications' => $publicationRepository->trie_decroissant_date(),
         ]);
     }
+    //chart 
     #[Route('/admin', name: 'app_publication_admin', methods: ['GET'])]
     public function index2(PublicationRepository $publicationRepository): Response
     {
+        $offerCount = $publicationRepository->countByType('offre');
+        $ordinaryCount = $publicationRepository->countByType('ordinaire');
+        $publications = $publicationRepository->findAll();
+        $publicationLabels = [];
+        $collaboratorCounts = [];
+        foreach ($publications as $publication) {
+            $publicationLabels[] = 'nbre collaborateurs pour pub #'.$publication->getId(); 
+            $collaboratorCounts[] = count($publication->getCollaborations()); 
+        }
         return $this->render('publication/admin_pub.html.twig', [
             'publications' => $publicationRepository->findAll(),
+            'offerCount' => $offerCount,
+            'ordinaryCount' => $ordinaryCount,
+            'publicationLabels' => $publicationLabels,
+            'collaboratorCounts' => $collaboratorCounts,
         ]);
     }
 
@@ -134,22 +151,31 @@ class PublicationController extends AbstractController
         return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
     }
   
-    #[Route("/filter-publications", name: "filter_publications", methods: ["POST"])]
+    #[Route("/filter-publications", name: "filter-publications", methods: ["POST"])]
     public function filterPublications(Request $request, PublicationRepository $publicationRepository)
     {
         $type = $request->request->get('publicationType');
-    
-        if ($type === 'offre') {
-            $publications = $publicationRepository->findByType('offre');
-        } elseif ($type === 'ordinaire') {
-            $publications = $publicationRepository->findByType('ordinaire');
-        } else {
-            $publications = $publicationRepository->findAll();
-        }
-        $response = new Response(json_encode($publications));
-        $response->headers->set('Content-Type', 'application/json');
-    
-        return $response;  
+            if ($type === 'offre' || $type === 'ordinaire') {
+                $publications = $publicationRepository->findByType($type);
+            } else {
+                $publications = $publicationRepository->findAll();
+            }
+
+            $responseData = [];
+            foreach ($publications as $publication) {
+                $responseData[] = [
+                    'id' => $publication->getId(),
+                    'photo' => $publication->getPhoto(),
+                    'type' => $publication->getType(),
+                    'lieu' => $publication->getLieu(),
+                    'text' => $publication->getText(),
+                    'dateCreation' => $publication->getDateCreation()->format('Y-m-d'), 
+                    'dateModification' => $publication->getDateModification()->format('Y-m-d'), 
+                ];
+            }
+
+            return new JsonResponse(['publications' => $responseData]);
+       
     }
     
     #[Route('/d/{id}', name: 'app_publication_deleteA', methods: ['POST'])]

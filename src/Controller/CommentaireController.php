@@ -50,6 +50,7 @@ class CommentaireController extends AbstractController
         return $this->renderForm('commentaire/new.html.twig', [
             'commentaire' => $commentaire,
             'form' => $form,
+            'errors'=>$form->getErrors(true,false)
         ]);
     }
     

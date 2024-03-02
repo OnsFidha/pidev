@@ -4,83 +4,71 @@
 
 {% block body %}
     <h1>Publication</h1>
-<section id="about" class="about">
-      <div class="container">
-
-        <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
-            <img src="{{ asset('pub/' ~ publication.photo) }}" class="img-fluid" alt="Paysage">
-          </div>
-          <div class="col-lg-5 content">
-            <div class="row">
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Type:</strong> <span>{{ publication.type }}</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Lieu:</strong> <span>{{ publication.lieu }}</span></li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Date de création:</strong> <span>{{ publication.getDateCreation|date('d F Y') }}</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Date de modification:</strong> <span>{{ publication.getDateModification|date('d F Y') }}</span></li>
-                </ul>
-              </div>
-            </div>
-            <p class="py-3">
-            {{ publication.text }} 
-            </p>
-          </div>
+    {% if publication.type == 'offre' %}
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ path('app_collaboration_index', {'id': publication.id}) }} "class="btn" style="background-color: #F9A936; border-color: #F9A936;">
+            <i class="bi bi-people-fill me-2"></i>Liste des collaborateurs
+            </a>
         </div>
-
-      </div>
+    {% endif %}
+    <section id="about" class="about">
+        <div class="container">
+            <div class="row gy-4 justify-content-center">
+                <div class="col-lg-4">
+                    <img src="{{ asset('pub/' ~ publication.photo) }}" class="img-fluid" alt="Paysage">
+                </div>
+                <div class="col-lg-5 content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul>
+                                <li><i class="bi bi-chevron-right"></i> <strong>Type:</strong> <span>{{ publication.type }}</span></li>
+                                <li><i class="bi bi-chevron-right"></i> <strong>Lieu:</strong> <span>{{ publication.lieu }}</span></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul>
+                                <li><i class="bi bi-chevron-right"></i> <strong>Date de création:</strong> <span>{{ publication.getDateCreation|date('d F Y') }}</span></li>
+                                <li><i class="bi bi-chevron-right"></i> <strong>Date de modification:</strong> <span>{{ publication.getDateModification|date('d F Y') }}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="py-3">
+                        {{ publication.text }} 
+                    </p>
+                </div>
+            </div>
+        </div>
     </section>
-    <div class="btn-group" role="group">
-        <a href="{{ path('app_publication_edit', {'id': publication.id}) }}" class="btn btn-primary">
-            <i class="fas fa-edit"></i>
-        </a>
-        <a href="{{ path('app_commentaire_new', {'id': publication.id}) }}" class="btn btn-success" data-toggle="modal" data-target="#commentModal">
-            <i class="fas fa-comment"></i>
-        </a>
-    </div>
-    {{ include('publication/_delete_form.html.twig', {'button_class': 'btn btn-danger'}) }}
 
-   <a href="{{ path('app_collaboration_new', {'id': publication.id}) }}" class="btn btn-primary">
+<style>
+    .btn-group  {
+        gap: 15px; 
+    }
+
+    .btn-group .btn {
+        border-radius: 10px !important; /* Modifier le rayon selon vos préférences */
+    }
+</style>
+   
+</style>
+<br><br>
+<div class="btn-group" role="group">
+    <a href="{{ path('app_publication_edit', {'id': publication.id}) }}" class="btn btn-primary" style="background-color: #F26A77;border-color:#F26A77">
+        <i class="fas fa-edit"></i>
+    </a>
+    <a id="comment-link" href="#" class="btn btn-success" data-toggle="modal" data-target="#commentModal" style="background-color: #91DAF0; border-color:#91DAF0">
+        <i class="fas fa-comment"></i>
+    </a>
+    {{ include('publication/_delete_form.html.twig', {'button_class': 'btn btn-danger'}) }}
+</div>
+
+<br><br>
+
+    {% if publication.type == 'offre' %}
+        <a href="{{ path('app_collaboration_new', {'id': publication.id}) }}" class="btn btn-primary" style="background-color: #F9A936;border-color: #F9A936">
             Collaborer
         </a>
-
-    <!-- Modale pour le formulaire de commentaire -->
-    <div class="modal fade" id="commentModal" width='400px' tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="commentModalLabel">Ajouter un commentaire</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    {{ form_start(commentForm) }}
-                    {{ form_label(commentForm.text) }}<br>
-                    {{ form_widget(commentForm.text, {'attr': {'class': 'form-control'}}) }}
-                    {% if form_errors(commentForm.text)|length > 0 %}
-                        {% for error in form_errors(commentForm.text) %}
-                            <div class="alert alert-danger">{{ form_errors(commentForm.text) }}</div>
-                        {% endfor %}
-                    {% endif %}
-                    <br>
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
-                    {{ form_end(commentForm) }}
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-
-<!-- Assurez-vous que jQuery et Bootstrap sont inclus -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-
+    {% endif %}
 
     <section id="testimonials" class="testimonials">
       <div class="container">
@@ -111,14 +99,62 @@
     <div class="swiper-pagination" style='color:black'></div>
 </div>
 
- <script>
+    <div class="modal fade" id="commentModal" width='400px' tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="commentModalLabel">Ajouter un commentaire</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(commentForm) }}
+                    {{ form_label(commentForm.text) }}<br>
+                    {{ form_widget(commentForm.text, {'attr': {'class': 'form-control'}}) }}
+                    {% if errors is defined and errors is not empty %}
+                        <div class="alert alert-danger">
+                            {% for error in errors %}
+                                {{ error.message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <br>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    {{ form_end(commentForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
         $(document).ready(function() {
             $('#comment-link').click(function(e) {
-                e.preventDefault(); // Empêche le lien de suivre son URL
-                $('#commentModal').modal('show'); // Affiche la modale
+                e.preventDefault(); // Prevent the link from following its URL
+                $('#commentModal').modal('show'); // Show the modal
             });
         });
     </script>
-      </div>
-    </section>
+
+    {% if errors is defined and errors is not empty %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = document.getElementById('commentModal');
+            if (modal) {
+                modal.classList.add('show');
+                modal.style.display = 'block';
+                modal.setAttribute('aria-modal', true);
+            }
+            var closeModalButton = document.querySelector('#commentModal .close');
+
+            if (closeModalButton && modal) {
+                closeModalButton.addEventListener('click', function() {
+                    modal.classList.remove('show');
+                    modal.style.display = 'none';
+                    modal.setAttribute('aria-modal', false);
+                });
+            }
+        });
+    </script>
+    {% endif %}
 {% endblock %}

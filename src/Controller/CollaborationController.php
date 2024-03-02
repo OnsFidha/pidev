@@ -12,16 +12,46 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\MailService;
+
 
 #[Route('/collaboration')]
 class CollaborationController extends AbstractController
-{
-    #[Route('/', name: 'app_collaboration_index', methods: ['GET'])]
-    public function index(CollaborationRepository $collaborationRepository,): Response
+{   
+   
+   
+    #[Route('/mail/{id}', name: 'email')]
+    public function contactUser(Request $request, MailService $mailService, $id,CollaborationRepository $collaborationRepository)
     {
+        // Récupérer la collaboration en fonction de l'ID
+        $collaboration = $collaborationRepository->find($id);
+    
+        if (!$collaboration) {
+            throw $this->createNotFoundException('La collaboration avec l\'ID ' . $id . ' n\'a pas été trouvée.');
+        }
+        $users = $collaboration->getUser();
+        if ($users->isEmpty()) {
+            throw $this->createNotFoundException('Aucun utilisateur associé à la collaboration avec l\'ID ' . $id);
+        }
+        $message = 'Contenu de l\'e-mail'; 
+        foreach ($users as $user) {
+            $mailService->sendEmail($user->getEmail(), 'Sujet de l\'e-mail', $message);
+        }
+    
+        return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
+
+    }
+    
+    #[Route('/{id}', name: 'app_collaboration_index', methods: ['GET'])]
+    public function index(CollaborationRepository $collaborationRepository,$id,PublicationRepository $publicationRepository): Response
+    {
+        $collaborations = $collaborationRepository->findByPublicationId($id);
+
+        // Vous pouvez ensuite passer les collaborations à votre template pour les afficher, ou effectuer toute autre opération nécessaire
         return $this->render('collaboration/index.html.twig', [
-            'collaborations' => $collaborationRepository->findAll(),
+            'collaborations' => $collaborations,
         ]);
+      
     }
 
     #[Route('/new/{id}', name: 'app_collaboration_new', methods: ['GET', 'POST'])]

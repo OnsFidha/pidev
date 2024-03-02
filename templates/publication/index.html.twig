@@ -2,22 +2,37 @@
 
 {% block title %}Publication{% endblock %}
 
+
 {% block body %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <h1>Liste des publications</h1>
-    <a href="{{ path('app_publication_new') }}">
-        <i class="bi bi-plus-circle" style="font-size: 25px;"></i> Ajouter une nouvelle publication
+<div class="d-flex justify-content-end mb-3">
+    <a href="{{ path('app_publication_new') }}" class="btn btn-primary" style="background-color: #F9A936; border-color: #F9A936;">
+        <i class="bi bi-plus-circle-fill me-2"></i> Ajouter une nouvelle publication
     </a>
-    
-    <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="float: right;">
-        <input type="radio" class="btn-check" name="publicationType" id="offreBtn" autocomplete="off" value="offre">
-        <label class="btn btn-outline-primary" for="offreBtn">Offre</label>
+</div>
 
-        <input type="radio" class="btn-check" name="publicationType" id="ordinaireBtn" autocomplete="off" value="ordinaire">
-        <label class="btn btn-outline-primary" for="ordinaireBtn">Ordinaire</label>
-    </div>
-    
+<div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="background-color: #FEFCF3; border-radius: 5px;">
+    <input type="radio" class="btn-check" name="publicationType" id="offreBtn" autocomplete="off" value="offre">
+    <label class="btn btn-outline-primary" for="offreBtn" style="background-color: #F9A936; border-color: white;">Offre</label>
+
+    <input type="radio" class="btn-check" name="publicationType" id="ordinaireBtn" autocomplete="off" value="ordinaire">
+    <label class="btn btn-outline-primary" for="ordinaireBtn" style="background-color: #F9A936; border-color:white">Ordinaire</label>
+</div>
+<style>
+    .btn-primary:hover {
+        background-color: #FEFCF3 !important;
+        color:black;
+    } .btn-outline-primary  {
+    color:white;}
+       .btn-outline-primary:hover {
+        background-color: #FEFCF3 !important;
+         color:black;
+    }
+</style>
+
     <section id="gallery" class="gallery">
         <div class="container-fluid">
             <div class="row gy-4 justify-content-center">
@@ -52,33 +67,10 @@
         </div>
     </section>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('input[name="publicationType"]').change(function() {
-                var selectedType = $(this).val();
-                $.ajax({
-                    url: '{{ path('filter_publications') }}',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: { publicationType: selectedType },
-                    success: function(data) {
-                        console.log(data); // Afficher les données dans la console
-                        // Mettre à jour l'interface utilisateur avec les données renvoyées si nécessaire
-                    },
-                  error: function(xhr, status, error) {
-    console.error('Une erreur s\'est produite lors de la requête:', error,xhr.responseText);
-    console.log(xhr.responseText);
-}
-                });
-            });
-        });
-    </script>
-    
+
+
     {% for flashMessage in app.session.flashBag.get('success') %}
         <script>
-            // Affiche la SweetAlert après 3 secondes
-       
                 Swal.fire({
                     icon: 'success',
                     title: 'Succès!',

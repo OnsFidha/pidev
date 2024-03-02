@@ -3,42 +3,53 @@
 {% block title %}Collaboration index{% endblock %}
 
 {% block body %}
-    <h1>Collaboration index</h1>
+    <h1 class="mb-4">Collaboration Index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Disponibilite</th>
-                <th>Competence</th>
-                <th>Cv</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for collaboration in collaborations %}
-            <tr>
-                <td>{{ collaboration.id }}</td>
-                <td>{{ collaboration.disponibilite }}</td>
-                <td>{{ collaboration.competence }}</td>
-                <td>   {% if collaboration.cv %}
-                    <a href="{{ asset('cv/' ~ collaboration.cv) }}" download="{{ collaboration.cv }}">Télécharger CV</a>
-                {% else %}
-                    Aucun CV téléchargé
-                {% endif %}
-                </td>
-                <td>
-                    <a href="{{ path('app_collaboration_show', {'id': collaboration.id}) }}">show</a>
-                    <a href="{{ path('app_collaboration_edit', {'id': collaboration.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-3">Collaboration #{{ collaboration.id }}</h5>
+                        <p class="card-text"><strong>Disponibilité:</strong> <br>{{ collaboration.disponibilite }}</p>
+                        <p class="card-text"><strong>Compétences:</strong></p>
+                        <div>
+                        {% set colors = ['#BEE5B4', '#91DAF0', '#F26A77', '#F9A936'] %}
+                        {% set competences = collaboration.competence|split(' ') %}
 
-   
+                        {% for competenc in competences %}
+                            {% set index = loop.index0 %} {# Récupérer l'index actuel dans la boucle #}
+                            {% set color = colors[index % colors|length] %} {# Choisir une couleur de la liste en fonction de l'index #}
+                            <span class="badge" style="background-color: {{ color }}">{{ competenc }}</span><br>
+                        {% endfor %}
+
+                        </div><br>
+                        {% if collaboration.cv %}
+                            <p class="card-text"><strong></strong> <a href="{{ asset('cv/' ~ collaboration.cv) }}" download="{{ collaboration.cv }}">Télécharger CV</a></p>
+                        {% else %}
+                            <p class="card-text"><strong></strong> Aucun CV téléchargé</p>
+                        {% endif %}
+                        <hr>
+                        <h6 class="card-subtitle mb-3">Utilisateur Associés:</h6>
+                        {% for user in collaboration.user %}
+                            <div class="d-flex flex-column align-items-center mb-3">
+                                {% if user.image %}
+                                    <img src="{{ asset('user/' ~ user.image) }}" alt="User Photo" class="mb-2" style="width: 80px; height: 80px; border-radius: 50%;">
+                                {% endif %}
+                                <p class="mb-1">{{ user.email }}</p>
+                                <div>
+                                <br>
+                                    <a href="{{ path('email', {'id': collaboration.id}) }}" class="btn btn-primary me-2" style="background-color: #F9A936; border-color: #F9A936;">Contacter</a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <p class="card-text">Aucun utilisateur associé</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="col">Aucun enregistrement trouvé</p>
+        {% endfor %}
+    </div>
 {% endblock %}

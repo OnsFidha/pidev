@@ -20,6 +20,15 @@ class CollaborationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Collaboration::class);
     }
+    public function findByPublicationId(int $publicationId): array
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.pub', 'p')
+            ->andWhere('p.id = :publicationId')
+            ->setParameter('publicationId', $publicationId)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Collaboration[] Returns an array of Collaboration objects

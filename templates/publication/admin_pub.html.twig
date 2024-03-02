@@ -2,40 +2,138 @@
 
 {% block title %}Publication {% endblock %}
 
-{% block body %}
-<div class='container'>
-<div class='card'>
-    <h1>Liste des publications</h1>
-    
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Photo</th>
-                <th>Texte</th>
-                <th>Date de création</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for publication in publications %}
-            <tr>
-                <td>{{ publication.type }}</td>
-                <td><img src="{{ asset('pub/' ~ publication.photo) }}" class="img-fluid" alt="Paysage" width="100px" height="150px"></td>
-                <td>{{ publication.text }}</td>
-                <td>{{ publication.dateCreation ? publication.dateCreation|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_publication_showAdd', {'id': publication.id}) }}" class="btn btn-primary">Détails</a>
-                      {{ include('publication/deletA.html.twig') }}
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="5">Pas de publications</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% block body %}  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class='container'>
+        <div class='card'>
+            <h1>Liste des publications</h1>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Photo</th>
+                        <th>Texte</th>
+                        <th>Date de création</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for publication in publications %}
+                    <tr>
+                        <td>{{ publication.type }}</td>
+                        <td><img src="{{ asset('pub/' ~ publication.photo) }}" class="img-fluid" alt="Paysage" width="100px" height="150px"></td>
+                        <td>{{ publication.text }}</td>
+                        <td>{{ publication.dateCreation ? publication.dateCreation|date('Y-m-d') : '' }}</td>
+                        <td>
+                            <a href="{{ path('app_publication_showAdd', {'id': publication.id}) }}" class="btn btn-primary">Détails</a>
+                            {{ include('publication/deletA.html.twig') }}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5">Pas de publications</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+          <div class='col-lg-12'>
+    <div class='card'>
+        <div class='row'>
+            <div class='col-lg-6'>
+                <h1>Publication Statistics</h1>
+                <canvas id="publicationChart" width="50" height="50"></canvas>
+            </div>
+            <div class='col-lg-6'>
+                <h1>Collaborator Distribution</h1>
+                <canvas id="collaboratorChart" width="50" height="10"></canvas>
+            </div>
+        </div>
     </div>
-    </div>
+</div>
+
+
+    </div>  
+    <script>
+        // Get the data from the controller and organize it as labels and values
+        const collaboratorData = {
+            labels: {{ publicationLabels | json_encode | raw }},
+            datasets: [{
+                data: {{ collaboratorCounts | json_encode | raw }},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)'
+                ]
+            }]
+        };
+
+        // Render the pie chart
+        const ctx = document.getElementById('collaboratorChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: collaboratorData,
+            options: {
+               
+                legend: {
+                    position: 'right',
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Collaborator Distribution in Publications'
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('publicationChart').getContext('2d');
+            var publicationData = {
+                labels: ['Offre', 'Ordinaire'],
+                datasets: [{
+                    label: 'Nombre de publications',
+                    data: [{{ offerCount }}, {{ ordinaryCount }}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)', // Red for offers
+                        'rgba(54, 162, 235, 0.2)'   // Blue for ordinary
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: publicationData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                     plugins: {
+                        legend: {
+                            labels: {
+                                // Customizing legend labels
+                                generateLabels: function(chart) {
+                                    return [
+                                        { text: 'Offer', fillStyle: 'rgba(54, 162, 235, 0.2)' }, // Blue for offer
+                                        { text: 'Ordinary', fillStyle: 'rgba(255, 99, 132, 0.2)' } // Pink for ordinary
+                                    ];
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 {% endblock %}
