@@ -12,6 +12,29 @@ use App\Repository\ProduitRepository;
 
 class PanierController extends AbstractController
 {
+    #[Route('/consult/panier', name: 'app_consult_panier',methods: ['GET', 'POST'])]
+    public function consult (SessionInterface $session,ProduitRepository $produitRepository): Response
+    {
+        //on récupère le panier existante   
+        $panier=$session->get('panier',[]);
+        $data =[];
+        $total=0;
+        $nb=0;
+        foreach($panier as $id =>$quantite){
+            $produit =$produitRepository->find($id);
+            $data[]=[
+                'produit'=>$produit,
+                'quantite'=>$quantite
+            ];
+            $nb=$nb+1;
+            $total+=$produit->getPrix()*$quantite;
+        }
+        $session->set('total',$total);
+        $session->set('nb',$nb);
+            
+       // render` est utilisée pour afficher un template HTML dans une vue
+        return $this->render('panier/index.html.twig',compact('data','total'));
+    }
     #[Route('/panier', name: 'app_panier',methods: ['GET', 'POST'])]
     public function index (SessionInterface $session,ProduitRepository $produitRepository): Response
     {
@@ -19,20 +42,23 @@ class PanierController extends AbstractController
         $panier=$session->get('panier',[]);
         $data =[];
         $total=0;
+        $nb=0;
         foreach($panier as $id =>$quantite){
             $produit =$produitRepository->find($id);
             $data[]=[
                 'produit'=>$produit,
                 'quantite'=>$quantite
             ];
+            $nb=$nb+1;
             $total+=$produit->getPrix()*$quantite;
         }
-        
-
-        
-            
-        
-        return $this->render('panier/index.html.twig',compact('data','total'));
+         $session->set('total',$total);
+        $session->set('nb',$nb);
+                  
+       // render` est utilisée pour afficher un template HTML dans une vue
+        return $this->render('shopping/index.html.twig',[
+            'produits' => $produitRepository->findAll(),  
+        ]);
     }
     #[Route('/panier/{id}', name: 'app_add_panier',methods: ['GET', 'POST'])]
     public function add(Produit $produit,SessionInterface $session): Response
@@ -52,7 +78,7 @@ class PanierController extends AbstractController
 
             
         
-        return $this->redirectToRoute('app_panier');
+        return $this->redirectToRoute('app_consult_panier');
     }
     #[Route('remove/panier/{id}', name: 'app_remove_panier',methods: ['GET', 'POST'])]
     public function remove(Produit $produit,SessionInterface $session): Response
@@ -77,7 +103,7 @@ class PanierController extends AbstractController
 
         } 
         $session->set('panier',$panier);
-        return $this->redirectToRoute('app_panier');
+        return $this->redirectToRoute('app_consult_panier');
     }
     #[Route('delete/panier/{id}', name: 'app_delete_panier',methods: ['GET', 'POST'])]
     public function delete(Produit $produit,SessionInterface $session): Response
@@ -98,13 +124,13 @@ class PanierController extends AbstractController
 
         } 
         $session->set('panier',$panier);
-        return $this->redirectToRoute('app_panier');
+        return $this->redirectToRoute('app_consult_panier');
     }
     #[Route('empty/panier', name: 'app_empty_panier',methods: ['GET', 'POST'])]
     public function empty(SessionInterface $session): Response
     {
         
        $session->remove('panier');
-        return $this->redirectToRoute('app_panier');
+        return $this->redirectToRoute('app_consult_panier');
     }
 }

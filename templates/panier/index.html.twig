@@ -28,11 +28,11 @@
 </tr>
 {% else %}
 <tr>
-<td colspan="5">votre panier est vide</td>
+<td colspan="5">Votre panier est vide</td>
 </tr>
 {% endfor %}
 <tr>
-<td colspan="3">total</td>
+<td colspan="3">Total</td>
 <td>{{total}}</td>
 <td><a href="{{path('app_empty_panier')}}" class ="btn btn-danger">Vider le panier</a></td>
 </tr>
@@ -41,6 +41,6 @@
 
 
 </table>
-<a href="" class ="btn btn-success">commander</a>
-<a href="{{path('app_shopping')}}" class ="btn btn-success">continuer</a>
+<a href="{{ path('app_add_commande')}}" class ="btn btn-success">Commander</a>
+<a href="{{path('app_shopping')}}" class ="btn btn-success">Continuer</a>
 {% endblock %}

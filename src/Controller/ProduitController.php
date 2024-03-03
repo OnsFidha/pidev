@@ -69,9 +69,8 @@ class ProduitController extends AbstractController
             $this->addFlash('notice','Insertion avec succès');
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }
-    
-
-        return $this->renderForm('produit/new.html.twig', [
+      //renderForm` est utilisée pour afficher un formulaire dans une vue
+       return $this->renderForm('produit/new.html.twig', [
             'produit' => $produit,
             'form' => $form,
            

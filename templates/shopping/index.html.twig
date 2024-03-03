@@ -1,8 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ShoppingController!{% endblock %}
+{% block title %}Shopping{% endblock %}
 
 {% block body %}
+<div>{% for message in app.flashes('notice') %}
+    <div class="flash-notice" style="color:green">
+       <center> <h6>{{ message }}</h6></center>
+    </div>
+{% endfor %}</div>
 <div class="row">
 
   

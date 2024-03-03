@@ -20,5 +20,11 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "bootstrap": "^5.3.3",
+        "datatables.net": "^2.0.1",
+        "datatables.net-bs4": "^2.0.1",
+        "sass": "^1.71.1"
     }
 }
