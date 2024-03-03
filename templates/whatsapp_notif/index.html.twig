@@ -1,0 +1,49 @@
+
+
+{% extends 'baseBack.html.twig' %}
+{% block whatsapp_navbar %}
+    <!-- Content Row -->
+    <div class="row">
+        <!-- Dropdown Column -->
+        <div class="col-lg-6 mb-4">
+            <!-- Dropdown -->
+            <li class="nav-item dropdown no-arrow mx-1" style="list-style: none;">
+                <a class="nav-link dropdown-toggle" href="#" id="whatsappDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fab fa-whatsapp fa-fw"></i>
+                    <span class="badge badge-danger badge-counter">1+</span> 
+                </a>
+                    
+                
+                
+                   
+                
+                <!-- Dropdown - Whatsapp -->
+                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                    aria-labelledby="whatsappDropdown">
+                    <h6 class="dropdown-header">
+                        Whatsapp Notifications
+                    </h6>
+                    {% for whatsapp_notif in whatsapp_notifs %}
+                        <a class="dropdown-item d-flex align-items-center" href="{{ path('app_reclamation_show2', {'id': whatsapp_notif.getIdReclam().getId()}) }}">
+                            <div class="mr-3">
+                                <div class="icon-circle bg-primary">
+                                    <i class="fab fa-whatsapp text-white"></i>
+                                     
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-diraction:row;">
+                                
+                                <span class="font-weight-bold">{{ whatsapp_notif.text }}</span>
+                                {{ include('whatsapp_notif/_delete_form.html.twig') }}
+                            </div>
+                        </a>
+                    {% else %}
+                        <span class="dropdown-item">No Whatsapp notifications</span>
+                    {% endfor %}
+                    {# <a class="dropdown-item text-center small text-gray-500" href="#">Show All Whatsapp Notifications</a> #}
+                </div>
+            </li>
+        </div>
+    </div>
+{% endblock %}

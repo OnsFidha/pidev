@@ -100,22 +100,33 @@ class ReclamationRepository extends ServiceEntityRepository
 
 
 
-     public function searchByTerm(string $searchTerm): array
-    {
-        // Convert search term to lowercase to ensure case-insensitive search
-        $searchTerm = mb_strtolower($searchTerm);
+  public function searchByTerm(string $searchTerm): array
+{
+    // Convert search term to lowercase to ensure case-insensitive search
+    $searchTerm = mb_strtolower($searchTerm);
 
-        return $this->createQueryBuilder('r')
-            ->andWhere('
-                r.type LIKE :searchTerm 
-                OR r.description LIKE :searchTerm 
-                OR r.id LIKE :searchTerm 
-                OR r.date_creation LIKE :searchTerm
-                OR r.etat = :etat
-            ')
-            ->setParameter('searchTerm', '%' . $searchTerm . '%')
-            ->setParameter('etat', $searchTerm === 'traité') 
-            ->getQuery()
-            ->getResult();
-        }
+    // Validate if $searchTerm is a valid date string
+    $searchDate = null;
+    if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $searchTerm)) {
+        // Assuming 'UTC' is the timezone you want to use for comparison
+        $searchDate = new \DateTime($searchTerm, new \DateTimeZone('UTC'));
+    }
+
+    return $this->createQueryBuilder('r')
+        ->andWhere('
+            r.type LIKE :searchTerm 
+            OR r.description LIKE :searchTerm 
+            OR r.etat = :etat
+        ')
+        ->setParameter('searchTerm', '%' . $searchTerm . '%')
+        //->setParameter('searchDate', $searchDate ? $searchDate->format('Y-m-d') : null) // Use format for date comparison
+        ->setParameter('etat', $searchTerm === 'traité' ? true : false) // Assuming 'traité' represents a treated state
+        ->getQuery()
+        ->getResult();
+}
+
+
+
+
+
 }

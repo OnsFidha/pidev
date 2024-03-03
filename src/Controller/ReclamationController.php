@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
+use App\Entity\WhatsappNotif;
 use App\Form\SearchFormType;
 use App\Repository\ReclamationRepository;
 use App\Repository\ReponseRepository;
@@ -17,27 +18,54 @@ use Dompdf\Options;
 use Twilio\Rest\Client;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
 {
-    #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
-    public function index(ReclamationRepository $reclamationRepository): Response
+    
+    // #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
+    // public function index(ReclamationRepository $reclamationRepository): Response
+    // {
+    //     return $this->render('reclamation/index.html.twig', [
+    //         'reclamations' => $reclamationRepository->findAll(),
+    //     ]);
+    // }
+
+     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
+    public function index(Request $request, ReclamationRepository $reclamationRepository, PaginatorInterface $paginator): Response
     {
+        $pagination = $paginator->paginate(
+            $reclamationRepository->findAll(), // Query
+            $request->query->getInt('page', 1), // Page number
+            10 // Limit per page
+        );
+
         return $this->render('reclamation/index.html.twig', [
-            'reclamations' => $reclamationRepository->findAll(),
+            'reclamations' => $pagination,
         ]);
     }
 
+
     /////
     #[Route('/back', name: 'app_reclamation_index2', methods: ['GET'])]
-    public function index2(ReclamationRepository $reclamationRepository): Response
+    public function index2(Request $request, ReclamationRepository $reclamationRepository,  PaginatorInterface $paginator): Response
     {
+         $pagination = $paginator->paginate(
+            $reclamationRepository->findAll(), // Query
+            $request->query->getInt('page', 1), // Page number
+            10 // Limit per page
+        );
+
         return $this->render('reclamation/indexBack.html.twig', [
-            'reclamations' => $reclamationRepository->findAll(),
+            'reclamations' => $pagination,
         ]);
+
+        // return $this->render('reclamation/indexBack.html.twig', [
+        //     'reclamations' => $reclamationRepository->findAll(),
+        // ]);
     }
 
     /////
@@ -48,10 +76,11 @@ class ReclamationController extends AbstractController
 
         //whatsapp
         $sid    = "AC0caafa1f675f3f429a7df499c1e754b7";
-        $token  = "0014dbafb89d52b244da0ee8aa13b8ad";
+        $token  = "c4d3ce7a4f24e4148012b9280314e9cd";
         $twilio = new Client($sid, $token);
         //
         $reclamation = new Reclamation();
+       
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
 
@@ -65,23 +94,30 @@ class ReclamationController extends AbstractController
                         "body" => "Il a envoyé une Reclamation, vous pouvez le contacter sur num :",
                     ]
                 );
-                
-                // Output message SID for debugging
-                $this->addFlash('success', "Message SID: " . $message->sid);
+
+                //
+                $whatsappNotif = new WhatsappNotif();
+                $whatsappNotif->setText("user name: a ajouter une reclamation ");
+                $whatsappNotif->setIdReclam($reclamation);
+                $entityManager->persist($whatsappNotif);
+                //
+               
                 $entityManager->persist($reclamation);
                 $entityManager->flush();
+
+                  
                 
                 
                 return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
             } catch (\Exception $e) {
                 $this->addFlash('error', "Failed to send WhatsApp message: " . $e->getMessage());
             }
-        }
-        //mailling
+                    //mailling
                         
                         $email = (new Email())
-                        ->from('sana.khiari2002@gmail.com')
-                        ->to('sana.khiari@esprit.tn')
+                        ->from('sana.khiari@esprit.tn')
+                        // ->to('majed.smichi@esprit.tn')
+                        ->to('ghofrane.belhadef@esprit.tn')
                         ->subject('Reclamation Artist')
                         ->text('Votre demande sera prise en compte et nous vous répondrons dans les meilleurs délais.
                         Vous serez notifiés via une maill les details de traitement de votre reclamation
@@ -90,6 +126,8 @@ class ReclamationController extends AbstractController
                     $mailer->send($email);
 
                 //
+        }
+
 
         return $this->renderForm('reclamation/new.html.twig', [
             'reclamation' => $reclamation,
@@ -287,6 +325,22 @@ class ReclamationController extends AbstractController
             'reclamations' => $reclamations,
         ]);
     }
+
+    #[Route('/test/mail', name: 'test_mail')]
+    public function test(MailerInterface $mailer): Response
+    {
+        $email = (new Email())
+            ->from('sender@example.com')
+            ->to('your@mailtrap.io') // Replace with your Mailtrap inbox email or leave as your default to email
+            ->subject('Time for Symfony Mailer!')
+            ->text('Sending emails is fun again!')
+            ->html('<p>See Twig integration for better HTML integration!</p>');
+
+        $mailer->send($email);
+
+        return new Response('Email sent!');
+    }
+
 
     //
 }

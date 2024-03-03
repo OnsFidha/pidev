@@ -1,0 +1,9 @@
+
+
+
+<form method="post" action="{{ path('app_whatsapp_notif_delete', {'id': whatsapp_notif.id}) }}" onsubmit="return confirm('Êtes-vous sûr(e) de vouloir supprimer cet élément ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ whatsapp_notif.id) }}">
+    <button type="submit" class="btn">
+        <i class="fas fa-trash-alt"></i> <!-- Assuming you are using Font Awesome for icons -->
+    </button>
+</form>

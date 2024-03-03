@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 
 class ReclamationType extends AbstractType
@@ -32,6 +33,10 @@ class ReclamationType extends AbstractType
                 'required' => true, 
             ])
             ->add('description',TextareaType::class)
+            //  ->add('generateWithAI', CheckboxType::class, [
+            //      'label' => 'Generate description with AI',
+            //      'required' => false,
+            //  ]);
             // ->add('etat')
             //->add('date_creation')
         //    ->add('enregistrer',SubmitType::class )

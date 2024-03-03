@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ReclamationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use GuzzleHttp\Client;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,8 +22,8 @@ class Reclamation
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"Entrez votre réclamation s'il vous plait")]
-    #[Assert\Length(min:10, minMessage:"Votre reclamation ne contient pas {{ limit }} caractères.")]
+    // #[Assert\NotBlank(message:"Entrez votre réclamation s'il vous plait")]
+    // #[Assert\Length(min:10, minMessage:"Votre reclamation ne contient pas {{ limit }} caractères.")]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -31,6 +32,9 @@ class Reclamation
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     // private ?\DateTimeInterface $date_creation = null;
     private ?\DateTimeInterface $date_creation ;
+
+    #[ORM\Column]
+    private ?bool $generateWithAI = false;
 
     public function __construct()
     {
@@ -58,7 +62,7 @@ class Reclamation
     {
         return $this->description;
     }
-
+// 
     public function setDescription(string $description): static
     {
 //         $this->description = $description;
@@ -74,8 +78,18 @@ class Reclamation
 
         
 
-    return $this;
+    // return $this;
     }
+
+
+
+
+
+
+// 
+
+// 
+
 
     private function filterBadWords(string $description): string
     {   
@@ -125,4 +139,18 @@ class Reclamation
 {
     return $this->getId() !== null ? (string) $this->getId() : '';
 }
+
+    public function isGenerateWithAI(): ?bool
+    {
+        return $this->generateWithAI;
+    }
+
+    public function setGenerateWithAI(bool $generateWithAI): static
+    {
+        $this->generateWithAI = $generateWithAI;
+
+        return $this;
+    }
+
+    
 }

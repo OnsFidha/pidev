@@ -33,8 +33,10 @@
                         <li><a href="about.html">Magasin</a></li>
                         <li><a href="#"> Evènement</a></li>
                         <li><a href="services.html">Poste</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li> <a  href="{{ path('app_reclamation_index') }}">Réclamation</a></li>
                         </ul>
+                        
+                         
                     </nav>
                     <div class="header-social-links">
                         <a href="#"  class="">se connecter</a>
@@ -77,5 +79,6 @@
         <script src="{{asset('aos/aos.js')}}"></script>
         <script src="{{asset('php-email-form/validate.js')}}"></script>
         <script src="{{asset('js/main.js')}}"></script>
+        
     {% endblock %}
 </html>

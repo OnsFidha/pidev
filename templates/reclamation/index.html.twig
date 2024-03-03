@@ -47,6 +47,7 @@
     background-color: #FEFCF3;
     color: #000; /* Texte en noir */
 }
+
 </style>
 
 <h1>Liste des Reclamations </h1>
@@ -96,6 +97,45 @@
     {% endfor %}
     </tbody>
 </table>
+<div class="pagination" style="display: flex; justify-content: center; margin-top: 20px;">
+    {{ knp_pagination_render(reclamations) }}
+
+    <style>
+        /* Define your pagination styles here */
+        .pagination ul.pagination {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pagination ul.pagination li {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .pagination ul.pagination li.active {
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .pagination ul.pagination li a {
+            text-decoration: none;
+            color: #007bff;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+        }
+
+        .pagination ul.pagination li a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</div>
+
+
 <div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 30px;">
 <a href="{{ path('app_reclamation_new') }}" class="custom-button green-button">Ajouter une nouvelle réclamation</a>
 <a href="{{ path('reclamation_listePdf') }}" class="custom-button beige-button">pdf</a>

@@ -3,21 +3,10 @@
 {% block title %}Statistiques{% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="row justify-content-start">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Répartition des Réclamations</div>
-                <div class="card-body">
-                    <canvas id="donutChart" width="400" height="400"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="container mt-4">
-    <div class="row justify-content-start">
+    <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Statistiques des Réclamations</div>
@@ -36,8 +25,21 @@
 </div>
 
 
+<div class="container">
+    <div class="row justify-content-start">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Répartition des Réclamations</div>
+                <div class="card-body">
+                    <canvas id="donutChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container mt-4">
-    <div class="row justify-content-end">
+    <div class="row justify-content-start">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Statistiques des Réclamations par type</div>
