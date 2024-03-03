@@ -4,17 +4,13 @@
 
 {% block body %}
     <h1 style="text-align: center;">Liste des Utilisateurs</h1>
-
-    {# Afficher le formulaire de recherche #}
-    <form id="search-form">
-        <input type="text" id="search-input" placeholder="Rechercher...">
-        <button type="submit">Rechercher</button>
-    </form>
-
-    <div id="search-results">
-        <!-- Les résultats de la recherche seront affichés ici -->
+    
+    <div style="margin-bottom: 100px; display:flex; justify-content: center;">
+        <a href="{{ path('user_role')}}" class="btn btn-primary" style="margin-right: 20px;">Trier par rôle</a>
+        <a href="{{ path('user_date')}}" class="btn btn-primary" style="margin-left: 20px;">Trier par date</a>
     </div>
 
+    <!-- Tableau des utilisateurs -->
     <table class="table">
         <thead>
             <tr>
@@ -22,7 +18,7 @@
                 <th>Email</th>
                 <th>Name</th>
                 <th>Prename</th>
-                <th>intérêt</th>
+                <th>interest</th>
                 <th>Phone</th>
                 <th>IsVerified</th>
                 <th>Birthday</th>
@@ -53,29 +49,11 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="11">no records found</td>
+                    <td colspan="11">Aucun enregistrement trouvé</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <btn class='btn btn-primary'><a href="{{ path('listePdf') }}">pdf</a></btn>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#search-form').on('submit', function(event) {
-                event.preventDefault();
-                var query = $('#search-input').val();
-                $.ajax({
-                    url: '{{ path('search_route') }}',
-                    method: 'POST',
-                    data: { query: query },
-                    success: function(response) {
-                        $('#search-results').html(response);
-                    }
-                });
-            });
-        });
-    </script>
+    <button class='btn btn-primary'><a href="{{ path('listePdf') }}">pdf</a></button>
 {% endblock %}

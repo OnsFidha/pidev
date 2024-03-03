@@ -23,7 +23,7 @@ class UserType extends AbstractType
                 'attr' => ['class' => 'form-control']
             ])
             ->add('roles', ChoiceType::class, [
-                'label' => 'intérêt:',
+                'label' => 'Interest:',
                 'required' => true,
                 'attr' => ['class' => 'form-select'], // Using form-select class for Bootstrap 5 styling
                 'choices' => [
@@ -65,4 +65,3 @@ class UserType extends AbstractType
         ]);
     }
 }
-

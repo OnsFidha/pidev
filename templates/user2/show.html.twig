@@ -8,6 +8,10 @@
     <table class="table">
         <tbody>
             <tr>
+                <th>Image</th>
+                <td><img src="{{ asset('assets/pdp/' ~ user.image) }}" alt="User Image"></td>
+            </tr>
+            <tr>
                 <th>Id</th>
                 <td>{{ user.id }}</td>
             </tr>
@@ -43,15 +47,10 @@
                 <th>Birthday</th>
                 <td>{{ user.birthday ? user.birthday|date('Y-m-d') : '' }}</td>
             </tr>
-            <tr>
-                <th>Image</th>
-                {# <td>{{ user.image }}</td> #}
-                <td><img src="{{ asset('assets/pdp/' ~ user.image) }}" alt="User Image"></td>
-            </tr>
         </tbody>
     </table>
 
-   <btn class='btn btn-primary'> <a href="{{ path('app_user2_index') }}">back to list</a></btn>
+    <btn class='btn btn-primary'> <a href="{{ path('app_user2_index') }}">back to list</a></btn>
 
     <btn class='btn btn-primary'><a href="{{ path('app_user2_edit', {'id': user.id}) }}">edit</a></btn>
 

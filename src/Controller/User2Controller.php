@@ -156,4 +156,45 @@ class User2Controller extends AbstractController
 
 
     }
+    //les tris
+    #[Route('/user/role', name:'user_role')]
+    
+    public function usersbyrole(UserRepository $UserRepository): Response
+    {
+        $users = $UserRepository->findByrole();
+        
+        return $this->render('user2/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
+    #[Route('/user/date', name:'user_date')]
+    
+    public function usersbydate(UserRepository $UserRepository): Response
+    {
+        $users = $UserRepository->findBydate();
+        
+        return $this->render('user2/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
+    //
+  
+    public function filterUsersByInterest(Request $request): Response
+{
+    // Get the selected interest from the request
+    $roles = $request->request->get('roles');
+
+    // Fetch users from the database based on the selected interest
+    $users = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->findByInterest($roles); // Suppose que vous avez une méthode dans votre repository pour récupérer les utilisateurs par intérêt
+
+    // Render the HTML for the filtered users
+    $html = $this->renderView('user2/index.html.twig', [
+        'users' => $users,
+    ]);
+
+    // Return the HTML as response
+    return new Response($html);
+}
 }
