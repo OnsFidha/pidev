@@ -1,0 +1,64 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %} Commande {% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+ 
+  <div class="row">
+    <div class="col-sm">
+      <div><label class="mt-2">N°Commande :{{ commandes.id}}</label></div>
+       <div><label class="mt-2">Date Commande :{{ commandes.datecommande|date('d/m/y')}}</label></div>
+       <div><label class="mt-2">Reference :{{ commandes.reference }}</label></div>
+
+    </div>
+    <div class="col-sm">
+     <div><label class="mt-2">  Client :{{ commandes.user.nom}} {{ commandes.user.prenom}}</label></div>
+       <div><label class="mt-2">Telephone :{{ commandes.user.tel}}</label></div>
+       <div><label class="mt-2">Email :{{ commandes.user.email}}</label></div>
+    </div>
+     
+  </div>
+  <table class="display table table-striped"   style=" margin-top:50px"  >
+        <thead>
+            <tr>
+               
+                
+                <th>Produit</th>
+                <th>Quantite</th>
+                 <th>Prix unitaire</th>
+                 <th>Total</th>
+                  
+            </tr>
+        </thead>
+        <tbody>
+        {% for detail in detailCommande %}
+            <tr>
+                
+                 
+                <td>  {{ detail.produit.nom }}   </td>
+                <td> {{ detail.quantite }} </td>
+                 <td> {{ detail.prix }} </td>
+                  <td>  {{ (detail.quantite * detail.prix )|number_format('3', '.', ',')   }} TND </td>
+                   
+            </tr>
+
+        {% else %}
+            <tr>
+                <td colspan="5"> Aucune enregistrement</td>
+            </tr>
+        {% endfor %}
+        <tr>
+        <td colspan="3"><b>Total</b></td>
+        
+        <td><b>{{commandes.montanttotal|number_format('3', ',', '.') }} TND</b></td>
+        </tbody>
+    </table>
+</div>
+  
+ 
+
+
+{% endblock %}

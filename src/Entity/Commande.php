@@ -29,6 +29,9 @@ class Commande
     #[ORM\OneToMany(targetEntity: DetailCommande::class, mappedBy: 'commande',cascade:['persist'])]
     private Collection $detailCommandes;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 3)]
+    private ?string $montant_total = null;
+
     public function __construct()
     {
         $this->detailCommandes = new ArrayCollection();
@@ -101,6 +104,18 @@ class Commande
                 $detailCommande->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMontantTotal(): ?string
+    {
+        return $this->montant_total;
+    }
+
+    public function setMontantTotal(string $montant_total): static
+    {
+        $this->montant_total = $montant_total;
 
         return $this;
     }

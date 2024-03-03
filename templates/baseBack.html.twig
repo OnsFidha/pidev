@@ -13,17 +13,46 @@
 
     <!-- Custom fonts for this template-->
     {% block css%} 
-    
-  <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('css/css.css')}}" rel="stylesheet">
-
-    <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
-     <link href="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
-      <link href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link  href="{{asset('css/css.css')}}"rel="stylesheet">
+    <link href="{{asset('datatable1/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('datatable1/dataTables.bootstrap5.css')}}" rel="stylesheet">
+     <link href="{{asset('datatable1/dataTables.dataTables.css')}}" rel="stylesheet">
     <!-- Custom styles for this template-->
+    <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+    {% endblock %}
+
+ 
+
+    <!-- before the closing <body> tag -->
+   
+{% block js %}
+ 
+    
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{asset('vendor/jquery/jquery.min.js' )}}"></script>
+    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+
+    <!-- Page level plugins -->
+
+
+    <script src="{{asset('datatable1/dataTables.js')}}"></script>
+    
+    <script src="{{asset('datatable1/dataTables.bootstrap5.js')}}"></script>
+    <script src="{{asset('datatable1/bootstrap.bundle.min.js')}}"></script>
+    <script > $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+    </script>
   
     {% endblock %}
- 
 </head>
 
 <body id="page-top">
@@ -86,6 +115,12 @@
                     <i class="fas fa-fw fa-table"></i>
                    
                     <span>Catégorie</span></a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_commande') }}">
+                    <i class="fas fa-fw fa-table"></i>
+                   
+                    <span>Commande</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="tables.html">
@@ -363,27 +398,7 @@
     
     
 
-    {% block js %}
-
- <script src="{{asset('vendor/datatables/jquery-3.7.1.js') }}"></script>
-    <!-- Bootstrap core JavaScript-->
-     <script src="{{asset('vendor/datatables/jquery.dataTables.js') }}"></script>
-     <script src="{{asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-
-    <!-- Page level plugins -->
     
-    <script src="{{asset('vendor/datatables/dataTables.bootstrap4.js') }}"></script>
-   
-      <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
- 
-    {% endblock %}
 
 </body>
 

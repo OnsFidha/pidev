@@ -8,6 +8,8 @@
         <meta content="" name="keywords">
 
         {% block css %}
+        <link href="{{asset('datatable1/dataTables.bootstrap5.css')}}" rel="stylesheet">
+     <link href="{{asset('datatable1/dataTables.dataTables.css')}}" rel="stylesheet">
             <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
             <link href="{{asset('bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
             <link href="{{asset('swiper/swiper-bundle.min.css')}}" rel="stylesheet">
@@ -92,6 +94,19 @@
 
 
 	{% block js %}
+    <script src="{{asset('vendor/jquery/jquery.min.js' )}}"></script>
+    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+     <script src="{{asset('datatable1/dataTables.js')}}"></script>
+    
+    <script src="{{asset('datatable1/dataTables.bootstrap5.js')}}"></script>
+    <script src="{{asset('datatable1/bootstrap.bundle.min.js')}}"></script>
+    <script > $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+    </script>
         <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{asset('swiper/swiper-bundle.min.js')}}"></script>
         <script src="{{asset('glightbox/js/glightbox.min.js')}}"></script>
