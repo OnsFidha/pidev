@@ -5,10 +5,10 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     cv_directory: 'cv'
-    images_directory: 'pub'
+    images_directorys: 'pub'
     api_key: 'bVEylMhimuHW7Yu87yPdA5szAFE64xLU'
-   
-
+    images_directory: '%kernel.project_dir%/public/uploads'
+    
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -26,3 +26,12 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Entity\User:
+        autowire: true
+        autoconfigure: true
+
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%images_directory%'
+
+    

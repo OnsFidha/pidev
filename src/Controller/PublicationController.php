@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Publication;
 use App\Entity\Commentaire;
+use App\Entity\User;
 use App\Form\PublicationType;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
@@ -55,7 +56,7 @@ class PublicationController extends AbstractController
     
     #[Route('/new', name: 'app_publication_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,UserRepository $repU): Response
-    {    $userId=1;
+    {   $userId = $this->getUser();
         $user = $repU->find($userId);
         $publication = new Publication();
         $publication->setIdUser($user);
@@ -66,7 +67,7 @@ class PublicationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('photo')->getData();
             $fileName = uniqid().'.'.$file->guessExtension();
-            $file->move($this->getParameter('images_directory'), $fileName);
+            $file->move($this->getParameter('images_directorys'), $fileName);
             $publication->setPhoto($fileName);
             $entityManager->persist($publication);
             $entityManager->flush();
@@ -114,7 +115,7 @@ class PublicationController extends AbstractController
     #[Route('/{id}/edit', name: 'app_publication_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {   $photoold=$publication->getPhoto();   
-        $path=$this->getParameter('images_directory').'/'.$photoold; 
+        $path=$this->getParameter('images_directorys').'/'.$photoold; 
         
         $publication->setPhoto($path);
         $form = $this->createForm(PublicationType::class, $publication, [
@@ -125,7 +126,7 @@ class PublicationController extends AbstractController
             if($publication->getPhoto()!=null){
                 $file = $form->get('photo')->getData();
                 $fileName = uniqid().'.'.$file->guessExtension();
-                $file->move($this->getParameter('images_directory'), $fileName);
+                $file->move($this->getParameter('images_directorys'), $fileName);
                 $publication->setPhoto($fileName);}
                 else{
                 $publication->setPhoto($photoold);}

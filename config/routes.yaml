@@ -1,7 +1,11 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-filtre:
-  path: /filter-publications
-  controller : App\Controller\PublicationController::filterPublications
+index:
+   path: /
+   controller: App\Controller\AppController::index
+# filtre:
+#   path: /filter-publications
+#   controller : App\Controller\PublicationController::filterPublications
   
+filter_users_by_interest:
+    path: /filter-users-by-interest
+    controller: App\Controller\UserController::filterUsersByInterest
+    methods: [POST]

@@ -119,12 +119,12 @@
                 </div>
             </li> #}
           <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="user2">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Utilisateurs</span></a>
             </li>   
                    <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="{{ path('app_publication_admin') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Publications</span></a>
             </li>   
@@ -149,11 +149,21 @@
                     <span>Réponses</span></a>
             </li>
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+
+
+            <!-- Option de menu déroulant pour les types de graphiques -->
+            <li class="nav-item dropdown no-arrow mx-1">
+                <a class="nav-link dropdown-toggle" href="#" id="chartsDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>Charts</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="chartsDropdown">
+                    <a class="dropdown-item" href="{{ path('stat') }}">Charts User</a>
+                    <a class="dropdown-item" href="{{ path('statPub') }}">Charts Pub</a>
+                </div>
             </li>
+
 
         
   
@@ -179,7 +189,7 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
+ 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
@@ -194,6 +204,7 @@
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
+                                    
                                 </button>
                             </div>
                         </div>
@@ -201,6 +212,17 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+                      <div class="header-social-links">
+                    	<a class="nav-link hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="true">
+							<div class="avatar">
+								<img src="../assets/pdp/{{app.user.image}}"  alt="" width="40" height="50" class="w-px-40 h-auto rounded-circle">
+							</div>
+                              <a href="{{ path('app_profile') }}"  class="">{{app.user.name}} {{app.user.prename}}</a>
+                        <a href="{{ path('app_logout') }}"  class="">Logout</a>
+						</a>
+                        
+                        
+                    </div>
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
@@ -232,7 +254,8 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
+                              
+                                
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -283,7 +306,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
+                                
                             </a>
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -349,9 +372,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="{{asset('img/undraw_profile.svg' )}}">
+                                {# <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span> #}
+                                {# <img class="img-profile rounded-circle"
+                                    src="{{asset('img/undraw_profile.svg' )}}"> #}
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

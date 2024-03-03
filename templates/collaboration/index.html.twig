@@ -34,7 +34,7 @@
                         {% for user in collaboration.user %}
                             <div class="d-flex flex-column align-items-center mb-3">
                                 {% if user.image %}
-                                    <img src="{{ asset('user/' ~ user.image) }}" alt="User Photo" class="mb-2" style="width: 80px; height: 80px; border-radius: 50%;">
+                                    <img src="../assets/pdp/{{ user.image }}" alt="User Photo" class="mb-2" style="width: 80px; height: 80px; border-radius: 50%;">
                                 {% endif %}
                                 <p class="mb-1">{{ user.email }}</p>
                                 <div>

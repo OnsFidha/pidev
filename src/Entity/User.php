@@ -1,62 +1,113 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-
-class User
+#[ORM\Table(name: "user")]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $role = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $mdp = null;
+    private ?string $prename = null;
 
     #[ORM\Column]
-    private ?int $tel = null;
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
+
+    #[ORM\Column]
+    #[Assert\Length(
+             min : 8,
+            max :8,
+            exactMessage : "Le numéro de téléphone doit avoir exactement {{ limit }} chiffres",
+             normalizer : "trim"
+         )]
+    private ?int $phone = null;
+
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private $isVerified = false;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_naissance = null;
+    private ?\DateTimeInterface $birthday = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $image = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $nom = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $prenom = null;
-
-    #[ORM\ManyToMany(targetEntity: Collaboration::class, mappedBy: 'user')]
-    private Collection $collaborations;
-
-    #[ORM\OneToMany(targetEntity: Publication::class, mappedBy: 'id_user')]
-    private Collection $publications;
-
-    #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'id_user')]
-    private Collection $commentaires;
-
-    public function __construct()
+    public function getImage()
     {
-        $this->collaborations = new ArrayCollection();
-        $this->publications = new ArrayCollection();
-        $this->commentaires = new ArrayCollection();
+        return $this->image;
+    }
+    public function setImage($image): self
+    {
+        $this->image = $image;
+        return $this;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPrename(): ?string
+    {
+        return $this->prename;
+    }
+
+    public function setPrename(string $prename): self
+    {
+        $this->prename = $prename;
+
+        return $this;
+    }
+    public function getBirthday(): ?\DateTimeInterface
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(\DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
+        return $this;
+    }
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(int $phone): self
+    {
+        $this->phone = $phone;
+        return $this;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -70,180 +121,86 @@ class User
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): static
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    public function getMdp(): ?string
-    {
-        return $this->mdp;
-    }
-
-    public function setMdp(string $mdp): static
-    {
-        $this->mdp = $mdp;
-
-        return $this;
-    }
-
-    public function getTel(): ?int
-    {
-        return $this->tel;
-    }
-
-    public function setTel(int $tel): static
-    {
-        $this->tel = $tel;
-
-        return $this;
-    }
-
-    public function getDateNaissance(): ?\DateTimeInterface
-    {
-        return $this->date_naissance;
-    }
-
-    public function setDateNaissance(\DateTimeInterface $date_naissance): static
-    {
-        $this->date_naissance = $date_naissance;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): static
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): static
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): static
-    {
-        $this->prenom = $prenom;
-
         return $this;
     }
 
     /**
-     * @return Collection<int, Collaboration>
+     * A visual identifier that represents this user.
+     * @see UserInterface
      */
-    public function getCollaborations(): Collection
+    public function getUserIdentifier(): string
     {
-        return $this->collaborations;
+        return (string) $this->email;
     }
 
-    public function addCollaboration(Collaboration $collaboration): static
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
     {
-        if (!$this->collaborations->contains($collaboration)) {
-            $this->collaborations->add($collaboration);
-            $collaboration->addUser($this);
-        }
-
-        return $this;
+        return (string) $this->email;
     }
 
-    public function removeCollaboration(Collaboration $collaboration): static
-    {
-        if ($this->collaborations->removeElement($collaboration)) {
-            $collaboration->removeUser($this);
-        }
+    /**
+     * @see UserInterface
+     */
+    // public function getRoles(): array
+    // {
+    //     $roles = $this->roles;
+    //     $roles[] = 'ROLE_USER';
+    //     return array_unique($roles);
+    // }
+    public function getRoles(): array
+{
+    return $this->roles;
+}
 
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
         return $this;
     }
 
     /**
-     * @return Collection<int, Publication>
+     * @see PasswordAuthenticatedUserInterface
      */
-    public function getPublications(): Collection
+    public function getPassword(): string
     {
-        return $this->publications;
+        return $this->password;
     }
 
-    public function addPublication(Publication $publication): static
+    public function setPassword(string $password): static
     {
-        if (!$this->publications->contains($publication)) {
-            $this->publications->add($publication);
-            $publication->setIdUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removePublication(Publication $publication): static
-    {
-        if ($this->publications->removeElement($publication)) {
-            // set the owning side to null (unless already changed)
-            if ($publication->getIdUser() === $this) {
-                $publication->setIdUser(null);
-            }
-        }
-
+        $this->password = $password;
         return $this;
     }
 
     /**
-     * @return Collection<int, Commentaire>
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     * @see UserInterface
      */
-    public function getCommentaires(): Collection
+    public function getSalt(): ?string
     {
-        return $this->commentaires;
+        return null;
     }
 
-    public function addCommentaire(Commentaire $commentaire): static
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
     {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires->add($commentaire);
-            $commentaire->setIdUser($this);
-        }
+    }
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }
-
-    public function removeCommentaire(Commentaire $commentaire): static
-    {
-        if ($this->commentaires->removeElement($commentaire)) {
-            // set the owning side to null (unless already changed)
-            if ($commentaire->getIdUser() === $this) {
-                $commentaire->setIdUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-   
 }

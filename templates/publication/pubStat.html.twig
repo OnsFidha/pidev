@@ -1,0 +1,103 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Stat{% endblock %}
+
+{% block body %}
+<div class='test-center'>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <div class='col-lg-12'>
+        <div class='card' id:'chart'>
+            <div class='row'>
+                <div class='col-lg-6'>
+                    <h1>Publications</h1>
+                    <canvas id="publicationChart" width="50" height="50"></canvas>
+                </div>
+                <div class='col-lg-6'>
+                    <h1>Collaborateur Distribution</h1>
+                    <canvas id="collaboratorChart" width="50" height="10"></canvas>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>  
+    <script>
+        // Get the data from the controller and organize it as labels and values
+        const collaboratorData = {
+            labels: {{ publicationLabels | json_encode | raw }},
+            datasets: [{
+                data: {{ collaboratorCounts | json_encode | raw }},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)'
+                ]
+            }]
+        };
+
+        // Render the pie chart
+        const ctx = document.getElementById('collaboratorChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: collaboratorData,
+            options: {
+               
+                legend: {
+                    position: 'right',
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Collaborateur Distribution dans les Publications'
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('publicationChart').getContext('2d');
+            var publicationData = {
+                labels: ['Offre', 'Ordinaire'],
+                datasets: [{
+                    label: 'Nombre de publications',
+                    data: [{{ offerCount }}, {{ ordinaryCount }}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)', 
+                        'rgba(54, 162, 235, 0.2)'   
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: publicationData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                     plugins: {
+                        legend: {
+                            labels: {
+                                // Customizing legend labels
+                                generateLabels: function(chart) {
+                                  
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    </div>
+{% endblock %}
+
