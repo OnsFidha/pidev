@@ -36,9 +36,11 @@
                         <li><a href="indexp.html" class="active">Accueil</a></li>
                         <li><a href="about.html">Magasin</a></li>
                         <li><a href="#"> Evènement</a></li>
-                        <li><a href="{{ path('app_publication_index') }}">Poste</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="{{ path('app_publication_index') }}">Poste</a></li>               
+                        <li> <a  href="{{ path('app_reclamation_index') }}">Réclamation</a></li>
                         </ul>
+                        
+                         
                     </nav>
                     <div class="header-social-links">
     <a class="nav-link hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="true">
@@ -102,5 +104,6 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
+        
     {% endblock %}
 </html>

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier votre reclamation{% endblock %}
+
+{% block body %}
+<h1>Modification de votre réclamation</h1>
+    {{ include('reclamation/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+
+    
+    <div style="display: flex; gap: 15px; justify-content:center;">
+        <button class="styled-button"><a href="{{ path('app_reclamation_index') }}" style="color: white; text-decoration: none;">retour à la liste des réclamations</a></button>
+        {{ include('reclamation/_delete_form.html.twig') }}
+    </div>
+    
+
+<style>
+.styled-button {
+    background-color: #BEE5B4;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+
+.styled-button a {
+    color: inherit; /* Assure que la couleur du lien reste blanche */
+    text-decoration: none; /* Supprime le soulignement par défaut du lien */
+}
+</style>
+
+{% endblock %}

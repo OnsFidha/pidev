@@ -15,4 +15,10 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
+     #[Route('/test2', name: 'app_test2')]
+    public function index2(): Response
+    {
+        return $this->render('test/index2.html.twig');
+    }
 }

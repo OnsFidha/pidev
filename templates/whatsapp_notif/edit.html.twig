@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit WhatsappNotif{% endblock %}
+
+{% block body %}
+    <h1>Edit WhatsappNotif</h1>
+
+    {{ include('whatsapp_notif/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_whatsapp_notif_index') }}">back to list</a>
+
+    {{ include('whatsapp_notif/_delete_form.html.twig') }}
+{% endblock %}

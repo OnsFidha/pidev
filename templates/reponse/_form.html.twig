@@ -1,0 +1,63 @@
+{# {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+
+
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'enctype': 'multipart/form-data'}}) }}
+<div class="row justify-content-center" >
+ <div class="col-sm-6">
+    <div class="card form-card">
+        <div class="card-body">
+           
+            <div class="form-group">
+                {{form_label(form.reponse,"Description de la réponse")}}
+                {{form_widget(form.reponse, {'attr': {'class': 'form-control'}})}}
+                {{form_errors(form.reponse)}}
+            </div>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+    </div>
+ </div>
+</div>
+{{ form_end(form) }}
+
+<style>
+    .form-card {
+        background-color: #FEFCF3;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .form-card .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-card label {
+        font-weight: bold;
+    }
+
+    .form-card input[type="text"],
+    .form-card textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form-card button[type="submit"] {
+        background-color: #BEE5B4;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .form-card button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>

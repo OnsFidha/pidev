@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Reclamations{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-wXA+RO4RX+vhIS/JvFkzO4vxKrX9+T5BTKIWkrz1t50vDSxNEKz3vPEKi//m+Ahg" crossorigin="anonymous">
+   <style>
+
+/* Styles pour les boutons personnalisés */
+.custom-button {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px; /* Espacement entre les boutons */
+    margin-bottom: 5px;
+}
+
+/* Couleur verte */
+.green-button {
+    background-color: #BEE5B4;
+    color: #FFF; /* Texte en blanc */
+}
+
+/* Couleur bleue */
+.blue-button {
+    background-color: #91DAF0;
+    color: #FFF; /* Texte en blanc */
+}
+
+/* Couleur rose */
+.pink-button {
+    background-color: #F26A77;
+    color: #FFF; /* Texte en blanc */
+}
+
+/* Couleur orange */
+.orange-button {
+    background-color: #F9A936;
+    color: #FFF; /* Texte en blanc */
+}
+
+/* Couleur beige */
+.beige-button {
+    background-color: #FEFCF3;
+    color: #000; /* Texte en noir */
+}
+
+</style>
+
+<h1>Liste des Reclamations </h1>
+
+<table style="background-color: #FEFCF3; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-collapse: collapse; width: 100%; ">
+
+     <style>
+        /* Espacement entre les lignes */
+        tr td {
+            padding: 10px;
+        }
+    </style>
+    <thead >
+        <tr >
+            <th>Id</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Etat</th>
+            <th>Date_creation</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for reclamation in reclamations %}
+        <tr>
+            <td>{{ reclamation.id }}</td>
+            <td>{{ reclamation.type }}</td>
+            <td>{{ reclamation.description }}</td>
+            <td>{{ reclamation.etat ? 'Traitée' : 'Non traitée' }}</td>
+            <td>{{ reclamation.dateCreation ? reclamation.dateCreation|date('Y-m-d') : '' }}</td>
+            {% if (reclamation.etat == false) %}
+                 <td>
+                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}" class="custom-button blue-button">  détail</a>
+                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}" class="custom-button green-button">modification</a>
+                </td>
+            {% else %}
+                <td>
+                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}" class="custom-button blue-button"> <i class="fas fa-eye"></i> détail</a>
+                    <a href="{{ path('app_reclamation_reponse_show', {'id': reclamation.id}) }}" class="custom-button pink-button">admin réponse</a>
+                </td>
+            {% endif %}
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">Aucun enregistrement trouvé</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="pagination" style="display: flex; justify-content: center; margin-top: 20px;">
+    {{ knp_pagination_render(reclamations) }}
+
+    <style>
+        /* Define your pagination styles here */
+        .pagination ul.pagination {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pagination ul.pagination li {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .pagination ul.pagination li.active {
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .pagination ul.pagination li a {
+            text-decoration: none;
+            color: #007bff;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+        }
+
+        .pagination ul.pagination li a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</div>
+
+
+<div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 30px;">
+<a href="{{ path('app_reclamation_new') }}" class="custom-button green-button">Ajouter une nouvelle réclamation</a>
+<a href="{{ path('reclamation_listePdf') }}" class="custom-button beige-button">pdf</a>
+</div>
+{% endblock %}
