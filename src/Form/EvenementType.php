@@ -42,7 +42,7 @@ class EvenementType extends AbstractType
            
             ->add('nbre_max',NumberType::class,['required'=>true,'label'=>'Nombre de participants maximale','attr' => ['class' => 'form-control'],])
             ->add('image', FileType::class, [
-                'label' => 'Image)',
+                'label' => 'Image',
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
                 // make it optional so you don't have to re-upload the PDF file

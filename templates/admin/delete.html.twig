@@ -1,4 +1,19 @@
 <form method="post" action="{{ path('admindeleteevent', {'id': event.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet évènement?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
-    <button class="btn btn-danger">Supprimer</button>
+   <button class="btn custom-btn-danger">
+    <i class="bi bi-trash"></i> Supprimer
+</button>
+<style>
+.custom-btn-danger {
+        background-color: #97d1ac;
+        color: #ffffff;
+        border-color: #97d1ac;
+    }
+
+.custom-btn-danger:hover {
+        background-color: #90d6a9;
+        color: #ffffff;
+        border-color: #90d6a9;
+    }
+</style>
 </form>

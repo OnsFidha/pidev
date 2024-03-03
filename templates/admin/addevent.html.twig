@@ -8,6 +8,11 @@
 
     {{ include('admin/formevent.html.twig') }}
 
-    <a href="{{ path('app_admin') }}">retour</a>
+
+    <div class="row justify-content-center mt-4">
+            <div class="col-md-8 text-center">
+                <a href="{{ path('app_admin') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Retour </a>
+            </div>
+        </div>
      {{ form_rest(form) }}
 {% endblock %}

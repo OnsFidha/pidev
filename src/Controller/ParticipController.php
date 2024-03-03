@@ -100,22 +100,27 @@ public function new(ManagerRegistry $manager, Request $request, $id, EvenementRe
 
             // Increase the number of participants
             $event->setNbreParticipants($event->getNbreParticipants() + 1);
+            $cheminImage = 'uploads/images/' . $event->getImage();
+            $nomEvenement = $event->getNom();
+$dateDebut = $event->getDateDebut()->format('d F Y');
 
             // Persist and flush both entities
             $em->persist($event);
             $em->persist($participation);
             $em->flush();
+            $email = (new Email())
+            ->from('syrine.zaier@esprit.tn')
+            ->to('Syrinezaier283@gmail.com')
+            ->subject('Invitation')
+            ->text("Vous êtes invité à l'événement '$nomEvenement' qui aura lieu le $dateDebut.")
+            ->attachFromPath($cheminImage, $event->getImage(), 'image/jpeg');
+      
+
+            $mailer->send($email);
 
             return $this->redirectToRoute('list_event');
         
-    //     $email = (new Email())
-    //     ->from('syrine.zaier@esprit.tn')
-    //     ->to('Syrinezaier283@gmail.com')
-    //     ->subject('Invitation')
-    //     ->text('Vous etes invité à ....');
-      
-
-    // $mailer->send($email);
+           
 
         return $this->renderForm('particip/new.html.twig', [
             'participation' => $participation,
