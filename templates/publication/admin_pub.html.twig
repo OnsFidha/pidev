@@ -28,6 +28,8 @@
                         <td>
                             <a href="{{ path('app_publication_showAdd', {'id': publication.id}) }}" class="btn btn-info"><i class="fas fa-eye"></i> Voir</a>
                             {{ include('publication/deletA.html.twig') }}
+                            <a href="{{ path('app_publication_showCom', {'id': publication.id}) }}" class="btn btn-success"><i class="fas fa-comment"></i> commentaires</a>
+
                         </td>
                     </tr>
                     {% else %}

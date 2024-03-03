@@ -52,7 +52,7 @@ class PublicationController extends AbstractController
             'collaboratorCounts' => $collaboratorCounts,
         ]);
     }
-
+    
     #[Route('/new', name: 'app_publication_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,UserRepository $repU): Response
     {    $userId=1;
@@ -101,6 +101,13 @@ class PublicationController extends AbstractController
             'commentForm' => $commentForm->createView(),
         ]);
     }
+    #[Route('/com/{id}', name: 'app_publication_showCom')]
+    public function showc(Publication $publication, CommentaireRepository $commentaireRepository): Response
+    {
+        $commentaires = $commentaireRepository->findBy(['id_publication' => $publication]);
+        return $this->render('commentaire/index.html.twig', [
+            'commentaires' => $commentaires
+        ]);}
     
 
 

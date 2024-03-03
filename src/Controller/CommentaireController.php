@@ -56,7 +56,6 @@ class CommentaireController extends AbstractController
             'errors'=>$form->getErrors(true,false)
         ]);
     }
-    
     #[Route('/{id}', name: 'app_commentaire_show', methods: ['GET'])]
     public function show(Commentaire $commentaire): Response
     {

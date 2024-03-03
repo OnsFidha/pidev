@@ -14,16 +14,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\MailService;
 
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
 
 #[Route('/collaboration')]
 class CollaborationController extends AbstractController
 {   
    
    
-    #[Route('/mail/{id}', name: 'email')]
-    public function contactUser(Request $request, MailService $mailService, $id,CollaborationRepository $collaborationRepository)
+    #[Route('/mail/{id}', name: 'email', methods: ['GET', 'POST'])]
+    public function contactUser(MailerInterface $mailer,Request $request, MailService $mailService, $id,CollaborationRepository $collaborationRepository)
     {
-        $mailService->sendEmail();
+        
         // // Récupérer la collaboration en fonction de l'ID
         // $collaboration = $collaborationRepository->find($id);
     
@@ -38,6 +41,15 @@ class CollaborationController extends AbstractController
         // foreach ($users as $user) {
         //     $mailService->sendEmail($user->getEmail(), 'Sujet de l\'e-mail', $message);
         // }
+        $email = (new Email())
+        ->from('onsfidha3@gmail.com')
+        ->to('elfidha.ons@esprit.tn')
+        ->subject('Reclamation Artist')
+        ->text('Votre demande sera prise en compte et nous vous répondrons dans les meilleurs délais.
+        Vous serez notifiés via une maill les details de traitement de votre reclamation
+        Merci !!');
+        
+        $mailer->send($email);
     
          return $this->redirectToRoute('app_publication_index', [], Response::HTTP_SEE_OTHER);
 
