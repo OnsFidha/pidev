@@ -15,16 +15,29 @@ use App\Entity\Evenement;
 use App\Form\EvenementType;
 use App\Repository\EvenementRepository;
 use App\Repository\ParticipationRepository;
-
+use Knp\Component\Pager\PaginatorInterface;
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app_admin')]
-    public function index(FeedbackRepository $fbRepository, EvenementRepository $eventRepository): Response
+    public function index(Request $request,FeedbackRepository $fbRepository, EvenementRepository $eventRepository,PaginatorInterface $paginator): Response
     {
+        $events= $eventRepository->findAll();
+        $feedback= $fbRepository->findAll();
+        $events = $paginator->paginate(
+            $events, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            2/*limit per page*/
+        );
+        $feedback = $paginator->paginate(
+            $feedback, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            2/*limit per page*/
+        );
         return $this->render('admin/eventadmin.html.twig', [
             
-            'feedback' => $fbRepository->findAll(),
-            'event' => $eventRepository->findAll(),
+
+            'feedback' => $feedback,
+            'event' => $events,
             
         ]);
     }

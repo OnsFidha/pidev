@@ -12,14 +12,21 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Evenement;
+use Knp\Component\Pager\PaginatorInterface;
 
 class FeedbackController extends AbstractController
 {
     #[Route('/feedback', name: 'app_feedback')]
-    public function index(FeedbackRepository $fbRepository): Response
+    public function index(FeedbackRepository $fbRepository,PaginatorInterface $paginator): Response
     {
+        $feedback= $fbRepository->findAll();
+        $feedback = $paginator->paginate(
+            $feedback, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            1/*limit per page*/
+        );
         return $this->render('feedback/index.html.twig', [
-            'feedback' => $fbRepository->findAll(),
+            'feedback' => $feedback,
         ]);
     }
     #[Route('/new/{id}', name: 'app_feedback_new', methods: ['GET', 'POST'])]

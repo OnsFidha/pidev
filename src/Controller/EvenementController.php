@@ -100,10 +100,16 @@ class EvenementController extends AbstractController
             return $this->redirectToRoute('list_event');
         }
         #[Route('/event/{id}',name:'event_details')]
-        public function detail($id,EvenementRepository $eventrep,FeedbackRepository $fbRepository): Response 
+        public function detail($id,EvenementRepository $eventrep,FeedbackRepository $fbRepository,PaginatorInterface $paginator, Request $request  ): Response 
         {
             $fb= $fbRepository->findBy(['id_evenement' => $id]);
             $event = $eventrep->find($id);
+           
+        $fb = $paginator->paginate(
+            $fb, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            2/*limit per page*/
+        );
             return $this->render(
                 'evenement/showevent.html.twig',
                 ['event' => $event,
@@ -142,20 +148,20 @@ class EvenementController extends AbstractController
 
         return $this->render('evenement/calendrier.html.twig', compact('data'));
     }
-    #[Route('/email',name: 'email')]
-    public function Participer(MailerInterface $mailer): Response
-    {
-        $email = (new Email())
-            ->from('syrine.zaier@esprit.tn')
-            ->to('Syrinezaier283@gmail.com')
-            ->subject('Invitation')
-            ->text('Vous etes invité à ....');
+    // #[Route('/email',name: 'email')]
+    // public function Participer(MailerInterface $mailer): Response
+    // {
+    //     $email = (new Email())
+    //         ->from('syrine.zaier@esprit.tn')
+    //         ->to('Syrinezaier283@gmail.com')
+    //         ->subject('Invitation')
+    //         ->text('Vous etes invité à ....');
           
 
-        $mailer->send($email);
-        return $this->redirectToRoute('list_event');
+    //     $mailer->send($email);
+    //     return $this->redirectToRoute('list_event');
 
        
-    }
+    // }
     
 }

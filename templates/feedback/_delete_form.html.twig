@@ -1,4 +1,19 @@
 <form method="post" action="{{ path('app_feedback_delete', {'id': feedback.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce feedback?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ feedback.id) }}">
-    <button class="btn">Delete</button>
+    <button class="btn custom-btn-danger">
+    <i class="bi bi-trash"></i> Supprimer
+</button>
+<style>
+.custom-btn-danger {
+        background-color: #eba081;
+        color: #ffffff;
+        border-color: #eba081;
+    }
+
+.custom-btn-danger:hover {
+        background-color: #eb7a4b;
+        color: #ffffff;
+        border-color: #eb7a4b;
+    }
+</style>
 </form>

@@ -21,6 +21,28 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+
+    <style>
+.pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination .page-item.active .page-link {
+    background-color: #5fada3;
+    border-color: #5fada3;
+    color: #ffffff;
+}
+
+.pagination .page-item .page-link {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #5fada3;
+
+}
+</style>
+    
     {% endblock %}
 
 </head>

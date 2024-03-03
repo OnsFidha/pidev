@@ -3,43 +3,48 @@
 {% block title %}Évènement{% endblock %}
 
 {% block body %}
-  <section id="about" class="about" style="padding: 30px;">
+  <section id="event-details" class="event-details py-5">
     <div class="container">
-      <div class="row gy-4 justify-content-center">
-        <div class="col-lg-4">
-          <img src="{{ asset('uploads/images/' ~ event.image) }}" class="img-fluid" alt="Paysage">
-        </div>
-        <div class="col-lg-5 content">
-          <div class="row">
+        <div class="row gy-4">
             <div class="col-lg-6">
-              <ul class="list-group">
-                <li class="list-group-item"><strong>Nom:</strong> {{ event.nom }}</li>
-                <li class="list-group-item"><strong>Lieu:</strong> {{ event.lieu }}</li>
-                <li class="list-group-item"><strong>Nombre de participants:</strong> {{ event.getNbreMax }}</li>
-              </ul>
+                <img src="{{ asset('uploads/images/' ~ event.image) }}" class="img-fluid rounded" alt="Event Image">
             </div>
             <div class="col-lg-6">
-              <ul class="list-group">
-                <li class="list-group-item"><strong>Date de début:</strong> {{ event.getDateDebut|date('d F Y') }}</li>
-                <li class="list-group-item"><strong>Date de fin:</strong> {{ event.getDateFin|date('d F Y') }}</li>
-              </ul>
+                <div class="event-info" >
+                    <h2 class="fw-bold">{{ event.nom }}</h2>
+                     <ul class="list-group list-group-flush custom-bg-list">
+                        <li class="list-group-item"><strong>Lieu:</strong> <span class="text-dark">{{ event.lieu }}</span></li>
+                        <li class="list-group-item"><strong>Participants:</strong> <span class="text-dark">{{ event.getNbreMax }}</span></li>
+                        <li class="list-group-item"><strong>Date de début:</strong> <span class="text-dark">{{ event.getDateDebut|date('d F Y') }}</span></li>
+                        <li class="list-group-item"><strong>Date de fin:</strong> <span class="text-dark">{{ event.getDateFin|date('d F Y') }}</span></li>
+                    </ul>
+                    <p class="mt-3">{{ event.description }}</p>
+                </div>
             </div>
-          </div>
-          <p class="py-3">{{ event.description }}</p>
         </div>
-      </div>
     </div>
-  </section>
+</section>
 
-  <div class="container">
-    <a href="{{ path('list_event') }}" class="btn btn-secondary" style="margin-right: 15px;"><i class="bi bi-arrow-left"></i> Retour</a>
-    <a href="{{ path('editevent', {'id': event.id}) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Modifier</a>
-    {{ include('evenement/delete.html.twig') }}
-    <a href="#" class="btn btn-info" id="participerBtn" data-event-id="{{ event.id }}">
-    <i class="bi bi-person-plus"></i> Participer
-</a>
-    <a href="{{ path('app_feedback_new', {'id': event.id}) }}" class="btn btn-success"><i class="bi bi-chat-dots"></i> Ajouter un feedback</a>
-  </div>
+  <div class="container d-flex justify-content-between align-items-center my-3">
+    <a href="{{ path('list_event') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Retour
+    </a>
+    <div class="d-flex">
+        <a href="{{ path('editevent', {'id': event.id}) }}" class="btn custom-btn-warning mx-2">
+            <i class="bi bi-pencil"></i> Modifier
+        </a>
+        
+           
+            {{ include('evenement/delete.html.twig') }}
+        
+        <a href="#" class="btn custom-btn-info mx-2" id="participerBtn" data-event-id="{{ event.id }}">
+            <i class="bi bi-person-plus"></i> Participer
+        </a>
+        <a href="{{ path('app_feedback_new', {'id': event.id}) }}" class="btn custom-btn-success mx-2">
+            <i class="bi bi-chat-dots"></i> Ajouter un feedback
+        </a>
+    </div>
+</div>
 
   <section id="testimonials" class="testimonials" style="margin-top: 30px;">
     <div class="container">
@@ -48,7 +53,7 @@
       </div>
 
       {% for feedb in fb %}
-        <section class="feedback-section" style="background-color: #f7f6f6; padding: 20px;">
+        <section class="feedback-section mt-1" >
           <div class="container my-5 py-5 text-dark">
             <div class="row d-flex justify-content-center">
               <div class="col-md-12 col-lg-10 col-xl-8">
@@ -82,8 +87,84 @@
           </div>
         </section>
       {% endfor %}
+       {{ knp_pagination_render(fb) }}
     </div>
   </section>
+  <style>
+.pagination .page-item.active .page-link {
+    background-color: #f29d88;
+    border-color: #f29d88;
+    color: #ffffff;
+}
+
+.pagination .page-item .page-link {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #f29d88;
+}
+
+
+    .card {
+        border-radius:30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for a lifted effect */
+        margin-top:-90px;
+    }
+
+    .custom-bg-list .list-group-item {
+        background-color: #f8f9fa; /* Choose your desired background color */
+    }
+
+       
+
+    .custom-btn-warning {
+        background-color: #eba081;
+        color: #ffffff;
+        border-color: #eba081;
+    }
+
+    .custom-btn-danger {
+        background-color: #eba081;
+        color: #ffffff;
+        border-color: #eba081;
+    }
+
+    .custom-btn-info {
+        background-color: #eba081;
+        color: #ffffff;
+        border-color: #eba081;
+    }
+
+    .custom-btn-success {
+        background-color: #eba081;
+        color: #ffffff;
+        border-color: #eba081;
+    }
+
+     .custom-btn-warning:hover {
+        background-color: #eb7a4b;
+        color: #ffffff;
+        border-color: #eb7a4b;
+    }
+
+    .custom-btn-danger:hover {
+        background-color: #eb7a4b;
+        color: #ffffff;
+        border-color: #eb7a4b;
+    }
+
+    .custom-btn-info:hover {
+        background-color: #eb7a4b;
+        color: #ffffff;
+        border-color: #eb7a4b;
+    }
+
+    .custom-btn-success:hover {
+        background-color: #eb7a4b;
+        color: #ffffff;
+        border-color: #eb7a4b;
+    }
+</style>
+
   <script>
     document.getElementById('participerBtn').addEventListener('click', function(event) {
         // Prevent the default link behavior
