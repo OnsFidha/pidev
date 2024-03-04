@@ -1,0 +1,18 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %} Ajouter un évènement {% endblock %}
+
+{% block body %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <h1>Ajouter un évènement</h1>
+
+    {{ include('admin/formevent.html.twig') }}
+
+
+    <div class="row justify-content-center mt-4">
+            <div class="col-md-8 text-center">
+                <a href="{{ path('app_admin') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Retour </a>
+            </div>
+        </div>
+     {{ form_rest(form) }}
+{% endblock %}

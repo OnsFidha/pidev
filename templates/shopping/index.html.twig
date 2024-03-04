@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shopping{% endblock %}
+
+{% block body %}
+<div>{% for message in app.flashes('notice') %}
+    <div class="flash-notice" style="color:green">
+       <center> <h6>{{ message }}</h6></center>
+    </div>
+{% endfor %}</div>
+<div class="row">
+
+  
+        {% for produit in produits %}
+          <div class="col-md-4">
+                <div class="product-item">
+                    <a href="{{ path('detail_image', {'id': produit.id}) }}"><img class="img-fluid" src="/uploads/images/{{produit.image}}" alt="{{produit.nom}}" width="800px";height="800px"></a>
+                    <h5 class="mt-2"><center>{{ produit.nom}}</center></h5>
+ 
+                    <span class="product-price text-center" style="color:red"><center><b>{{(produit.prix ) }}  DT </b></center></span>
+                    <center> <a href="{{path('app_add_panier',{'id': produit.id} )}}" class ="btn btn-success">Ajouter au panier</a></center>
+                </div>
+           </div>
+        {% endfor %}
+      
+    </div>
+{% endblock %}

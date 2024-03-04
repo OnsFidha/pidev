@@ -8,6 +8,9 @@ parameters:
     images_directorys: 'pub'
     api_key: 'bVEylMhimuHW7Yu87yPdA5szAFE64xLU'
     images_directory: '%kernel.project_dir%/public/uploads'
+    photo_dirr:  '%kernel.project_dir%/public/uploads/images'
+    photo_dir: "uploads/images"
+
     
 services:
     # default configuration for services in *this* file

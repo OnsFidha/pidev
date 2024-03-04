@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+<div class="container mt-5">
+
+
+    <div class="card p-4 shadow">
+        <table class="table text-center">
+            <tr>
+                <td>{{ form_label(form.nom) }}</td>
+                <td>{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_errors(form.nom, {'attr': {'class': 'form-error'}}) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.description) }}</td>
+                <td>{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_errors(form.description) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.lieu) }}</td>
+                <td>{{ form_widget(form.lieu) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_errors(form.lieu, {'attr': {'class': 'form-error'}}) }}</td>
+            </tr>
+           <tr>
+                <td>{{ form_label(form.image, 'Choisir un fichier') }}</td>
+                <td>
+                    <div class="input-group">
+                        {{ form_widget(form.image, {'attr': {'class': 'form-control', 'aria-describedby': 'file-upload'}}) }}
+                        <div class="input-group-append">
+                            <label for="{{ form.image.vars.id }}" class="btn btn-primary" id="file-upload">Parcourir</label>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ form_errors(form.image) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.date_debut) }}</td>
+                <td>{{ form_widget(form.date_debut, {'attr': {'class': 'form-control'}}) }}</td>
+                <td>{{ form_errors(form.date_debut) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.date_fin) }}</td>
+                <td>{{ form_widget(form.date_fin, {'attr': {'class': 'form-control'}}) }}</td>
+                <td>{{ form_errors(form.date_fin) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.nbre_max) }}</td>
+                <td>{{ form_widget(form.nbre_max, {'attr': {'class': 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_errors(form.nbre_max, {'attr': {'class': 'form-error'}}) }}</td>
+            </tr>
+        </table>
+
+        <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+
+        {% if form_errors(form) %}
+            {{ form_errors(form) }}
+        {% endif %}
+    </div>
+</div>
+
+
+{{ form_end(form) }}

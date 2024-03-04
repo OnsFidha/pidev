@@ -1,0 +1,116 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\FeedbackRepository;
+use App\Entity\Feedback;
+use App\Form\FeedbackType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Evenement;
+use App\Repository\UserRepository;
+use Knp\Component\Pager\PaginatorInterface;
+
+class FeedbackController extends AbstractController
+{
+    #[Route('/feedback', name: 'app_feedback')]
+    public function index(FeedbackRepository $fbRepository,PaginatorInterface $paginator,Request $request): Response
+    {
+        $feedback= $fbRepository->findAll();
+        $feedback = $paginator->paginate(
+            $feedback, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            1/*limit per page*/
+        );
+        return $this->render('feedback/index.html.twig', [
+            'feedback' => $feedback,
+        ]);
+    }
+    #[Route('/new/{id}', name: 'app_feedback_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager,$id,UserRepository $repU): Response
+    {     $userId = $this->getUser();
+        $user = $repU->find($userId);
+        $feedback = new Feedback();
+        $feedback->setIdUser($user);
+        $event = $entityManager->getRepository(Evenement::class)->find($id);
+        $feedback->setIdEvenement($event);
+        $form = $this->createForm(FeedbackType::class, $feedback);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($feedback);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('event_details', ['id' => $feedback->getIdEvenement()->getId()]);
+        }
+
+        return $this->renderForm('feedback/new.html.twig', [
+            'feedback' => $feedback,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/feedback/{id}', name: 'app_feedback_show')]
+    // public function show(Feedback $feedback): Response
+    // {
+    //     return $this->render('feedback/show.html.twig', [
+    //         'feedback' => $feedback,
+    //     ]);
+    // }
+    public function show($id,FeedbackRepository $fbrep): Response 
+    {
+            $fb = $fbrep->find($id);
+            return $this->render(
+                'feedback/show.html.twig',
+                ['feedback' => $fb,]
+    
+            );
+            
+    }
+
+    #[Route('/{id}/edit', name: 'app_feedback_edit', methods: ['GET', 'POST'])]
+    public function editFeedback(Request $request, ManagerRegistry $manager, $id, FeedbackRepository $fbrepository): Response
+    {
+        $em = $manager->getManager();
+    
+       
+        $fb  = $fbrepository->find($id);
+        $form = $this->createForm(FeedbackType::class, $fb);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em->persist($fb);
+            $em->flush();
+            return $this->redirectToRoute('event_details', ['id' => $fb->getIdEvenement()->getId()]);
+        }
+    
+        return $this->renderForm('feedback/edit.html.twig', [
+            'feedback' => $fb,
+           
+            'form' => $form,
+        ]);
+    }
+    #[Route('/d/{id}', name: 'app_feedback_delete')]
+    public function delete(Request $request, $id, ManagerRegistry $manager, FeedbackRepository $fbRepository): Response
+{
+    $em = $manager->getManager();
+    $fb = $fbRepository->find($id);
+
+    // Check if the entity exists
+    if (!$fb) {
+        // Handle the case where the entity is not found, e.g., redirect or show an error message
+        return $this->redirectToRoute('app_list_eventt');
+    }
+
+    $em->remove($fb);
+    $em->flush();
+
+    return $this->redirectToRoute('event_details', ['id' => $fb->getIdEvenement()->getId()]);
+}
+
+}

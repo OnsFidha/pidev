@@ -1,6 +1,6 @@
-index:
-   path: /
-   controller: App\Controller\AppController::index
+# index:
+#    path: /
+#    controller: App\Controller\AppController::index
 # filtre:
 #   path: /filter-publications
 #   controller : App\Controller\PublicationController::filterPublications

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau feedback{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+       <h1 class="mb-4 text-center" style="color: #ed724c; font-size: 2.5rem; font-weight: bold;">Ajouter un feedback</h1>
+
+
+        <div class="card p-4 shadow">
+            {{ include('feedback/_form.html.twig') }}
+        </div>
+
+        <a href="{{ path('event_details', {'id': feedback.getIdEvenement().id}) }}" class="btn btn-secondary mt-3">
+            <i class="bi bi-arrow-left"></i> Retour
+        </a>
+    </div>
+{% endblock %}

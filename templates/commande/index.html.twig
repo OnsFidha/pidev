@@ -1,0 +1,50 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %} Commande {% endblock %}
+
+{% block body %}
+<h3><center>Liste des commandes</center></h3>
+<table class="display table table-striped"  id="myTable"  >
+        <thead>
+            <tr>
+               
+                <th>Id</th>
+                <th>Date</th>
+                <th>Reference</th>
+                 <th>Nom client</th>
+                 <th>Prénom client</th>
+              <th>Telephone</th>
+              <th>Email</th>
+               <th>Montant Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for element in commandes %}
+            <tr>
+                
+                <td>{{ element.id}}</td>
+                <td> {{ element.datecommande|date('d/m/y') }}  </td>
+                <td>{{ element.reference }}</td>
+                 <td>{{ element.user.name }}</td>
+                  <td>{{ element.user.prename }}</td>
+              <td>{{ element.user.phone }}</td>
+                 <td>{{ element.user.email }}</td>
+                  <td>{{ element.montanttotal }}</td>
+                <td>
+                  <a href="{{ path('app_commande_detail', {'id': element.id}) }}" class="btn btn-success">Detail</a> 
+
+                 <a href="{{ path('app_commande', {'id': element.id}) }}" class="btn btn-danger">Modifier</a>  
+                </td>
+            </tr>
+
+        {% else %}
+            <tr>
+                <td colspan="5"> Aucune enregistrement</td>
+            </tr>
+        {% endfor %}
+        
+        </tbody>
+        
+    </table>
+{% endblock %}

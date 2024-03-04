@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ajouter un évènement {% endblock %}
+
+{% block body %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <h1>Ajouter un évènement</h1>
+    <a href="{{ path('app_list_eventt') }}" class="btn custom-btn-secondary"><i class="bi bi-arrow-left"></i>Retour</a>
+
+    {{ include('evenement/formevent.html.twig') }}
+
+    
+     {{ form_rest(form) }}
+
+    <style>
+     .custom-btn-secondary {
+        margin-left:15px;
+        margin-top:50px;
+        margin-bottom:-40px;
+        background-color: #eba081;
+        color: #ffffff;
+        border-color: #eba081;
+    }
+
+     .custom-btn-secondary:hover {
+        background-color: #eb7a4b;
+        color: #ffffff;
+        border-color: #eb7a4b;
+    }
+
+    </style>
+{% endblock %}

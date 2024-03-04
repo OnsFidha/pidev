@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Feedback index{% endblock %}
+
+{% block body %}
+    <h1>Feedback index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Text</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fb in feedback %}
+            <tr>
+                <td>{{ fb.id }}</td>
+                <td>{{ fb.text }}</td>
+                <td>
+                    <a href="{{ path('app_feedback_show', {'id': fb.id}) }}">show</a>
+                    <a href="{{ path('app_feedback_edit', {'id': fb.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}
