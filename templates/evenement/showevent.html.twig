@@ -29,20 +29,25 @@
     <a href="{{ path('app_list_eventt') }}" class="btn btn-secondary">
         <i class="bi bi-arrow-left"></i> Retour
     </a>
+    
     <div class="d-flex">
+     {% if event.getIdUser() == app.user %} 
         <a href="{{ path('editevent', {'id': event.id}) }}" class="btn custom-btn-warning mx-2">
             <i class="bi bi-pencil"></i> Modifier
         </a>
+        {% endif %}
         
-           
+             {% if event.getIdUser() == app.user %} 
             {{ include('evenement/delete.html.twig') }}
-        
+        {% endif %}
+         {% if event.getIdUser() != app.user %} 
         <a href="#" class="btn custom-btn-info mx-2" id="participerBtn" data-event-id="{{ event.id }}">
             <i class="bi bi-person-plus"></i> Participer
         </a>
         <a href="{{ path('app_feedback_new', {'id': event.id}) }}" class="btn custom-btn-success mx-2">
             <i class="bi bi-chat-dots"></i> Ajouter un feedback
         </a>
+         {% endif %}
     </div>
 </div>
 
@@ -60,18 +65,20 @@
                 <div class="card mb-3">
                   <div class="card-body">
                     <div class="d-flex flex-start">
-                      <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp" alt="avatar" width="40" height="40" />
+                      <img class="rounded-circle shadow-1-strong me-3" src="../assets/pdp/{{feedb.getIdUser().getImage()}}" alt="avatar" width="40" height="40" />
                       <div class="w-100">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                           <h6 class="text-primary fw-bold mb-0">
-                            lara_stewart
+                            {{ feedb.getIdUser().getName() }} {{ feedb.getIdUser().getPrename() }}
                             <span class="text-dark ms-2">{{ feedb.text }}</span>
                           </h6>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                           <p class="small mb-0" style="color: #aaa;">
+                                     {% if feedb.getIdUser() == app.user %}
                             <a href="{{ path('app_feedback_delete', {'id': feedb.id}) }}" class="link-grey"><i class="bi bi-trash"></i> Supprimer</a> •
                             <a href="{{ path('app_feedback_edit', {'id': feedb.id}) }}" class="link-grey"><i class="bi bi-pencil"></i> Modifier</a>
+                          {% endif %}
                           </p>
                           <div class="d-flex flex-row">
                             <i class="fas fa-star text-warning me-2"></i>

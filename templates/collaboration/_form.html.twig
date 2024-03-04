@@ -19,8 +19,9 @@
         margin-left: 20px; 
     }
 </style>
+<center>
 {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'enctype': 'multipart/form-data'}}) }}
-<div class="card">
+<div class="card" style='width:600px'>
     <div class="card-body" style='background-color:#FEFCF3'>
         <table class="table">
             <tbody>
@@ -53,7 +54,8 @@
                 </tr>
             </tbody>
         </table>
-        <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+        <button type="submit" class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>
     </div>
 </div>
 {{ form_end(form) }}
+</center>

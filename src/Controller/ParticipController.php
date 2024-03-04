@@ -109,7 +109,7 @@ public function new(ManagerRegistry $manager, Request $request, $id, EvenementRe
             $em->persist($participation);
             $em->flush();
             $email = (new Email())
-            ->from('syrine.zaier@esprit.tn')
+            ->from('onsfidha3@gmail.com')
             ->to('Syrinezaier283@gmail.com')
             ->subject('Invitation')
             ->text("Vous êtes invité à l'événement '$nomEvenement' qui aura lieu le $dateDebut.")

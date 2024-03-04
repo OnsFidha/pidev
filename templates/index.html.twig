@@ -1,10 +1,72 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Titre de la page Test
+    Bienvenue sur Artify - Explorer, Collaborer, Créer
 {% endblock %}
 
 {% block body %}
-    <h1>Contenu de la page Test</h1>
-    <p>Ceci est un test.</p>
+    <div class="container">
+<div class="row justify-content-center align-items-center mt-5">
+    <div class="col-md-6 text-center">
+        <h1 class="display-4 mb-4">Bienvenue sur Artify</h1>
+        <p class="lead">Votre plateforme pour la <strong>collaboration artistique</strong>, l'<strong>engagement communautaire</strong> et l'<strong>expression créative</strong>.</p>
+        <a href="#" class="btn btn-primary btn-lg mt-3">Commencer</a>
+    </div>
+    <div class="col-md-6">
+        <img id="randomArtImage" src="https://source.unsplash.com/800x400/?art" class="img-fluid rounded" alt="Random Art Image">
+    </div>
+</div>
+
+        
+        <hr class="my-5">
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ asset('colab.jfif') }}" class="card-img-top" style="height: 400px;" alt="Collaboration" >
+                    <div class="card-body">
+                        <h5 class="card-title">Collaboration</h5>
+                        <p class="card-text">Connectez-vous avec d'autres artistes, partagez des idées et travaillez ensemble sur des projets créatifs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ asset('comm.jfif') }}" class="card-img-top" style="height: 400px;" alt="Community">
+                    <div class="card-body">
+                        <h5 class="card-title">Communauté</h5>
+                        <p class="card-text">Engagez-vous avec une communauté vibrante d'amateurs d'art, de collectionneurs et de supporters.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ asset('even.jfif') }}" style="height: 400px;" class="card-img-top" alt="Events">
+                    <div class="card-body">
+                        <h5 class="card-title">Événements</h5>
+                        <p class="card-text">Découvrez et participez à des expositions d'art, des ateliers et des événements culturels.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // API: Obtenir une image aléatoire liée à l'art depuis Unsplash
+        function getRandomArtImage() {
+            fetch('https://api.unsplash.com/photos/random?query=art&client_id=-Q19YvSBRRkTHYVp90hGX7joZpRoSIYSq28JRNZPo-o')
+                .then(response => response.json())
+                .then(data => {
+                    const imageUrl = data.urls.regular;
+                    document.getElementById('randomArtImage').src = imageUrl;
+                })
+                .catch(error => console.error('Erreur lors du chargement de l\'image :', error));
+        }
+
+        // Appel de la fonction pour charger une image aléatoire au chargement de la page
+        window.onload = getRandomArtImage;
+    </script>
 {% endblock %}

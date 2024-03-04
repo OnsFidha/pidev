@@ -92,11 +92,7 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Evènements</span></a>
             </li>  
-                    <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Produits</span></a>
-            </li>
+                 
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_reclamation_index2') }}">
                     <i class="fas fa-fw fa-table"></i>
@@ -451,6 +447,14 @@
     <script src="{{asset('vendor/jquery/jquery.min.js' )}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
+    <script src="{{asset('datatable1/dataTables.js')}}"></script>
+    
+    <script src="{{asset('datatable1/dataTables.bootstrap5.js')}}"></script>
+    <script src="{{asset('datatable1/bootstrap.bundle.min.js')}}"></script>
+    <script > $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+    </script>
     <!-- Core plugin JavaScript-->
     <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 

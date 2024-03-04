@@ -9,7 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\CommandeRepository;
-
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use App\Repository\DetailCommandeRepository;
 use App\Entity\User;
 use App\Entity\Commande;
@@ -24,7 +25,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class CommandeController extends AbstractController
 {
     #[Route('/commande/ajouter', name: 'app_commande_add')]
-    public function add_commande(ProduitRepository $produitRepository,SessionInterface $session, EntityManagerInterface $entityManager,UserRepository $userrepository): Response
+    public function add_commande(MailerInterface $mailer,ProduitRepository $produitRepository,SessionInterface $session, EntityManagerInterface $entityManager,UserRepository $userrepository): Response
     {
       $id='1';
         // $this->$this->denyAccessUnlessGranted('ROLE_USER');
@@ -51,7 +52,13 @@ class CommandeController extends AbstractController
             $DetailCommande->setProduit($produit);
             $DetailCommande->setQuantite($quantite);
             $DetailCommande->setPrix($produit->getPrix());
+            $email = (new Email())
+            ->from('onsfidha3@gmail.com')
+            ->to($user->getEmail())
+            ->subject('Commande ')
+            ->text('Votre commande est passé avec success.');
             
+        $mailer->send($email);
             $commande->addDetailCommande($DetailCommande);
             
              }

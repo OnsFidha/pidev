@@ -42,7 +42,7 @@
                         <div class="gallery-item h-100"> 
                             <img src="{{ asset('pub/' ~ publication.photo) }}" class="img-fluid" alt="Paysage">
                             <div class="gallery-links d-flex align-items-center justify-content-center">
-                                <div>Publié le {{ publication.getDateCreation|date('d F Y') }} par xxxxx</div>
+                                <div>Publié le {{ publication.getDateCreation|date('d F Y') }} par {{ publication.getIdUser().getName() }}  {{publication.getIdUser().getPrename()}}</div>
                             </div>
                         </div>
                     </a>

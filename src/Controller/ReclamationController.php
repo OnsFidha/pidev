@@ -106,24 +106,21 @@ class ReclamationController extends AbstractController
                 $entityManager->persist($whatsappNotif);
                 $entityManager->persist($reclamation);
                 $entityManager->flush();
-
-                  
+                $email = (new Email())
+                ->from('onsfidha3@gmail.com')
+                ->to($user->getEmail())
+                ->subject('Reclamation Artist')
+                ->text('Votre demande sera prise en compte et nous vous répondrons dans les meilleurs délais.
+                Vous serez notifiés via une maill les details de traitement de votre reclamation
+                Merci !!');
                 
-                
+            $mailer->send($email);
                 return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
             } catch (\Exception $e) {
                 $this->addFlash('error', "Failed to send WhatsApp message: " . $e->getMessage());
             }
                     //mailling
-                        $email = (new Email())
-                        ->from('sana.khiari@esprit.tn')
-                        ->to($user->getEmail())
-                        ->subject('Reclamation Artist')
-                        ->text('Votre demande sera prise en compte et nous vous répondrons dans les meilleurs délais.
-                        Vous serez notifiés via une maill les details de traitement de votre reclamation
-                        Merci !!');
-                        
-                    $mailer->send($email);
+          
 
                 //
         }

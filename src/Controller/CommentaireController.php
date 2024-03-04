@@ -27,7 +27,7 @@ class CommentaireController extends AbstractController
 
     #[Route('/new/{id}', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,UserRepository $repU, $id, BadWordDetector $badWordDetector): Response
-    {  $userId=1;
+    {  $userId = $this->getUser();
         $user = $repU->find($userId);
         $commentaire = new Commentaire();
         $commentaire->setIdUser( $user);
